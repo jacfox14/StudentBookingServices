@@ -6,176 +6,6 @@
     <title>Notifications - Student Booking Services</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <style>
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-        .mark-all-btn {
-            padding: 8px 16px;
-            border: none;
-            background: #f5f5f5;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        .filter-tabs {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-            border-bottom: 2px solid #eee;
-        }
-        .filter-tab {
-            padding: 12px 16px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 14px;
-            color: #666;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-        }
-        .filter-tab.active {
-            color: #c41e3a;
-            border-bottom-color: #c41e3a;
-            font-weight: 500;
-        }
-        .preferences-link {
-            margin-bottom: 24px;
-        }
-        .preferences-link a {
-            color: #c41e3a;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        .notifications-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .notification-item {
-            display: flex;
-            gap: 16px;
-            padding: 16px;
-            border: 1px solid #eee;
-            border-radius: 6px;
-            background: white;
-            transition: all 0.2s;
-        }
-        .notification-item--unread {
-            background: #f9f9f9;
-            border-color: #e0e0e0;
-        }
-        .notification-item--unread::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 4px;
-            height: 100%;
-            background: #c41e3a;
-            border-radius: 6px 0 0 6px;
-        }
-        .notification-item {
-            position: relative;
-        }
-        .notification-icon {
-            font-size: 24px;
-            min-width: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .notification-content {
-            flex: 1;
-        }
-        .notification-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 8px;
-        }
-        .notification-title {
-            font-weight: 600;
-            font-size: 15px;
-            color: #333;
-        }
-        .notification-timestamp {
-            font-size: 12px;
-            color: #999;
-            white-space: nowrap;
-            margin-left: 12px;
-        }
-        .notification-description {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-        .notification-actions {
-            display: flex;
-            gap: 8px;
-        }
-        .action-btn {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        .action-btn-primary {
-            background: #c41e3a;
-            color: white;
-        }
-        .action-btn-primary:hover {
-            background: #a01a2f;
-        }
-        .action-btn-secondary {
-            background: #f0f0f0;
-            color: #333;
-        }
-        .action-btn-secondary:hover {
-            background: #e0e0e0;
-        }
-        .action-btn-ghost {
-            background: none;
-            color: #666;
-            border: 1px solid #ddd;
-        }
-        .action-btn-ghost:hover {
-            border-color: #c41e3a;
-            color: #c41e3a;
-        }
-        .bell-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #c41e3a;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        @keyframes fadeOut {
-            from {
-                opacity: 1;
-                transform: translateX(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-        }
-    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -200,7 +30,7 @@
 
     <!-- Main Content -->
     <div class="container">
-        <div class="page-header">
+        <div class="page-header page-header--flex">
             <h1 class="page-title">Notifications</h1>
             <button class="mark-all-btn">Mark All as Read</button>
         </div>
@@ -383,6 +213,10 @@
         </div>
     </div>
 
+    <footer>
+        <p>Student Booking Services &copy; 2026</p>
+    </footer>
+
     <script>
         // Tab filtering functionality
         document.querySelectorAll('.filter-tab').forEach(tab => {
@@ -406,9 +240,13 @@
         // Dismiss buttons
         document.querySelectorAll('.action-btn-ghost').forEach(btn => {
             btn.addEventListener('click', function() {
-                this.closest('.notification-item').style.animation = 'fadeOut 0.3s ease-out';
+                const item = this.closest('.notification-item');
+                item.style.opacity = '1';
+                item.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(20px)';
                 setTimeout(() => {
-                    this.closest('.notification-item').remove();
+                    item.remove();
                 }, 300);
             });
         });
