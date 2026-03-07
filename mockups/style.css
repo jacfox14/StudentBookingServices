@@ -1,0 +1,1603 @@
+/* ================================================================
+   STUDENT BOOKING SERVICES - SHARED STYLESHEET
+   WSU Brand Colors & Comprehensive Component Styles
+   ================================================================ */
+
+/* ================================================================
+   1. CSS VARIABLES - COLOR THEME & DESIGN TOKENS
+   ================================================================ */
+
+:root {
+  /* WSU Brand Colors */
+  --crimson: #A60F2D;
+  --crimson-accent: #CA1237;
+  --gray: #4D4D4D;
+  --black: #000000;
+  --white: #FFFFFF;
+
+  /* Black Opacity Variations */
+  --black-80: rgba(0,0,0,0.8);
+  --black-70: rgba(0,0,0,0.7);
+  --black-60: rgba(0,0,0,0.6);
+  --black-50: rgba(0,0,0,0.5);
+  --black-40: rgba(0,0,0,0.4);
+  --black-30: rgba(0,0,0,0.3);
+
+  /* Background Colors */
+  --bg-light: #f5f5f5;
+  --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+
+  /* Status Colors */
+  --color-success: #28a745;
+  --color-warning: #ffc107;
+  --color-danger: #dc3545;
+  --color-info: #17a2b8;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition: 0.3s ease;
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ================================================================
+   2. RESET & BASE STYLES
+   ================================================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--white);
+  color: var(--black);
+  line-height: 1.6;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* ================================================================
+   3. TYPOGRAPHY
+   ================================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+  color: var(--black);
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
+h5 {
+  font-size: 1.1rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  margin-bottom: 1rem;
+  color: var(--gray);
+}
+
+a {
+  color: var(--crimson);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--crimson-accent);
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+em {
+  font-style: italic;
+}
+
+small {
+  font-size: 0.875rem;
+}
+
+/* ================================================================
+   4. NAVIGATION BAR
+   ================================================================ */
+
+.navbar {
+  background-color: var(--crimson);
+  color: var(--white);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navbar-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.navbar-links a {
+  color: var(--white);
+  font-weight: 500;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color var(--transition);
+}
+
+.navbar-links a:hover {
+  border-bottom-color: var(--white);
+  text-decoration: none;
+}
+
+.navbar-links a.active {
+  border-bottom-color: var(--white);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar-bell {
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: transform var(--transition);
+}
+
+.navbar-bell:hover {
+  transform: scale(1.1);
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.navbar-user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background-color: var(--black-30);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* ================================================================
+   5. ROLE BADGES
+   ================================================================ */
+
+.role-badge {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.role-badge--admin {
+  background-color: var(--crimson);
+  color: var(--white);
+}
+
+.role-badge--provider {
+  background-color: #4CAF50;
+  color: var(--white);
+}
+
+.role-badge--student {
+  background-color: #2196F3;
+  color: var(--white);
+}
+
+/* ================================================================
+   6. CONTAINER & LAYOUT
+   ================================================================ */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--bg-light);
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+  color: var(--gray);
+  font-size: 1rem;
+}
+
+/* ================================================================
+   7. CARDS
+   ================================================================ */
+
+.card {
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card--bordered {
+  border-left: 4px solid var(--crimson);
+}
+
+.card--no-shadow {
+  box-shadow: none;
+  border: 1px solid var(--bg-light);
+}
+
+/* ================================================================
+   8. BUTTONS
+   ================================================================ */
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background-color: var(--crimson);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background-color: var(--crimson-accent);
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--crimson);
+  border: 2px solid var(--crimson);
+}
+
+.btn-secondary:hover {
+  background-color: var(--crimson);
+  color: var(--white);
+  text-decoration: none;
+}
+
+.btn-danger {
+  background-color: var(--color-danger);
+  color: var(--white);
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+}
+
+.btn-success {
+  background-color: var(--color-success);
+  color: var(--white);
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ================================================================
+   9. FORMS
+   ================================================================ */
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--black);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+input[type="tel"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+input[type="tel"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--crimson);
+  box-shadow: 0 0 0 3px rgba(166, 15, 45, 0.1);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-hint {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--gray);
+  margin-top: 0.35rem;
+}
+
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+  border-color: var(--color-danger);
+}
+
+.error-message {
+  color: var(--color-danger);
+  font-size: 0.875rem;
+  margin-top: 0.35rem;
+}
+
+/* ================================================================
+   10. STATUS BADGES
+   ================================================================ */
+
+.status-badge {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-badge--confirmed,
+.status-badge--active,
+.status-badge--completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-badge--pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-badge--cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.status-badge--inactive {
+  background-color: #e2e3e5;
+  color: #383d41;
+}
+
+/* ================================================================
+   11. TABLES
+   ================================================================ */
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--white);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.data-table th {
+  background-color: var(--bg-light);
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--black);
+  border-bottom: 2px solid #ddd;
+}
+
+.data-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  color: var(--gray);
+}
+
+.data-table tbody tr:nth-child(odd) {
+  background-color: #fafafa;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f0f0f0;
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ================================================================
+   12. MODALS
+   ================================================================ */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--black-60);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition), visibility var(--transition);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--bg-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--gray);
+}
+
+.modal-close:hover {
+  color: var(--black);
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  padding: 1.5rem;
+  border-top: 1px solid var(--bg-light);
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+/* ================================================================
+   13. GRID LAYOUTS
+   ================================================================ */
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ================================================================
+   14. METRIC CARDS (ADMIN DASHBOARD)
+   ================================================================ */
+
+.metric-card {
+  background: linear-gradient(135deg, var(--white) 0%, #f9fafb 100%);
+  border: 1px solid var(--bg-light);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.metric-card:hover {
+  border-color: var(--crimson);
+  box-shadow: var(--shadow-md);
+}
+
+.metric-card__value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--crimson);
+  margin-bottom: 0.5rem;
+}
+
+.metric-card__label {
+  font-size: 0.95rem;
+  color: var(--gray);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.metric-card__trend {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.metric-card__trend--up {
+  color: var(--color-success);
+}
+
+.metric-card__trend--down {
+  color: var(--color-danger);
+}
+
+/* ================================================================
+   15. APPOINTMENT/BOOKING CARDS
+   ================================================================ */
+
+.appointment-card {
+  background-color: var(--white);
+  border: 1px solid var(--bg-light);
+  border-left: 4px solid var(--crimson);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  transition: all var(--transition);
+}
+
+.appointment-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateX(4px);
+}
+
+.appointment-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+.appointment-card__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.appointment-card__detail {
+  font-size: 0.9rem;
+  color: var(--gray);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ================================================================
+   16. SERVICE CARDS
+   ================================================================ */
+
+.service-card {
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.service-card__image {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, var(--crimson) 0%, var(--crimson-accent) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 3rem;
+}
+
+.service-card__header {
+  padding: 1.25rem 1.5rem 0;
+}
+
+.service-card__title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 0.5rem;
+}
+
+.service-card__body {
+  padding: 0 1.5rem 1rem;
+  flex-grow: 1;
+}
+
+.service-card__description {
+  font-size: 0.9rem;
+  color: var(--gray);
+  margin-bottom: 0.75rem;
+}
+
+.service-card__provider {
+  font-size: 0.85rem;
+  color: var(--crimson);
+  font-weight: 500;
+}
+
+.service-card__footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--bg-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.service-card__rating {
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+/* ================================================================
+   17. SEARCH BAR
+   ================================================================ */
+
+.search-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: var(--crimson);
+  box-shadow: 0 0 0 3px rgba(166, 15, 45, 0.1);
+}
+
+.search-bar button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--crimson);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all var(--transition);
+}
+
+.search-bar button:hover {
+  background-color: var(--crimson-accent);
+}
+
+/* ================================================================
+   18. FILTERS
+   ================================================================ */
+
+.filters-container {
+  background-color: var(--bg-light);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.filter-group label {
+  margin: 0;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.filter-group select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
+/* ================================================================
+   19. PAGINATION
+   ================================================================ */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 2rem 0;
+}
+
+.pagination button {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ddd;
+  background-color: var(--white);
+  color: var(--black);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-size: 0.9rem;
+}
+
+.pagination button:hover {
+  border-color: var(--crimson);
+  color: var(--crimson);
+}
+
+.pagination button.active {
+  background-color: var(--crimson);
+  color: var(--white);
+  border-color: var(--crimson);
+}
+
+/* ================================================================
+   20. WELCOME BANNER
+   ================================================================ */
+
+.welcome-banner {
+  background: linear-gradient(135deg, var(--crimson) 0%, var(--crimson-accent) 100%);
+  color: var(--white);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+}
+
+.welcome-banner h2 {
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+.welcome-banner p {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0;
+}
+
+/* ================================================================
+   21. QUICK ACTION CARDS
+   ================================================================ */
+
+.action-card {
+  background-color: var(--white);
+  border: 2px solid var(--bg-light);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.action-card:hover {
+  border-color: var(--crimson);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.action-card__icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.action-card__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 0.5rem;
+}
+
+.action-card__description {
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+/* ================================================================
+   22. EMPTY STATE
+   ================================================================ */
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.empty-state__icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-state__heading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 0.5rem;
+}
+
+.empty-state__text {
+  color: var(--gray);
+  margin-bottom: 1.5rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ================================================================
+   23. ALERTS
+   ================================================================ */
+
+.alert {
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  border-left: 4px solid;
+}
+
+.alert--critical {
+  background-color: #f8d7da;
+  border-color: var(--color-danger);
+  color: #721c24;
+}
+
+.alert--warning {
+  background-color: #fff3cd;
+  border-color: var(--color-warning);
+  color: #856404;
+}
+
+.alert--info {
+  background-color: #d1ecf1;
+  border-color: var(--color-info);
+  color: #0c5460;
+}
+
+.alert--success {
+  background-color: #d4edda;
+  border-color: var(--color-success);
+  color: #155724;
+}
+
+/* ================================================================
+   24. DROPDOWN
+   ================================================================ */
+
+.dropdown-menu {
+  position: absolute;
+  background-color: var(--white);
+  border: 1px solid #ddd;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  min-width: 200px;
+  z-index: 500;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all var(--transition);
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--black);
+  font-weight: 500;
+  transition: background-color var(--transition);
+}
+
+.dropdown-menu a:hover {
+  background-color: var(--bg-light);
+  text-decoration: none;
+}
+
+/* ================================================================
+   25. TABS
+   ================================================================ */
+
+.tabs {
+  display: flex;
+  border-bottom: 2px solid var(--bg-light);
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.tab {
+  padding: 1rem 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--gray);
+  border-bottom: 3px solid transparent;
+  transition: all var(--transition);
+  font-size: 1rem;
+  font-family: var(--font-family);
+}
+
+.tab:hover {
+  color: var(--black);
+}
+
+.tab.active {
+  color: var(--crimson);
+  border-bottom-color: var(--crimson);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ================================================================
+   26. CALENDAR GRID
+   ================================================================ */
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--bg-light);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  background-color: var(--white);
+  font-weight: 500;
+}
+
+.calendar-day:hover {
+  border-color: var(--crimson);
+  background-color: rgba(166, 15, 45, 0.05);
+}
+
+.calendar-day.selected {
+  background-color: var(--crimson);
+  color: var(--white);
+  border-color: var(--crimson);
+}
+
+.calendar-day.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ================================================================
+   27. NOTIFICATION ITEMS
+   ================================================================ */
+
+.notification-item {
+  background-color: var(--white);
+  border-left: 4px solid var(--gray);
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.notification-item:hover {
+  background-color: var(--bg-light);
+}
+
+.notification-item--unread {
+  border-left-color: var(--crimson);
+  background-color: rgba(166, 15, 45, 0.02);
+}
+
+.notification-item__title {
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 0.25rem;
+}
+
+.notification-item__body {
+  font-size: 0.9rem;
+  color: var(--gray);
+  margin-bottom: 0.5rem;
+}
+
+.notification-item__time {
+  font-size: 0.8rem;
+  color: var(--gray);
+  font-style: italic;
+}
+
+/* ================================================================
+   28. CHARTS PLACEHOLDER
+   ================================================================ */
+
+.chart-container {
+  background-color: var(--white);
+  border: 1px solid var(--bg-light);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.chart-bar {
+  background: linear-gradient(180deg, var(--crimson) 0%, var(--crimson-accent) 100%);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  height: 100%;
+  min-height: 50px;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.chart-bar:hover {
+  opacity: 0.9;
+  transform: scaleY(1.05);
+}
+
+/* ================================================================
+   29. FOOTER
+   ================================================================ */
+
+footer {
+  background-color: var(--gray);
+  color: var(--white);
+  padding: 2rem 0;
+  margin-top: 3rem;
+}
+
+footer .container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+footer h4 {
+  color: var(--white);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+footer a {
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+footer a:hover {
+  color: var(--white);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+/* ================================================================
+   30. UTILITY CLASSES
+   ================================================================ */
+
+/* Text Alignment */
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+/* Text Colors */
+.text-crimson {
+  color: var(--crimson);
+}
+
+.text-muted {
+  color: var(--gray);
+}
+
+.text-white {
+  color: var(--white);
+}
+
+/* Margins */
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Padding */
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+
+/* Flexbox */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+/* Gaps */
+.gap-1 { gap: 0.5rem; }
+.gap-2 { gap: 1rem; }
+.gap-3 { gap: 1.5rem; }
+
+/* Display */
+.d-none {
+  display: none;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-inline {
+  display: inline;
+}
+
+.d-inline-block {
+  display: inline-block;
+}
+
+/* Opacity */
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.opacity-75 {
+  opacity: 0.75;
+}
+
+/* Cursor */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
+/* ================================================================
+   31. LOGIN PAGE STYLES
+   ================================================================ */
+
+body.login-page {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container {
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-header h1 {
+  color: var(--crimson);
+  margin-bottom: 0.5rem;
+}
+
+.login-header p {
+  color: var(--gray);
+}
+
+/* ================================================================
+   32. RESPONSIVE DESIGN
+   ================================================================ */
+
+@media (max-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .navbar-left {
+    width: 100%;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .navbar-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .filters-container {
+    flex-direction: column;
+  }
+
+  .filter-group {
+    flex-direction: column;
+  }
+
+  .filter-group select {
+    width: 100%;
+  }
+
+  .modal {
+    width: 95%;
+  }
+
+  .welcome-banner {
+    padding: 1.5rem;
+  }
+
+  footer .container {
+    grid-template-columns: 1fr;
+  }
+
+  .tabs {
+    gap: 0.5rem;
+  }
+
+  .tab {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  .navbar {
+    padding: 0.75rem;
+  }
+
+  .navbar-logo {
+    font-size: 1.25rem;
+  }
+
+  .btn {
+    padding: 0.65rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .card {
+    padding: 0.75rem;
+  }
+
+  .page-title {
+    font-size: 1.25rem;
+  }
+
+  .metric-card__value {
+    font-size: 2rem;
+  }
+
+  .empty-state__icon {
+    font-size: 3rem;
+  }
+
+  .welcome-banner {
+    padding: 1rem;
+  }
+
+  .login-container {
+    padding: 1.5rem;
+  }
+
+  .tabs {
+    flex-direction: column;
+    border-bottom: none;
+  }
+
+  .tab {
+    border-bottom: 2px solid transparent;
+    padding: 0.75rem 0;
+  }
+
+  .tab.active {
+    border-bottom-color: var(--crimson);
+  }
+
+  .data-table {
+    font-size: 0.9rem;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 0.75rem 0.5rem;
+  }
+}

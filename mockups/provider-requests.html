@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Requests - SBS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">SBS</div>
+            <div class="provider-badge">Provider</div>
+            <div class="nav-links">
+                <a href="provider-dashboard.html">Dashboard</a>
+                <a href="provider-schedule.html">My Schedule</a>
+                <a href="provider-requests.html">Requests</a>
+                <a href="provider-profile.html">Profile</a>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="bell-icon">🔔</div>
+            <div class="user-menu">
+                <div class="user-avatar">DJ</div>
+                <div class="user-name">Dr. Johnson</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="page-title">
+                <h1>Pending Booking Requests</h1>
+                <span class="request-badge">5</span>
+            </div>
+            <div class="page-controls">
+                <select class="sort-dropdown">
+                    <option selected>Sort by: Appointment Date</option>
+                    <option>Sort by: Request Date</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Auto-Accept Toggle -->
+        <div class="auto-accept-section">
+            <span class="auto-accept-text">Enable Auto-Accept for all new requests</span>
+            <label class="toggle-switch">
+                <input type="checkbox">
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+
+        <!-- Request Cards -->
+        <div class="request-list">
+            <!-- Request 1 -->
+            <div class="request-card">
+                <div class="card-header">
+                    <div class="student-info">
+                        <div class="student-avatar">👩‍🎓</div>
+                        <div class="student-details">
+                            <h3>Sarah Martinez</h3>
+                            <div class="student-id">ID: WSU-45892</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-main">
+                    <div class="main-info">
+                        <h4>Service Requested</h4>
+                        <p>Calculus Tutoring</p>
+                    </div>
+                    <div class="main-info">
+                        <h4>Requested Date/Time</h4>
+                        <p>March 12, 9:00 AM</p>
+                    </div>
+                    <div class="main-info">
+                        <h4>Duration</h4>
+                        <p>60 minutes</p>
+                    </div>
+                </div>
+
+                <div class="card-notes">
+                    <h4>Student Notes</h4>
+                    <div class="notes-box">Need help understanding the chain rule and applications of derivatives for my upcoming exam.</div>
+                </div>
+
+                <div class="student-profile-summary">
+                    <div class="summary-row">
+                        <span class="summary-label">Major:</span>
+                        <span class="summary-value">Engineering</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Previous Bookings:</span>
+                        <span class="summary-value">3</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Reliability Score:</span>
+                        <span class="summary-value">9.2/10</span>
+                    </div>
+                </div>
+
+                <div class="card-buttons">
+                    <button class="btn btn-accept" onclick="openAcceptModal(this)">Accept</button>
+                    <button class="btn btn-decline" onclick="openDeclineModal(this)">Decline</button>
+                </div>
+            </div>
+
+            <!-- Request 2 -->
+            <div class="request-card">
+                <div class="card-header">
+                    <div class="student-info">
+                        <div class="student-avatar">👨‍🎓</div>
+                        <div class="student-details">
+                            <h3>Michael Chen</h3>
+                            <div class="student-id">ID: WSU-52104</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-main">
+                    <div class="main-info">
+                        <h4>Service Requested</h4>
+                        <p>Linear Algebra Help</p>
+                    </div>
+                    <div class="main-info">
+                        <h4>Requested Date/Time</h4>
+                        <p>March 14, 2:00 PM</p>
+                    </div>
+                    <div class="main-info">
+                        <h4>Duration</h4>
+                        <p>90 minutes</p>
+                    </div>
+                </div>
+
+                <div class="card-notes">
+                    <h4>Student Notes</h4>
+                    <div class="notes-box">Questions about eigenvalues and eigenvectors. Would prefer virtual session if possible.</div>
+                </div>
+
+                <div class="student-profile-summary">
+                    <div class="summary-row">
+                        <span class="summary-label">Major:</span>
+                        <span class="summary-value">Computer Science</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Previous Bookings:</span>
+                        <span class="summary-value">7</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Reliability Score:</span>
+                        <span class="summary-value">9.5/10</span>
+                    </div>
+                </div>
+
+                <div class="card-buttons">
+                    <button class="btn btn-accept" onclick="openAcceptModal(this)">Accept</button>
+                    <button class="btn btn-decline" onclick="openDeclineModal(this)">Decline</button>
+                </div>
+            </div>
+
+            <!-- Request 3 -->
+            <div class="request-card">
+                <div class="card-header">
+                    <div class="student-info">
+                        <div class="student-avatar">👩‍🎓</div>
+                        <div class="student-details">
+                            <h3>Emma Rodriguez</h3>
+                            <div class="student-id">ID: WSU-38721</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-main">
+                    <div class="main-info">
+                        <h4>Service Requested</h4>
+                        <p>Calculus Tutoring</p>
+                    </div>
+                    <div class="main-info">
+                        <h4>Requested Date/Time</h4>
+                        <p>March 15, 10:00 AM</p>
+                    </div>
+                    <div class="main-info">
+                        <h4>Duration</h4>
+                        <p>60 minutes</p>
+                    </div>
+                </div>
+
+                <div class="card-notes">
+                    <h4>Student Notes</h4>
+                    <div class="notes-box">Need clarification on integral calculations and area under curves. This is material for my midterm.</div>
+                </div>
+
+                <div class="student-profile-summary">
+                    <div class="summary-row">
+                        <span class="summary-label">Major:</span>
+                        <span class="summary-value">Physics</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Previous Bookings:</span>
+                        <span class="summary-value">2</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Reliability Score:</span>
+                        <span class="summary-value">8.8/10</span>
+                    </div>
+                </div>
+
+                <div class="card-buttons">
+                    <button class="btn btn-accept" onclick="openAcceptModal(this)">Accept</button>
+                    <button class="btn btn-decline" onclick="openDeclineModal(this)">Decline</button>
+                </div>
+            </div>
+
+            <!-- Request 4 -->
+            <div class="request-card">
+                <div class="card-header">
+                    <div class="student-info">
+                        <div class="student-avatar">👨‍🎓</div>
+                        <div class="student-details">
+                            <h3>James Kim</h3>
+                            <div class="student-id">ID: WSU-51289</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-main">
+                    <div class="main-info">
+                        <h4>Service Requested</h4>
+                        <p>Discrete Mathematics</p>
+                    </div>
+                    <div class="main-info">
+                        <h4>Requested Date/Time</h4>
+                        <p>March 16, 3:00 PM</p>
+                    </div>
+                    <div class="main-info">
+                        <h4>Duration</h4>
+                        <p>60 minutes</p>
+                    </div>
+                </div>
+
+                <div class="card-notes">
+                    <h4>Student Notes</h4>
+                    <div class="notes-box">Graph theory basics and tree algorithms. Can do virtual session.</div>
+                </div>
+
+                <div class="student-profile-summary">
+                    <div class="summary-row">
+                        <span class="summary-label">Major:</span>
+                        <span class="summary-value">Computer Science</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Previous Bookings:</span>
+                        <span class="summary-value">4</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Reliability Score:</span>
+                        <span class="summary-value">9.1/10</span>
+                    </div>
+                </div>
+
+                <div class="card-buttons">
+                    <button class="btn btn-accept" onclick="openAcceptModal(this)">Accept</button>
+                    <button class="btn btn-decline" onclick="openDeclineModal(this)">Decline</button>
+                </div>
+            </div>
+
+            <!-- Request 5 -->
+            <div class="request-card">
+                <div class="card-header">
+                    <div class="student-info">
+                        <div class="student-avatar">👩‍🎓</div>
+                        <div class="student-details">
+                            <h3>Jessica Lee</h3>
+                            <div class="student-id">ID: WSU-47635</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-main">
+                    <div class="main-info">
+                        <h4>Service Requested</h4>
+                        <p>Calculus Tutoring</p>
+                    </div>
+                    <div class="main-info">
+                        <h4>Requested Date/Time</h4>
+                        <p>March 17, 11:00 AM</p>
+                    </div>
+                    <div class="main-info">
+                        <h4>Duration</h4>
+                        <p>30 minutes</p>
+                    </div>
+                </div>
+
+                <div class="card-notes">
+                    <h4>Student Notes</h4>
+                    <div class="notes-box">Quick review session before quiz. Just need a quick recap of derivatives.</div>
+                </div>
+
+                <div class="student-profile-summary">
+                    <div class="summary-row">
+                        <span class="summary-label">Major:</span>
+                        <span class="summary-value">Biology</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Previous Bookings:</span>
+                        <span class="summary-value">1</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Reliability Score:</span>
+                        <span class="summary-value">8.5/10</span>
+                    </div>
+                </div>
+
+                <div class="card-buttons">
+                    <button class="btn btn-accept" onclick="openAcceptModal(this)">Accept</button>
+                    <button class="btn btn-decline" onclick="openDeclineModal(this)">Decline</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recently Processed -->
+        <div class="processed-section">
+            <h3>Recently Processed (Last 5)</h3>
+
+            <div class="processed-item">
+                <div class="processed-left">
+                    <div class="processed-student">David Thompson</div>
+                    <div class="processed-service">Calculus Tutoring - March 8</div>
+                </div>
+                <div class="processed-right">
+                    <span class="processed-status accepted">Accepted</span>
+                    <span class="processed-time">2 hours ago</span>
+                </div>
+            </div>
+
+            <div class="processed-item">
+                <div class="processed-left">
+                    <div class="processed-student">Olivia Anderson</div>
+                    <div class="processed-service">Linear Algebra Help - March 9</div>
+                </div>
+                <div class="processed-right">
+                    <span class="processed-status declined">Declined</span>
+                    <span class="processed-time">4 hours ago</span>
+                </div>
+            </div>
+
+            <div class="processed-item">
+                <div class="processed-left">
+                    <div class="processed-student">Noah White</div>
+                    <div class="processed-service">Discrete Mathematics - March 10</div>
+                </div>
+                <div class="processed-right">
+                    <span class="processed-status accepted">Accepted</span>
+                    <span class="processed-time">1 day ago</span>
+                </div>
+            </div>
+
+            <div class="processed-item">
+                <div class="processed-left">
+                    <div class="processed-student">Sophia Taylor</div>
+                    <div class="processed-service">Calculus Tutoring - March 7</div>
+                </div>
+                <div class="processed-right">
+                    <span class="processed-status accepted">Accepted</span>
+                    <span class="processed-time">1 day ago</span>
+                </div>
+            </div>
+
+            <div class="processed-item">
+                <div class="processed-left">
+                    <div class="processed-student">Ethan Harris</div>
+                    <div class="processed-service">Linear Algebra Help - March 6</div>
+                </div>
+                <div class="processed-right">
+                    <span class="processed-status declined">Declined</span>
+                    <span class="processed-time">2 days ago</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accept Modal -->
+    <div id="acceptModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Accept Booking Request</div>
+            <div class="modal-body">
+                <p style="margin-bottom: 15px; color: #666;">You are about to accept this booking request. You can optionally add a message to the student.</p>
+                <div class="form-group">
+                    <label>Optional Message to Student</label>
+                    <textarea placeholder="E.g., 'Looking forward to our session! Please have your notes ready...'"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal btn-modal-cancel" onclick="closeModals()">Cancel</button>
+                <button class="btn-modal btn-modal-confirm" onclick="confirmAccept()">Confirm Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Decline Modal -->
+    <div id="declineModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Decline Booking Request</div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Reason for Declining</label>
+                    <select id="declineReason">
+                        <option value="">-- Select a reason --</option>
+                        <option value="schedule">Schedule Conflict</option>
+                        <option value="service">Service Not Applicable</option>
+                        <option value="limit">Student Limit Reached</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Optional Message to Student</label>
+                    <textarea placeholder="Let the student know why you're declining and suggest alternatives if possible..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal btn-modal-cancel" onclick="closeModals()">Cancel</button>
+                <button class="btn-modal btn-modal-confirm" onclick="confirmDecline()">Confirm Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openAcceptModal(button) {
+            document.getElementById('acceptModal').classList.add('show');
+        }
+
+        function openDeclineModal(button) {
+            document.getElementById('declineModal').classList.add('show');
+        }
+
+        function closeModals() {
+            document.getElementById('acceptModal').classList.remove('show');
+            document.getElementById('declineModal').classList.remove('show');
+        }
+
+        function confirmAccept() {
+            alert('Booking request accepted! Student notification sent.');
+            closeModals();
+        }
+
+        function confirmDecline() {
+            const reason = document.getElementById('declineReason').value;
+            if (!reason) {
+                alert('Please select a reason for declining.');
+                return;
+            }
+            alert('Booking request declined. Student notification sent.');
+            closeModals();
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const acceptModal = document.getElementById('acceptModal');
+            const declineModal = document.getElementById('declineModal');
+            if (event.target == acceptModal) {
+                acceptModal.classList.remove('show');
+            }
+            if (event.target == declineModal) {
+                declineModal.classList.remove('show');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Student Booking Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <div class="logo">SBS</div>
+            <ul class="nav-links">
+                <li><a href="student-dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="search-services.html">Find Services</a></li>
+                <li><a href="my-bookings.html">My Bookings</a></li>
+                <li><a href="notifications.html">Notifications</a></li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <div class="profile-icon">👤</div>
+            <div class="dropdown-menu">
+                <a href="#profile">Profile</a>
+                <a href="#settings">Settings</a>
+                <a href="#help">Help & Support</a>
+                <button>Log Out</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="welcome-banner">
+                <h1>Welcome back, Alex!</h1>
+                <p>You're all set to book your next service. Let's get started.</p>
+            </div>
+
+            <div class="quick-actions">
+                <div class="action-card">
+                    <div class="action-card-icon">🔍</div>
+                    <h3>Find Services</h3>
+                    <p>Browse and discover available booking services</p>
+                </div>
+                <div class="action-card">
+                    <div class="action-card-icon">📋</div>
+                    <h3>My Bookings</h3>
+                    <p>View and manage your scheduled appointments</p>
+                </div>
+                <div class="action-card">
+                    <div class="action-card-icon">🔔</div>
+                    <h3>Notifications</h3>
+                    <p>Check your latest updates and reminders</p>
+                </div>
+            </div>
+
+            <div class="appointments-section">
+                <h2>Your Upcoming Appointments</h2>
+                <div class="appointments-grid">
+                    <div class="appointment-card">
+                        <div class="appointment-header">
+                            <div class="appointment-title">Academic Advising</div>
+                            <div class="status-badge status-confirmed">Confirmed</div>
+                        </div>
+                        <div class="appointment-details">
+                            <div class="appointment-detail">
+                                <span class="detail-icon">👨</span>
+                                <span>Dr. Sarah Johnson</span>
+                            </div>
+                            <div class="appointment-detail">
+                                <span class="detail-icon">📅</span>
+                                <span>March 8, 2026</span>
+                            </div>
+                            <div class="appointment-detail">
+                                <span class="detail-icon">🕐</span>
+                                <span>2:00 PM - 2:30 PM</span>
+                            </div>
+                            <div class="appointment-detail">
+                                <span class="detail-icon">📍</span>
+                                <span>Student Center, Room 215</span>
+                            </div>
+                        </div>
+                        <div class="appointment-action">
+                            <a href="#" class="appointment-link">View Details →</a>
+                        </div>
+                    </div>
+
+                    <div class="appointment-card">
+                        <div class="appointment-header">
+                            <div class="appointment-title">Career Counseling</div>
+                            <div class="status-badge status-pending">Pending</div>
+                        </div>
+                        <div class="appointment-details">
+                            <div class="appointment-detail">
+                                <span class="detail-icon">👩</span>
+                                <span>Ms. Emily Chen</span>
+                            </div>
+                            <div class="appointment-detail">
+                                <span class="detail-icon">📅</span>
+                                <span>March 10, 2026</span>
+                            </div>
+                            <div class="appointment-detail">
+                                <span class="detail-icon">🕐</span>
+                                <span>10:00 AM - 10:45 AM</span>
+                            </div>
+                            <div class="appointment-detail">
+                                <span class="detail-icon">📍</span>
+                                <span>Career Services Office</span>
+                            </div>
+                        </div>
+                        <div class="appointment-action">
+                            <a href="#" class="appointment-link">View Details →</a>
+                        </div>
+                    </div>
+
+                    <div class="appointment-card">
+                        <div class="appointment-header">
+                            <div class="appointment-title">Writing Center Tutoring</div>
+                            <div class="status-badge status-confirmed">Confirmed</div>
+                        </div>
+                        <div class="appointment-details">
+                            <div class="appointment-detail">
+                                <span class="detail-icon">👨</span>
+                                <span>Mark Williams</span>
+                            </div>
+                            <div class="appointment-detail">
+                                <span class="detail-icon">📅</span>
+                                <span>March 12, 2026</span>
+                            </div>
+                            <div class="appointment-detail">
+                                <span class="detail-icon">🕐</span>
+                                <span>3:30 PM - 4:30 PM</span>
+                            </div>
+                            <div class="appointment-detail">
+                                <span class="detail-icon">📍</span>
+                                <span>Virtual - Zoom Link</span>
+                            </div>
+                        </div>
+                        <div class="appointment-action">
+                            <a href="#" class="appointment-link">View Details →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Student Booking Services © 2026</p>
+    </footer>
+</body>
+</html>

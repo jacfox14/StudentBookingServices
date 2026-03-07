@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Analytics - Student Booking Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-left">
+            <div class="nav-logo">SBS</div>
+            <span class="admin-badge">ADMIN</span>
+            <ul class="nav-links">
+                <li><a href="admin-dashboard.html">Dashboard</a></li>
+                <li><a href="admin-users.html">Users</a></li>
+                <li><a href="admin-services.html">Services</a></li>
+                <li><a href="admin-reports.html" class="active">Reports</a></li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <div class="notification-icon">
+                🔔
+                <span class="notification-badge">3</span>
+            </div>
+            <div class="user-dropdown">
+                Admin User ▼
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Reports & Analytics</h1>
+            <p class="page-subtitle">Generate comprehensive booking reports and system analytics</p>
+        </div>
+
+        <!-- Report Builder -->
+        <div class="report-builder">
+            <div class="builder-title">Report Builder</div>
+
+            <!-- Report Types -->
+            <div class="parameters-section">
+                <div class="section-title">Select Report Type</div>
+                <div class="report-types">
+                    <div class="report-card" onclick="selectReport(this, 'booking-summary')">
+                        <div class="report-icon">📊</div>
+                        <div class="report-name">Booking Summary</div>
+                    </div>
+                    <div class="report-card" onclick="selectReport(this, 'provider-performance')">
+                        <div class="report-icon">⭐</div>
+                        <div class="report-name">Provider Performance</div>
+                    </div>
+                    <div class="report-card" onclick="selectReport(this, 'service-utilization')">
+                        <div class="report-icon">📈</div>
+                        <div class="report-name">Service Utilization</div>
+                    </div>
+                    <div class="report-card" onclick="selectReport(this, 'cancellation-analysis')">
+                        <div class="report-icon">❌</div>
+                        <div class="report-name">Cancellation Analysis</div>
+                    </div>
+                    <div class="report-card selected" onclick="selectReport(this, 'engagement')">
+                        <div class="report-icon">👥</div>
+                        <div class="report-name">Student Engagement</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parameters -->
+            <div class="parameters-section">
+                <div class="section-title">Report Parameters</div>
+                <div class="param-grid">
+                    <div class="form-group">
+                        <label class="form-label">Date Range</label>
+                        <select class="form-control">
+                            <option>Last 7 days</option>
+                            <option>Last 30 days</option>
+                            <option>This Semester</option>
+                            <option>Custom Range</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">End Date</label>
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Department</label>
+                        <select class="form-control">
+                            <option>All Departments</option>
+                            <option>Academic Affairs</option>
+                            <option>Student Services</option>
+                            <option>Career Services</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Service Category</label>
+                        <select class="form-control">
+                            <option>All Categories</option>
+                            <option>Academic Support</option>
+                            <option>Career Services</option>
+                            <option>Student Resources</option>
+                            <option>Study Spaces</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Provider Name</label>
+                        <input type="text" class="form-control" placeholder="Search provider...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="generateReport()">Generate Report</button>
+                <button class="btn btn-secondary" onclick="openModal('schedule')">Schedule Report</button>
+                <button class="btn btn-secondary" onclick="openModal('save')">Save as Template</button>
+            </div>
+        </div>
+
+        <!-- Report Display -->
+        <div id="reportDisplay" class="report-display">
+            <div class="report-header">
+                <h2 class="report-title" id="reportTitle">Student Engagement Report</h2>
+                <div class="report-export">
+                    <button class="btn btn-secondary btn-small">📥 Export PDF</button>
+                    <button class="btn btn-secondary btn-small">📊 Export CSV</button>
+                </div>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="key-metrics">
+                <div class="metric-box">
+                    <div class="metric-value">2,847</div>
+                    <div class="metric-label">Total Bookings</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-value">91.3%</div>
+                    <div class="metric-label">Completion Rate</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-value">5.2%</div>
+                    <div class="metric-label">Cancellation Rate</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-value">4.6</div>
+                    <div class="metric-label">Avg Rating</div>
+                </div>
+            </div>
+
+            <!-- Bookings Over Time Chart -->
+            <div class="chart-container">
+                <div class="chart-title">Bookings Over Time</div>
+                <svg class="line-chart" viewBox="0 0 500 250" preserveAspectRatio="xMidYMid meet">
+                    <!-- Grid lines -->
+                    <line x1="40" y1="200" x2="480" y2="200" stroke="#f0f0f0" stroke-width="1"/>
+                    <line x1="40" y1="150" x2="480" y2="150" stroke="#f0f0f0" stroke-width="1"/>
+                    <line x1="40" y1="100" x2="480" y2="100" stroke="#f0f0f0" stroke-width="1"/>
+                    <line x1="40" y1="50" x2="480" y2="50" stroke="#f0f0f0" stroke-width="1"/>
+
+                    <!-- Axes -->
+                    <line x1="40" y1="30" x2="40" y2="210" stroke="#999" stroke-width="2"/>
+                    <line x1="40" y1="210" x2="480" y2="210" stroke="#999" stroke-width="2"/>
+
+                    <!-- Area fill -->
+                    <polygon points="50,180 80,140 110,160 140,100 170,110 200,60 230,85 260,75 290,120 320,95 350,130 380,90 410,110 440,70 470,85 470,210 50,210" fill="#CA123780" opacity="0.3"/>
+
+                    <!-- Line plot -->
+                    <polyline points="50,180 80,140 110,160 140,100 170,110 200,60 230,85 260,75 290,120 320,95 350,130 380,90 410,110 440,70 470,85" fill="none" stroke="#A60F2D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <!-- Y-axis labels -->
+                    <text x="25" y="215" font-size="11" fill="#999" text-anchor="end">0</text>
+                    <text x="25" y="165" font-size="11" fill="#999" text-anchor="end">50</text>
+                    <text x="25" y="115" font-size="11" fill="#999" text-anchor="end">100</text>
+                    <text x="25" y="65" font-size="11" fill="#999" text-anchor="end">150</text>
+
+                    <!-- X-axis labels -->
+                    <text x="50" y="230" font-size="10" fill="#999" text-anchor="middle">Week 1</text>
+                    <text x="200" y="230" font-size="10" fill="#999" text-anchor="middle">Week 2</text>
+                    <text x="350" y="230" font-size="10" fill="#999" text-anchor="middle">Week 3</text>
+                    <text x="470" y="230" font-size="10" fill="#999" text-anchor="middle">Week 4</text>
+                </svg>
+            </div>
+
+            <!-- Top Services Table -->
+            <div class="chart-container">
+                <div class="chart-title">Top 10 Services by Bookings</div>
+                <div class="data-table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Bookings</th>
+                                <th>Completed</th>
+                                <th>Completion Rate</th>
+                                <th>Avg Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Math Tutoring</strong></td>
+                                <td>356</td>
+                                <td>325</td>
+                                <td><span class="badge badge-high">91.3%</span></td>
+                                <td>4.8/5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Writing Center</strong></td>
+                                <td>298</td>
+                                <td>273</td>
+                                <td><span class="badge badge-high">91.6%</span></td>
+                                <td>4.9/5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Career Counseling</strong></td>
+                                <td>267</td>
+                                <td>246</td>
+                                <td><span class="badge badge-high">92.1%</span></td>
+                                <td>4.7/5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Study Room A</strong></td>
+                                <td>245</td>
+                                <td>224</td>
+                                <td><span class="badge badge-high">91.4%</span></td>
+                                <td>4.6/5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Academic Advising</strong></td>
+                                <td>234</td>
+                                <td>215</td>
+                                <td><span class="badge badge-high">91.9%</span></td>
+                                <td>4.8/5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Study Room B</strong></td>
+                                <td>212</td>
+                                <td>194</td>
+                                <td><span class="badge badge-high">91.5%</span></td>
+                                <td>4.5/5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Language Lab</strong></td>
+                                <td>189</td>
+                                <td>172</td>
+                                <td><span class="badge badge-medium">91.0%</span></td>
+                                <td>4.4/5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mental Health Counseling</strong></td>
+                                <td>178</td>
+                                <td>163</td>
+                                <td><span class="badge badge-high">91.6%</span></td>
+                                <td>4.9/5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Physics Tutoring</strong></td>
+                                <td>156</td>
+                                <td>143</td>
+                                <td><span class="badge badge-high">91.7%</span></td>
+                                <td>4.7/5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Chemistry Lab</strong></td>
+                                <td>112</td>
+                                <td>102</td>
+                                <td><span class="badge badge-high">91.1%</span></td>
+                                <td>4.6/5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Provider Performance Table -->
+            <div class="chart-container">
+                <div class="chart-title">Provider Performance</div>
+                <div class="data-table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Provider Name</th>
+                                <th>Total Appointments</th>
+                                <th>Completion Rate</th>
+                                <th>Avg Rating</th>
+                                <th>Avg Response Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Michael Chen</strong></td>
+                                <td>267</td>
+                                <td><span class="badge badge-high">94.2%</span></td>
+                                <td>4.8/5</td>
+                                <td>1.2 hrs</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Jessica Lee</strong></td>
+                                <td>243</td>
+                                <td><span class="badge badge-high">92.9%</span></td>
+                                <td>4.9/5</td>
+                                <td>1.5 hrs</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dr. Patricia Johnson</strong></td>
+                                <td>198</td>
+                                <td><span class="badge badge-high">95.5%</span></td>
+                                <td>4.7/5</td>
+                                <td>2.1 hrs</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Robert Thompson</strong></td>
+                                <td>187</td>
+                                <td><span class="badge badge-high">91.2%</span></td>
+                                <td>4.6/5</td>
+                                <td>1.8 hrs</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Prof. José García</strong></td>
+                                <td>156</td>
+                                <td><span class="badge badge-high">93.6%</span></td>
+                                <td>4.8/5</td>
+                                <td>2.3 hrs</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Saved Reports -->
+        <div class="saved-reports">
+            <div class="saved-reports-title">Saved Report Templates</div>
+
+            <div class="saved-report-item">
+                <div class="saved-report-info">
+                    <h4>Weekly Booking Summary</h4>
+                    <p>Last run: March 3, 2026 • Monthly Schedule</p>
+                </div>
+                <div class="saved-report-actions">
+                    <button class="icon-btn" title="Run Now">▶️</button>
+                    <button class="icon-btn" title="Edit">✏️</button>
+                    <button class="icon-btn" title="Delete">🗑️</button>
+                </div>
+            </div>
+
+            <div class="saved-report-item">
+                <div class="saved-report-info">
+                    <h4>Provider Performance Analysis</h4>
+                    <p>Last run: March 1, 2026 • Weekly Schedule</p>
+                </div>
+                <div class="saved-report-actions">
+                    <button class="icon-btn" title="Run Now">▶️</button>
+                    <button class="icon-btn" title="Edit">✏️</button>
+                    <button class="icon-btn" title="Delete">🗑️</button>
+                </div>
+            </div>
+
+            <div class="saved-report-item">
+                <div class="saved-report-info">
+                    <h4>Service Utilization Report</h4>
+                    <p>Last run: February 25, 2026 • Bi-weekly Schedule</p>
+                </div>
+                <div class="saved-report-actions">
+                    <button class="icon-btn" title="Run Now">▶️</button>
+                    <button class="icon-btn" title="Edit">✏️</button>
+                    <button class="icon-btn" title="Delete">🗑️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Template Modal -->
+    <div id="saveModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Save as Template</div>
+            <input type="text" class="modal-input" placeholder="Template name...">
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="modal-btn modal-btn-primary" onclick="closeModal()">Save Template</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Modal -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Schedule Report</div>
+            <div style="margin-bottom: 1rem;">
+                <label class="form-label">Schedule Frequency</label>
+                <select class="modal-input">
+                    <option>Once</option>
+                    <option>Daily</option>
+                    <option>Weekly</option>
+                    <option>Monthly</option>
+                </select>
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="modal-input" placeholder="admin@wsu.edu">
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="modal-btn modal-btn-primary" onclick="closeModal()">Schedule</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectReport(element, reportType) {
+            document.querySelectorAll('.report-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+
+        function generateReport() {
+            const reportDisplay = document.getElementById('reportDisplay');
+            reportDisplay.classList.add('show');
+            reportDisplay.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function openModal(type) {
+            if (type === 'save') {
+                document.getElementById('saveModal').classList.add('show');
+            } else if (type === 'schedule') {
+                document.getElementById('scheduleModal').classList.add('show');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('saveModal').classList.remove('show');
+            document.getElementById('scheduleModal').classList.remove('show');
+        }
+
+        window.onclick = function(event) {
+            const saveModal = document.getElementById('saveModal');
+            const scheduleModal = document.getElementById('scheduleModal');
+            if (event.target == saveModal) {
+                saveModal.classList.remove('show');
+            }
+            if (event.target == scheduleModal) {
+                scheduleModal.classList.remove('show');
+            }
+        }
+    </script>
+</body>
+</html>

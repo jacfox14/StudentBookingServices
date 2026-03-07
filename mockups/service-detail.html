@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Tutoring - Student Booking Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo">SBS</div>
+            <div class="navbar-links">
+                <a href="student-dashboard.html">Dashboard</a>
+                <a href="search-services.html">Find Services</a>
+                <a href="my-bookings.html">My Bookings</a>
+                <a href="notifications.html">Notifications</a>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <div class="navbar-bell">🔔</div>
+            <div class="navbar-user">👤 Alex M.</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="search-services.html">Find Services</a> / Math Tutoring
+        </div>
+
+        <!-- Service Header -->
+        <div class="service-header">
+            <div class="service-title">Math Tutoring</div>
+            <div class="service-subtitle">with Dr. Sarah Johnson</div>
+        </div>
+
+        <!-- Provider Section -->
+        <div class="provider-section">
+            <div class="provider-header">About the Provider</div>
+            <div class="provider-info">
+                <div class="provider-photo">👩‍🏫</div>
+                <div class="provider-details">
+                    <div class="provider-name">Dr. Sarah Johnson</div>
+                    <div class="provider-item">
+                        <span class="provider-label">Department:</span>
+                        <span>Mathematics Department</span>
+                    </div>
+                    <div class="provider-item">
+                        <span class="provider-label">Experience:</span>
+                        <span>12+ years of tutoring</span>
+                    </div>
+                    <div class="provider-rating">
+                        <span class="provider-label">Rating:</span>
+                        <span class="stars">★★★★★</span>
+                        <span>4.8 out of 5 (124 reviews)</span>
+                    </div>
+                    <div class="credentials">
+                        Ph.D. Mathematics, MS Pure Math, BA Applied Math
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Section -->
+        <div class="booking-section">
+            <!-- Calendar -->
+            <div class="calendar-container">
+                <div class="calendar-title">Select a Date</div>
+                <div class="calendar">
+                    <div class="calendar-header">March 2026</div>
+                    <div class="calendar-days">
+                        <div class="day-header">Sun</div>
+                        <div class="day-header">Mon</div>
+                        <div class="day-header">Tue</div>
+                        <div class="day-header">Wed</div>
+                        <div class="day-header">Thu</div>
+                        <div class="day-header">Fri</div>
+                        <div class="day-header">Sat</div>
+                        <div class="calendar-day other-month">1</div>
+                        <div class="calendar-day other-month">2</div>
+                        <div class="calendar-day other-month">3</div>
+                        <div class="calendar-day other-month">4</div>
+                        <div class="calendar-day available">5</div>
+                        <div class="calendar-day available">6</div>
+                        <div class="calendar-day available">7</div>
+                        <div class="calendar-day available">8</div>
+                        <div class="calendar-day available">9</div>
+                        <div class="calendar-day available">10</div>
+                        <div class="calendar-day available selected">11</div>
+                        <div class="calendar-day available">12</div>
+                        <div class="calendar-day available">13</div>
+                        <div class="calendar-day available">14</div>
+                        <div class="calendar-day available">15</div>
+                        <div class="calendar-day available">16</div>
+                        <div class="calendar-day available">17</div>
+                        <div class="calendar-day available">18</div>
+                        <div class="calendar-day available">19</div>
+                        <div class="calendar-day available">20</div>
+                        <div class="calendar-day available">21</div>
+                        <div class="calendar-day available">22</div>
+                        <div class="calendar-day available">23</div>
+                        <div class="calendar-day available">24</div>
+                        <div class="calendar-day available">25</div>
+                        <div class="calendar-day available">26</div>
+                        <div class="calendar-day available">27</div>
+                        <div class="calendar-day available">28</div>
+                        <div class="calendar-day available">29</div>
+                        <div class="calendar-day available">30</div>
+                        <div class="calendar-day available">31</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Time Slots -->
+            <div class="timeslots-container">
+                <div class="timeslots-title">Select a Time</div>
+                <div class="timeslots-date">Wednesday, March 11, 2026</div>
+                <div class="timeslots-grid">
+                    <div class="timeslot available">9:00 AM</div>
+                    <div class="timeslot booked">9:30 AM</div>
+                    <div class="timeslot available">10:00 AM</div>
+                    <div class="timeslot available selected">10:30 AM</div>
+                    <div class="timeslot available">2:00 PM</div>
+                    <div class="timeslot available">2:30 PM</div>
+                    <div class="timeslot booked">3:00 PM</div>
+                    <div class="timeslot available">3:30 PM</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Form -->
+        <div class="booking-form">
+            <div class="form-section">
+                <div class="form-title">Appointment Details</div>
+                <div class="form-group">
+                    <label class="form-label">Reason for Appointment</label>
+                    <textarea class="form-textarea" placeholder="What topics would you like to cover in this session? (e.g., Calculus II exam prep, understanding derivatives, etc.)"></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-group">
+                    <label class="form-label">Notes for Provider (Optional)</label>
+                    <textarea class="form-textarea" placeholder="Any additional information that would be helpful..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-title">Meeting Format</div>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="format" value="in-person" checked>
+                        <span class="radio-label">In-Person</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="format" value="virtual">
+                        <span class="radio-label">Virtual (Zoom)</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Booking Summary -->
+            <div class="booking-summary">
+                <div class="summary-title">Booking Summary</div>
+                <div class="summary-item">
+                    <span class="summary-item-label">Service:</span>
+                    <span class="summary-item-value">Math Tutoring</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-item-label">Provider:</span>
+                    <span class="summary-item-value">Dr. Sarah Johnson</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-item-label">Date:</span>
+                    <span class="summary-item-value">Wednesday, March 11, 2026</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-item-label">Time:</span>
+                    <span class="summary-item-value">10:30 AM - 11:30 AM</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-item-label">Format:</span>
+                    <span class="summary-item-value">In-Person</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-item-label">Location:</span>
+                    <span class="summary-item-value">Math Building, Room 205</span>
+                </div>
+            </div>
+
+            <button class="btn-primary">Confirm Booking</button>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="reviews-section">
+            <div class="reviews-title">Student Reviews</div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div>
+                        <div class="review-name">James Martinez</div>
+                        <div class="review-rating">★★★★★</div>
+                    </div>
+                    <div class="review-date">2 weeks ago</div>
+                </div>
+                <div class="review-text">Dr. Johnson is an amazing tutor! She explains complex concepts in a way that's easy to understand. I went from struggling in Calculus to getting an A on my exam. Highly recommend!</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div>
+                        <div class="review-name">Emma Thompson</div>
+                        <div class="review-rating">★★★★☆</div>
+                    </div>
+                    <div class="review-date">1 month ago</div>
+                </div>
+                <div class="review-text">Very knowledgeable and patient. The sessions are well-structured and productive. Would have given 5 stars but wish the sessions could be a bit longer.</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div>
+                        <div class="review-name">Tyler Chen</div>
+                        <div class="review-rating">★★★★★</div>
+                    </div>
+                    <div class="review-date">1 month ago</div>
+                </div>
+                <div class="review-text">Excellent tutor with real-world insights. She not only helps with homework but also teaches you how to think about math problems differently. Worth every minute!</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

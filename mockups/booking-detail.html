@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Details - Student Booking Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo">SBS</div>
+            <div class="navbar-links">
+                <a href="student-dashboard.html">Dashboard</a>
+                <a href="search-services.html">Find Services</a>
+                <a href="my-bookings.html">My Bookings</a>
+                <a href="notifications.html">Notifications</a>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <div class="navbar-bell">🔔</div>
+            <div class="navbar-user">👤 Alex M.</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="my-bookings.html">My Bookings</a> / Booking Details
+        </div>
+
+        <h1 class="page-title">Booking Details</h1>
+
+        <!-- Detail Card -->
+        <div class="detail-card">
+            <!-- Status Section -->
+            <div class="card-section">
+                <div class="section-title">Status</div>
+                <div class="status-badge status-confirmed">Confirmed</div>
+            </div>
+
+            <!-- Booking ID -->
+            <div class="card-section">
+                <div class="detail-row">
+                    <span class="detail-label">Booking ID</span>
+                    <span class="detail-value">BK-2026-0342</span>
+                </div>
+            </div>
+
+            <!-- Service Information -->
+            <div class="card-section">
+                <div class="section-title">Service Information</div>
+                <div class="detail-row">
+                    <span class="detail-label">Service</span>
+                    <span class="detail-value">Math Tutoring</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Description</span>
+                    <span class="detail-value">One-on-one tutoring in mathematics covering calculus, linear algebra, and analysis topics.</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Duration</span>
+                    <span class="detail-value">1 hour</span>
+                </div>
+            </div>
+
+            <!-- Provider Information -->
+            <div class="card-section">
+                <div class="section-title">Provider Information</div>
+                <div class="detail-row">
+                    <span class="detail-label">Provider</span>
+                    <span class="detail-value">Dr. Sarah Johnson</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Department</span>
+                    <span class="detail-value">Mathematics Department</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Contact</span>
+                    <span class="detail-value">sjohnson@wsu.edu</span>
+                </div>
+            </div>
+
+            <!-- Appointment Details -->
+            <div class="card-section">
+                <div class="section-title">Appointment Details</div>
+                <div class="detail-row">
+                    <span class="detail-label">Date</span>
+                    <span class="detail-value">Wednesday, March 11, 2026</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Time</span>
+                    <span class="detail-value">10:30 AM - 11:30 AM</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Format</span>
+                    <span class="detail-value">In-Person</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Location</span>
+                    <span class="detail-value">Math Building, Room 205</span>
+                </div>
+            </div>
+
+            <!-- Student Notes -->
+            <div class="card-section">
+                <div class="section-title">Student Notes</div>
+                <div class="notes-box">
+                    <div class="notes-label">Reason for Appointment</div>
+                    <div class="notes-content">Prepare for Calculus II midterm exam. Need help with integration techniques and Taylor series concepts.</div>
+                </div>
+                <div class="notes-box">
+                    <div class="notes-label">Additional Notes</div>
+                    <div class="notes-content">Available to meet before or after class. Prefer to focus on problem-solving practice.</div>
+                </div>
+            </div>
+
+            <!-- Provider Notes -->
+            <div class="card-section">
+                <div class="section-title">Provider Notes</div>
+                <div class="notes-box">
+                    <div class="notes-label">Provider Response</div>
+                    <div class="notes-content">I'll prepare some additional practice problems on integration techniques. We can work through them together during the session.</div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="rescheduleBtn">Reschedule Appointment</button>
+                <button class="btn btn-danger" id="cancelBtn">Cancel Booking</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancel Modal -->
+    <div id="cancelModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Cancel Booking</h2>
+            <p class="modal-description">
+                Are you sure you want to cancel this booking? You can reschedule instead if you need a different time.
+            </p>
+
+            <form id="cancelForm">
+                <div class="form-group">
+                    <label class="form-label">Reason for Cancellation (Optional)</label>
+                    <select class="form-select" id="cancelReason">
+                        <option value="">Select a reason...</option>
+                        <option value="schedule">Schedule conflict</option>
+                        <option value="no-longer-needed">No longer needed</option>
+                        <option value="provider">Issue with provider</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Additional Comments (Optional)</label>
+                    <textarea class="form-textarea" id="cancelComments" placeholder="Let us know if you have any feedback..."></textarea>
+                </div>
+            </form>
+
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-secondary" onclick="closeCancelModal()">Keep Booking</button>
+                <button class="modal-btn modal-btn-danger" onclick="confirmCancel()">Confirm Cancellation</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reschedule Modal -->
+    <div id="rescheduleModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Reschedule Appointment</h2>
+            <p class="modal-description">
+                Select a new date and time for your appointment with Dr. Sarah Johnson.
+            </p>
+
+            <form id="rescheduleForm">
+                <div class="form-group">
+                    <label class="form-label">Select New Date</label>
+                    <input type="date" class="form-select" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Select New Time</label>
+                    <select class="form-select" required>
+                        <option value="">Available time slots...</option>
+                        <option value="09:00">9:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="10:30">10:30 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="14:00">2:00 PM</option>
+                        <option value="14:30">2:30 PM</option>
+                        <option value="15:30">3:30 PM</option>
+                    </select>
+                </div>
+            </form>
+
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-secondary" onclick="closeRescheduleModal()">Cancel</button>
+                <button class="modal-btn modal-btn-primary" onclick="confirmReschedule()">Reschedule</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cancel Modal Functions
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            document.getElementById('cancelModal').classList.add('show');
+        });
+
+        function closeCancelModal() {
+            document.getElementById('cancelModal').classList.remove('show');
+        }
+
+        function confirmCancel() {
+            alert('Booking cancelled successfully. You will receive a confirmation email.');
+            closeCancelModal();
+        }
+
+        // Reschedule Modal Functions
+        document.getElementById('rescheduleBtn').addEventListener('click', function() {
+            document.getElementById('rescheduleModal').classList.add('show');
+        });
+
+        function closeRescheduleModal() {
+            document.getElementById('rescheduleModal').classList.remove('show');
+        }
+
+        function confirmReschedule() {
+            alert('Appointment rescheduled successfully. A confirmation will be sent to your email.');
+            closeRescheduleModal();
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const cancelModal = document.getElementById('cancelModal');
+            const rescheduleModal = document.getElementById('rescheduleModal');
+
+            if (event.target === cancelModal) {
+                closeCancelModal();
+            }
+            if (event.target === rescheduleModal) {
+                closeRescheduleModal();
+            }
+        });
+    </script>
+</body>
+</html>

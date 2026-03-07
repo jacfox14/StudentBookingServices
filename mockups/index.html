@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Booking Services - Your Campus. Your Schedule. Your Success.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Hero Section - Index Specific Styles */
+    .hero {
+      background: linear-gradient(135deg, #A60F2D 0%, #CA1237 100%);
+      color: white;
+      padding: 6rem 2rem;
+      text-align: center;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .hero h1 {
+      color: white;
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .hero p {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-buttons .btn {
+      font-size: 1.1rem;
+      padding: 1rem 2.5rem;
+    }
+
+    .hero-buttons .btn-primary {
+      background-color: white;
+      color: #A60F2D;
+      font-weight: 600;
+    }
+
+    .hero-buttons .btn-primary:hover {
+      background-color: #f0f0f0;
+      text-decoration: none;
+    }
+
+    .hero-buttons .btn-secondary {
+      background-color: transparent;
+      color: white;
+      border-color: white;
+    }
+
+    .hero-buttons .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      text-decoration: none;
+    }
+
+    /* Features Section */
+    .features-section {
+      padding: 4rem 2rem;
+      background-color: #f5f5f5;
+    }
+
+    .features-section .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      color: #A60F2D;
+      font-size: 2.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: #4D4D4D;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .feature-card {
+      background-color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .feature-card-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      color: #000;
+      margin-bottom: 0.75rem;
+      font-size: 1.3rem;
+    }
+
+    .feature-card p {
+      color: #4D4D4D;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    /* Explore Section */
+    .explore-section {
+      padding: 4rem 2rem;
+      background-color: white;
+    }
+
+    .explore-section .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .explore-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .explore-header h2 {
+      color: #A60F2D;
+      font-size: 2.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .role-column {
+      background-color: #f9fafb;
+      border: 1px solid #e8ecf1;
+      border-radius: 12px;
+      padding: 2rem;
+      border-top: 4px solid #A60F2D;
+    }
+
+    .role-column h3 {
+      color: #A60F2D;
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .role-column ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .role-column li {
+      margin-bottom: 1rem;
+    }
+
+    .role-column a {
+      display: block;
+      padding: 0.75rem 1rem;
+      background-color: white;
+      border-left: 3px solid #A60F2D;
+      border-radius: 4px;
+      color: #A60F2D;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .role-column a:hover {
+      background-color: rgba(166, 15, 45, 0.05);
+      padding-left: 1.25rem;
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .roles-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 4rem 1.5rem;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .hero-buttons {
+        gap: 1rem;
+      }
+
+      .hero-buttons .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.95rem;
+      }
+
+      .features-section {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header h2 {
+        font-size: 1.75rem;
+      }
+
+      .explore-section {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .explore-header h2 {
+        font-size: 1.75rem;
+      }
+
+      .roles-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .role-column h3 {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 3rem 1rem;
+        min-height: 400px;
+      }
+
+      .hero h1 {
+        font-size: 1.5rem;
+      }
+
+      .hero p {
+        font-size: 0.95rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+      }
+
+      .feature-card {
+        padding: 1.5rem;
+      }
+
+      .feature-card-icon {
+        font-size: 2.5rem;
+      }
+
+      .role-column {
+        padding: 1.5rem;
+      }
+
+      .role-column a {
+        padding: 0.65rem 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <div class="navbar-logo">📚 SBS</div>
+    </div>
+    <div class="navbar-right">
+      <a href="#features" style="color: white; margin-right: 1rem;">Features</a>
+      <a href="#explore" style="color: white;">Explore</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Student Booking Services</h1>
+      <p>Your campus. Your schedule. Your success.</p>
+      <div class="hero-buttons">
+        <a href="login.html" class="btn btn-primary">Student Login</a>
+        <a href="login.html" class="btn btn-secondary">Provider Login</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>Why Choose SBS?</h2>
+        <p>A comprehensive platform designed to streamline campus service bookings for students, providers, and administrators.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-card-icon">🔍</div>
+          <h3>Easy Booking</h3>
+          <p>Search and book campus services with just a few clicks. Find exactly what you need, when you need it.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-icon">📅</div>
+          <h3>Smart Scheduling</h3>
+          <p>Service providers manage availability effortlessly. Set your schedule once and let the system handle availability.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-icon">📊</div>
+          <h3>Powerful Analytics</h3>
+          <p>Administrators monitor platform performance, track bookings, and generate insights to improve campus services.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Explore the Platform Section -->
+  <section class="explore-section" id="explore">
+    <div class="container">
+      <div class="explore-header">
+        <h2>Explore the Platform</h2>
+        <p>Tailored features for every user role</p>
+      </div>
+
+      <div class="roles-grid">
+        <!-- Students -->
+        <div class="role-column">
+          <h3>👨‍🎓 For Students</h3>
+          <ul>
+            <li><a href="student-dashboard.html">Dashboard</a></li>
+            <li><a href="search-services.html">Search Services</a></li>
+            <li><a href="my-bookings.html">My Bookings</a></li>
+            <li><a href="notifications.html">Notifications</a></li>
+            <li><a href="booking-confirmation.html">Confirmation</a></li>
+            <li><a href="booking-detail.html">Booking Details</a></li>
+          </ul>
+        </div>
+
+        <!-- Service Providers -->
+        <div class="role-column">
+          <h3>💼 For Providers</h3>
+          <ul>
+            <li><a href="provider-profile.html">My Profile</a></li>
+            <li><a href="provider-dashboard.html">Dashboard</a></li>
+            <li><a href="provider-schedule.html">Schedule</a></li>
+            <li><a href="provider-requests.html">Requests</a></li>
+          </ul>
+        </div>
+
+        <!-- Administrators -->
+        <div class="role-column">
+          <h3>🔐 For Administrators</h3>
+          <ul>
+            <li><a href="admin-dashboard.html">Dashboard</a></li>
+            <li><a href="admin-users.html">Manage Users</a></li>
+            <li><a href="admin-services.html">Manage Services</a></li>
+            <li><a href="admin-reports.html">Reports</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div>
+        <h4>About SBS</h4>
+        <p>Student Booking Services is your go-to platform for managing campus service bookings efficiently.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <a href="#features">Features</a>
+        <a href="#explore">Explore</a>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <a href="#">Contact Us</a>
+        <a href="#">FAQ</a>
+        <a href="#">Help Center</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Student Booking Services. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - Student Booking Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-left">
+            <div class="nav-logo">SBS</div>
+            <span class="admin-badge">ADMIN</span>
+            <ul class="nav-links">
+                <li><a href="admin-dashboard.html">Dashboard</a></li>
+                <li><a href="admin-users.html" class="active">Users</a></li>
+                <li><a href="admin-services.html">Services</a></li>
+                <li><a href="admin-reports.html">Reports</a></li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <div class="notification-icon">
+                🔔
+                <span class="notification-badge">3</span>
+            </div>
+            <div class="user-dropdown">
+                Admin User ▼
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">User Management</h1>
+            <p class="page-subtitle">Manage user accounts, roles, and access permissions</p>
+        </div>
+
+        <!-- Controls Bar -->
+        <div class="controls-bar">
+            <div class="controls-row">
+                <div class="search-box">
+                    <input type="text" placeholder="Search by name, email, ID...">
+                </div>
+            </div>
+            <div class="controls-row">
+                <div class="filter-group">
+                    <div class="filter-item">
+                        <span class="filter-label">Role</span>
+                        <select class="filter-select">
+                            <option>All Roles</option>
+                            <option>Student</option>
+                            <option>Provider</option>
+                            <option>Admin</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <span class="filter-label">Status</span>
+                        <select class="filter-select">
+                            <option>All Status</option>
+                            <option>Active</option>
+                            <option>Deactivated</option>
+                            <option>Pending</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <span class="filter-label">Department</span>
+                        <select class="filter-select">
+                            <option>All Departments</option>
+                            <option>Academic Affairs</option>
+                            <option>Student Services</option>
+                            <option>Career Services</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="controls-row">
+                <div class="bulk-actions">
+                    <input type="checkbox" class="bulk-checkbox" title="Select All">
+                    <button class="action-btn">Bulk Deactivate</button>
+                    <button class="action-btn">Export Users</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30px;"></th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>University ID</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Last Login</th>
+                        <th style="width: 120px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- User 1 -->
+                    <tr class="user-row" onclick="toggleExpanded(this)">
+                        <td><input type="checkbox"></td>
+                        <td><strong>Sarah Johnson</strong></td>
+                        <td>sjohnson@wsu.edu</td>
+                        <td>001234567</td>
+                        <td><span class="badge badge-student">Student</span></td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>Today, 2:15 PM</td>
+                        <td onclick="event.stopPropagation()">
+                            <div class="action-icons">
+                                <button class="icon-btn" title="Edit">✏️</button>
+                                <button class="icon-btn" title="Deactivate">⏸</button>
+                                <button class="icon-btn" title="Delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="row-expanded">
+                        <td colspan="8">
+                            <div class="expanded-content">
+                                <div class="expanded-section">
+                                    <div class="section-title">Profile Information</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Full Name</div>
+                                            <div class="info-value">Sarah Johnson</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Department</div>
+                                            <div class="info-value">Engineering</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Phone</div>
+                                            <div class="info-value">(509) 555-0123</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Joined</div>
+                                            <div class="info-value">Jan 15, 2024</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="expanded-section">
+                                    <div class="section-title">Booking History</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Total Bookings</div>
+                                            <div class="info-value">24</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Completed</div>
+                                            <div class="info-value">22</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- User 2 -->
+                    <tr class="user-row" onclick="toggleExpanded(this)">
+                        <td><input type="checkbox"></td>
+                        <td><strong>Michael Chen</strong></td>
+                        <td>mchen@wsu.edu</td>
+                        <td>001234568</td>
+                        <td><span class="badge badge-provider">Provider</span></td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>Yesterday, 5:42 PM</td>
+                        <td onclick="event.stopPropagation()">
+                            <div class="action-icons">
+                                <button class="icon-btn" title="Edit">✏️</button>
+                                <button class="icon-btn" title="Deactivate">⏸</button>
+                                <button class="icon-btn" title="Delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="row-expanded">
+                        <td colspan="8">
+                            <div class="expanded-content">
+                                <div class="expanded-section">
+                                    <div class="section-title">Profile Information</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Full Name</div>
+                                            <div class="info-value">Michael Chen</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Department</div>
+                                            <div class="info-value">Mathematics</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="expanded-section">
+                                    <div class="section-title">Provider Stats</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Total Appointments</div>
+                                            <div class="info-value">156</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Avg Rating</div>
+                                            <div class="info-value">4.8/5</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- User 3 -->
+                    <tr class="user-row" onclick="toggleExpanded(this)">
+                        <td><input type="checkbox"></td>
+                        <td><strong>Emily Rodriguez</strong></td>
+                        <td>erodriguez@wsu.edu</td>
+                        <td>001234569</td>
+                        <td><span class="badge badge-student">Student</span></td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>March 2, 2026</td>
+                        <td onclick="event.stopPropagation()">
+                            <div class="action-icons">
+                                <button class="icon-btn" title="Edit">✏️</button>
+                                <button class="icon-btn" title="Deactivate">⏸</button>
+                                <button class="icon-btn" title="Delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="row-expanded">
+                        <td colspan="8">
+                            <div class="expanded-content">
+                                <div class="expanded-section">
+                                    <div class="section-title">Profile Information</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Full Name</div>
+                                            <div class="info-value">Emily Rodriguez</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Department</div>
+                                            <div class="info-value">Business</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="expanded-section">
+                                    <div class="section-title">Booking History</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Total Bookings</div>
+                                            <div class="info-value">18</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Completed</div>
+                                            <div class="info-value">17</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- User 4 -->
+                    <tr class="user-row" onclick="toggleExpanded(this)">
+                        <td><input type="checkbox"></td>
+                        <td><strong>David Kim</strong></td>
+                        <td>dkim@wsu.edu</td>
+                        <td>001234570</td>
+                        <td><span class="badge badge-provider">Provider</span></td>
+                        <td><span class="badge badge-pending">Pending</span></td>
+                        <td>Never</td>
+                        <td onclick="event.stopPropagation()">
+                            <div class="action-icons">
+                                <button class="icon-btn" title="Edit">✏️</button>
+                                <button class="icon-btn" title="Deactivate">⏸</button>
+                                <button class="icon-btn" title="Delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="row-expanded">
+                        <td colspan="8">
+                            <div class="expanded-content">
+                                <div class="expanded-section">
+                                    <div class="section-title">Profile Information</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Full Name</div>
+                                            <div class="info-value">David Kim</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Department</div>
+                                            <div class="info-value">Physics</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="expanded-section">
+                                    <div class="section-title">Status</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Account Status</div>
+                                            <div class="info-value">Awaiting Verification</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- User 5 -->
+                    <tr class="user-row" onclick="toggleExpanded(this)">
+                        <td><input type="checkbox"></td>
+                        <td><strong>Lisa Thompson</strong></td>
+                        <td>lthompson@wsu.edu</td>
+                        <td>001234571</td>
+                        <td><span class="badge badge-student">Student</span></td>
+                        <td><span class="badge badge-deactivated">Deactivated</span></td>
+                        <td>Feb 28, 2026</td>
+                        <td onclick="event.stopPropagation()">
+                            <div class="action-icons">
+                                <button class="icon-btn" title="Edit">✏️</button>
+                                <button class="icon-btn" title="Deactivate">⏸</button>
+                                <button class="icon-btn" title="Delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="row-expanded">
+                        <td colspan="8">
+                            <div class="expanded-content">
+                                <div class="expanded-section">
+                                    <div class="section-title">Profile Information</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Full Name</div>
+                                            <div class="info-value">Lisa Thompson</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Deactivated Date</div>
+                                            <div class="info-value">March 1, 2026</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- User 6 -->
+                    <tr class="user-row" onclick="toggleExpanded(this)">
+                        <td><input type="checkbox"></td>
+                        <td><strong>James Wilson</strong></td>
+                        <td>jwilson@wsu.edu</td>
+                        <td>001234572</td>
+                        <td><span class="badge badge-admin">Admin</span></td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>Today, 9:30 AM</td>
+                        <td onclick="event.stopPropagation()">
+                            <div class="action-icons">
+                                <button class="icon-btn" title="Edit">✏️</button>
+                                <button class="icon-btn" title="Deactivate">⏸</button>
+                                <button class="icon-btn" title="Delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="row-expanded">
+                        <td colspan="8">
+                            <div class="expanded-content">
+                                <div class="expanded-section">
+                                    <div class="section-title">Profile Information</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Full Name</div>
+                                            <div class="info-value">James Wilson</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Admin Role</div>
+                                            <div class="info-value">System Administrator</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- User 7 -->
+                    <tr class="user-row" onclick="toggleExpanded(this)">
+                        <td><input type="checkbox"></td>
+                        <td><strong>Jessica Lee</strong></td>
+                        <td>jlee@wsu.edu</td>
+                        <td>001234573</td>
+                        <td><span class="badge badge-provider">Provider</span></td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>March 3, 2026</td>
+                        <td onclick="event.stopPropagation()">
+                            <div class="action-icons">
+                                <button class="icon-btn" title="Edit">✏️</button>
+                                <button class="icon-btn" title="Deactivate">⏸</button>
+                                <button class="icon-btn" title="Delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="row-expanded">
+                        <td colspan="8">
+                            <div class="expanded-content">
+                                <div class="expanded-section">
+                                    <div class="section-title">Profile Information</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Full Name</div>
+                                            <div class="info-value">Jessica Lee</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Department</div>
+                                            <div class="info-value">Writing Center</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="expanded-section">
+                                    <div class="section-title">Provider Stats</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Total Appointments</div>
+                                            <div class="info-value">203</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Avg Rating</div>
+                                            <div class="info-value">4.9/5</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- User 8 -->
+                    <tr class="user-row" onclick="toggleExpanded(this)">
+                        <td><input type="checkbox"></td>
+                        <td><strong>Robert Martinez</strong></td>
+                        <td>rmartinez@wsu.edu</td>
+                        <td>001234574</td>
+                        <td><span class="badge badge-student">Student</span></td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>March 1, 2026</td>
+                        <td onclick="event.stopPropagation()">
+                            <div class="action-icons">
+                                <button class="icon-btn" title="Edit">✏️</button>
+                                <button class="icon-btn" title="Deactivate">⏸</button>
+                                <button class="icon-btn" title="Delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="row-expanded">
+                        <td colspan="8">
+                            <div class="expanded-content">
+                                <div class="expanded-section">
+                                    <div class="section-title">Profile Information</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Full Name</div>
+                                            <div class="info-value">Robert Martinez</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Department</div>
+                                            <div class="info-value">Liberal Arts</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="expanded-section">
+                                    <div class="section-title">Booking History</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Total Bookings</div>
+                                            <div class="info-value">12</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Completed</div>
+                                            <div class="info-value">11</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <span class="pagination-info">Showing 1-10 of 1,247 users</span>
+            <div class="pagination-buttons">
+                <button class="page-btn">←</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">4</button>
+                <button class="page-btn">→</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleExpanded(row) {
+            const nextRow = row.nextElementSibling;
+            if (nextRow && nextRow.classList.contains('row-expanded')) {
+                nextRow.classList.toggle('show');
+            }
+        }
+    </script>
+</body>
+</html>
