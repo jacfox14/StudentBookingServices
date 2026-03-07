@@ -6,26 +6,92 @@
     <title>User Management - Student Booking Services</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #A60F2D;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            border: 2px solid white;
+        }
+        .navbar-bell {
+            position: relative;
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .row-expanded {
+            display: none;
+        }
+        .row-expanded.show {
+            display: table-row;
+        }
+        .expanded-content {
+            padding: 20px;
+            background: #f9f9f9;
+        }
+        .expanded-section {
+            margin-bottom: 20px;
+        }
+        .expanded-section:last-child {
+            margin-bottom: 0;
+        }
+        .section-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .info-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .info-value {
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
-        <div class="nav-left">
-            <div class="nav-logo">SBS</div>
-            <span class="admin-badge">ADMIN</span>
-            <ul class="nav-links">
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo">SBS</div>
+            <span class="role-badge role-badge--admin">ADMIN</span>
+            <ul class="navbar-links">
                 <li><a href="admin-dashboard.html">Dashboard</a></li>
                 <li><a href="admin-users.html" class="active">Users</a></li>
                 <li><a href="admin-services.html">Services</a></li>
                 <li><a href="admin-reports.html">Reports</a></li>
             </ul>
         </div>
-        <div class="nav-right">
-            <div class="notification-icon">
+        <div class="navbar-right">
+            <div class="navbar-bell">
                 🔔
                 <span class="notification-badge">3</span>
             </div>
-            <div class="user-dropdown">
+            <div class="navbar-user">
                 Admin User ▼
             </div>
         </div>
@@ -39,55 +105,51 @@
         </div>
 
         <!-- Controls Bar -->
-        <div class="controls-bar">
-            <div class="controls-row">
-                <div class="search-box">
+        <div class="filters-container">
+            <div class="filter-group">
+                <div class="search-bar">
                     <input type="text" placeholder="Search by name, email, ID...">
                 </div>
             </div>
-            <div class="controls-row">
+            <div class="filter-group">
                 <div class="filter-group">
-                    <div class="filter-item">
-                        <span class="filter-label">Role</span>
-                        <select class="filter-select">
-                            <option>All Roles</option>
-                            <option>Student</option>
-                            <option>Provider</option>
-                            <option>Admin</option>
-                        </select>
-                    </div>
-                    <div class="filter-item">
-                        <span class="filter-label">Status</span>
-                        <select class="filter-select">
-                            <option>All Status</option>
-                            <option>Active</option>
-                            <option>Deactivated</option>
-                            <option>Pending</option>
-                        </select>
-                    </div>
-                    <div class="filter-item">
-                        <span class="filter-label">Department</span>
-                        <select class="filter-select">
-                            <option>All Departments</option>
-                            <option>Academic Affairs</option>
-                            <option>Student Services</option>
-                            <option>Career Services</option>
-                        </select>
-                    </div>
+                    <label class="text-muted">Role</label>
+                    <select>
+                        <option>All Roles</option>
+                        <option>Student</option>
+                        <option>Provider</option>
+                        <option>Admin</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="text-muted">Status</label>
+                    <select>
+                        <option>All Status</option>
+                        <option>Active</option>
+                        <option>Deactivated</option>
+                        <option>Pending</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="text-muted">Department</label>
+                    <select>
+                        <option>All Departments</option>
+                        <option>Academic Affairs</option>
+                        <option>Student Services</option>
+                        <option>Career Services</option>
+                    </select>
                 </div>
             </div>
-            <div class="controls-row">
-                <div class="bulk-actions">
-                    <input type="checkbox" class="bulk-checkbox" title="Select All">
-                    <button class="action-btn">Bulk Deactivate</button>
-                    <button class="action-btn">Export Users</button>
-                </div>
+            <div class="filter-group">
+                <input type="checkbox" title="Select All">
+                <button class="btn btn-secondary btn-sm">Bulk Deactivate</button>
+                <button class="btn btn-secondary btn-sm">Export Users</button>
             </div>
         </div>
 
         <!-- Users Table -->
         <div class="table-container">
-            <table>
+            <table class="data-table">
                 <thead>
                     <tr>
                         <th style="width: 30px;"></th>
@@ -107,14 +169,14 @@
                         <td><strong>Sarah Johnson</strong></td>
                         <td>sjohnson@wsu.edu</td>
                         <td>001234567</td>
-                        <td><span class="badge badge-student">Student</span></td>
-                        <td><span class="badge badge-active">Active</span></td>
+                        <td><span class="status-badge--confirmed">Student</span></td>
+                        <td><span class="status-badge--active">Active</span></td>
                         <td>Today, 2:15 PM</td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Deactivate">⏸</button>
-                                <button class="icon-btn" title="Delete">🗑️</button>
+                            <div class="dropdown-menu">
+                                <button title="Edit">✏️</button>
+                                <button title="Deactivate">⏸</button>
+                                <button title="Delete">🗑️</button>
                             </div>
                         </td>
                     </tr>
@@ -165,14 +227,14 @@
                         <td><strong>Michael Chen</strong></td>
                         <td>mchen@wsu.edu</td>
                         <td>001234568</td>
-                        <td><span class="badge badge-provider">Provider</span></td>
-                        <td><span class="badge badge-active">Active</span></td>
+                        <td><span class="status-badge--confirmed">Provider</span></td>
+                        <td><span class="status-badge--active">Active</span></td>
                         <td>Yesterday, 5:42 PM</td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Deactivate">⏸</button>
-                                <button class="icon-btn" title="Delete">🗑️</button>
+                            <div class="dropdown-menu">
+                                <button title="Edit">✏️</button>
+                                <button title="Deactivate">⏸</button>
+                                <button title="Delete">🗑️</button>
                             </div>
                         </td>
                     </tr>
@@ -215,14 +277,14 @@
                         <td><strong>Emily Rodriguez</strong></td>
                         <td>erodriguez@wsu.edu</td>
                         <td>001234569</td>
-                        <td><span class="badge badge-student">Student</span></td>
-                        <td><span class="badge badge-active">Active</span></td>
+                        <td><span class="status-badge--confirmed">Student</span></td>
+                        <td><span class="status-badge--active">Active</span></td>
                         <td>March 2, 2026</td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Deactivate">⏸</button>
-                                <button class="icon-btn" title="Delete">🗑️</button>
+                            <div class="dropdown-menu">
+                                <button title="Edit">✏️</button>
+                                <button title="Deactivate">⏸</button>
+                                <button title="Delete">🗑️</button>
                             </div>
                         </td>
                     </tr>
@@ -265,14 +327,14 @@
                         <td><strong>David Kim</strong></td>
                         <td>dkim@wsu.edu</td>
                         <td>001234570</td>
-                        <td><span class="badge badge-provider">Provider</span></td>
-                        <td><span class="badge badge-pending">Pending</span></td>
+                        <td><span class="status-badge--confirmed">Provider</span></td>
+                        <td><span class="status-badge--pending">Pending</span></td>
                         <td>Never</td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Deactivate">⏸</button>
-                                <button class="icon-btn" title="Delete">🗑️</button>
+                            <div class="dropdown-menu">
+                                <button title="Edit">✏️</button>
+                                <button title="Deactivate">⏸</button>
+                                <button title="Delete">🗑️</button>
                             </div>
                         </td>
                     </tr>
@@ -311,14 +373,14 @@
                         <td><strong>Lisa Thompson</strong></td>
                         <td>lthompson@wsu.edu</td>
                         <td>001234571</td>
-                        <td><span class="badge badge-student">Student</span></td>
-                        <td><span class="badge badge-deactivated">Deactivated</span></td>
+                        <td><span class="status-badge--confirmed">Student</span></td>
+                        <td><span class="status-badge--inactive">Deactivated</span></td>
                         <td>Feb 28, 2026</td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Deactivate">⏸</button>
-                                <button class="icon-btn" title="Delete">🗑️</button>
+                            <div class="dropdown-menu">
+                                <button title="Edit">✏️</button>
+                                <button title="Deactivate">⏸</button>
+                                <button title="Delete">🗑️</button>
                             </div>
                         </td>
                     </tr>
@@ -348,14 +410,14 @@
                         <td><strong>James Wilson</strong></td>
                         <td>jwilson@wsu.edu</td>
                         <td>001234572</td>
-                        <td><span class="badge badge-admin">Admin</span></td>
-                        <td><span class="badge badge-active">Active</span></td>
+                        <td><span class="role-badge role-badge--admin">Admin</span></td>
+                        <td><span class="status-badge--active">Active</span></td>
                         <td>Today, 9:30 AM</td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Deactivate">⏸</button>
-                                <button class="icon-btn" title="Delete">🗑️</button>
+                            <div class="dropdown-menu">
+                                <button title="Edit">✏️</button>
+                                <button title="Deactivate">⏸</button>
+                                <button title="Delete">🗑️</button>
                             </div>
                         </td>
                     </tr>
@@ -385,14 +447,14 @@
                         <td><strong>Jessica Lee</strong></td>
                         <td>jlee@wsu.edu</td>
                         <td>001234573</td>
-                        <td><span class="badge badge-provider">Provider</span></td>
-                        <td><span class="badge badge-active">Active</span></td>
+                        <td><span class="status-badge--confirmed">Provider</span></td>
+                        <td><span class="status-badge--active">Active</span></td>
                         <td>March 3, 2026</td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Deactivate">⏸</button>
-                                <button class="icon-btn" title="Delete">🗑️</button>
+                            <div class="dropdown-menu">
+                                <button title="Edit">✏️</button>
+                                <button title="Deactivate">⏸</button>
+                                <button title="Delete">🗑️</button>
                             </div>
                         </td>
                     </tr>
@@ -435,14 +497,14 @@
                         <td><strong>Robert Martinez</strong></td>
                         <td>rmartinez@wsu.edu</td>
                         <td>001234574</td>
-                        <td><span class="badge badge-student">Student</span></td>
-                        <td><span class="badge badge-active">Active</span></td>
+                        <td><span class="status-badge--confirmed">Student</span></td>
+                        <td><span class="status-badge--active">Active</span></td>
                         <td>March 1, 2026</td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Deactivate">⏸</button>
-                                <button class="icon-btn" title="Delete">🗑️</button>
+                            <div class="dropdown-menu">
+                                <button title="Edit">✏️</button>
+                                <button title="Deactivate">⏸</button>
+                                <button title="Delete">🗑️</button>
                             </div>
                         </td>
                     </tr>
@@ -484,14 +546,14 @@
 
         <!-- Pagination -->
         <div class="pagination">
-            <span class="pagination-info">Showing 1-10 of 1,247 users</span>
-            <div class="pagination-buttons">
-                <button class="page-btn">←</button>
-                <button class="page-btn active">1</button>
-                <button class="page-btn">2</button>
-                <button class="page-btn">3</button>
-                <button class="page-btn">4</button>
-                <button class="page-btn">→</button>
+            <span class="text-muted">Showing 1-10 of 1,247 users</span>
+            <div>
+                <button class="btn btn-secondary btn-sm">←</button>
+                <button class="btn btn-secondary btn-sm active">1</button>
+                <button class="btn btn-secondary btn-sm">2</button>
+                <button class="btn btn-secondary btn-sm">3</button>
+                <button class="btn btn-secondary btn-sm">4</button>
+                <button class="btn btn-secondary btn-sm">→</button>
             </div>
         </div>
     </div>

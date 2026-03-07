@@ -6,26 +6,132 @@
     <title>Service Management - Student Booking Services</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #A60F2D;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            border: 2px solid white;
+        }
+        .navbar-bell {
+            position: relative;
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+        .modal.show {
+            display: block;
+        }
+        .modal-overlay.show {
+            display: block;
+        }
+        .stat-card {
+            padding: 20px;
+            border-radius: 8px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #A60F2D;
+            margin-bottom: 8px;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        .toggle-switch {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .toggle-switch input {
+            display: none;
+        }
+        .toggle-slider {
+            width: 44px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 12px;
+            position: relative;
+            transition: background 0.3s;
+        }
+        .toggle-slider::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s;
+        }
+        .toggle-switch input:checked + .toggle-slider {
+            background: #4CAF50;
+        }
+        .toggle-switch input:checked + .toggle-slider::after {
+            left: 22px;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
-        <div class="nav-left">
-            <div class="nav-logo">SBS</div>
-            <span class="admin-badge">ADMIN</span>
-            <ul class="nav-links">
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo">SBS</div>
+            <span class="role-badge role-badge--admin">ADMIN</span>
+            <ul class="navbar-links">
                 <li><a href="admin-dashboard.html">Dashboard</a></li>
                 <li><a href="admin-users.html">Users</a></li>
                 <li><a href="admin-services.html" class="active">Services</a></li>
                 <li><a href="admin-reports.html">Reports</a></li>
             </ul>
         </div>
-        <div class="nav-right">
-            <div class="notification-icon">
+        <div class="navbar-right">
+            <div class="navbar-bell">
                 🔔
                 <span class="notification-badge">3</span>
             </div>
-            <div class="user-dropdown">
+            <div class="navbar-user">
                 Admin User ▼
             </div>
         </div>
@@ -34,18 +140,18 @@
     <!-- Main Content -->
     <div class="container">
         <div class="page-header">
-            <div class="header-content">
-                <h1>Resource & Service Management</h1>
-                <p>Manage campus resources, services, and their availability</p>
+            <div>
+                <h1 class="page-title">Resource & Service Management</h1>
+                <p class="page-subtitle">Manage campus resources, services, and their availability</p>
             </div>
-            <div class="header-actions">
+            <div class="flex-between">
                 <button class="btn btn-secondary" onclick="openModal('import')">📥 Bulk Import (CSV)</button>
                 <button class="btn btn-primary" onclick="openModal('add')">+ Add New Service</button>
             </div>
         </div>
 
         <!-- Statistics -->
-        <div class="stats-grid">
+        <div class="grid grid-3">
             <div class="stat-card">
                 <div class="stat-value">45</div>
                 <div class="stat-label">Total Active Services</div>
@@ -61,42 +167,40 @@
         </div>
 
         <!-- Controls Bar -->
-        <div class="controls-bar">
-            <div class="controls-row">
-                <div class="search-box">
+        <div class="filters-container">
+            <div class="filter-group">
+                <div class="search-bar">
                     <input type="text" placeholder="Search by service name...">
                 </div>
             </div>
-            <div class="controls-row">
+            <div class="filter-group">
                 <div class="filter-group">
-                    <div class="filter-item">
-                        <span class="filter-label">Category</span>
-                        <select class="filter-select">
-                            <option>All Categories</option>
-                            <option>Academic Support</option>
-                            <option>Career Services</option>
-                            <option>Student Resources</option>
-                            <option>Study Spaces</option>
-                            <option>Wellness</option>
-                            <option>Language Services</option>
-                        </select>
-                    </div>
-                    <div class="filter-item">
-                        <span class="filter-label">Status</span>
-                        <select class="filter-select">
-                            <option>All Status</option>
-                            <option>Active</option>
-                            <option>Archived</option>
-                            <option>Suspended</option>
-                        </select>
-                    </div>
+                    <label class="text-muted">Category</label>
+                    <select>
+                        <option>All Categories</option>
+                        <option>Academic Support</option>
+                        <option>Career Services</option>
+                        <option>Student Resources</option>
+                        <option>Study Spaces</option>
+                        <option>Wellness</option>
+                        <option>Language Services</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="text-muted">Status</label>
+                    <select>
+                        <option>All Status</option>
+                        <option>Active</option>
+                        <option>Archived</option>
+                        <option>Suspended</option>
+                    </select>
                 </div>
             </div>
         </div>
 
         <!-- Services Table -->
         <div class="table-container">
-            <table>
+            <table class="data-table">
                 <thead>
                     <tr>
                         <th>Service Name</th>
@@ -117,12 +221,12 @@
                         <td>Science Hall 205</td>
                         <td>60 min</td>
                         <td>$0</td>
-                        <td><span class="badge badge-active">Active</span></td>
+                        <td><span class="status-badge--active">Active</span></td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" onclick="openModal('edit')" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Suspend">🚫</button>
-                                <button class="icon-btn" title="Archive">📦</button>
+                            <div class="dropdown-menu">
+                                <button onclick="openModal('edit')" title="Edit">✏️</button>
+                                <button title="Suspend">🚫</button>
+                                <button title="Archive">📦</button>
                             </div>
                         </td>
                     </tr>
@@ -133,12 +237,12 @@
                         <td>Library Building 3rd Floor</td>
                         <td>45 min</td>
                         <td>$0</td>
-                        <td><span class="badge badge-active">Active</span></td>
+                        <td><span class="status-badge--active">Active</span></td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" onclick="openModal('edit')" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Suspend">🚫</button>
-                                <button class="icon-btn" title="Archive">📦</button>
+                            <div class="dropdown-menu">
+                                <button onclick="openModal('edit')" title="Edit">✏️</button>
+                                <button title="Suspend">🚫</button>
+                                <button title="Archive">📦</button>
                             </div>
                         </td>
                     </tr>
@@ -149,12 +253,12 @@
                         <td>Admin Building 102</td>
                         <td>30 min</td>
                         <td>$0</td>
-                        <td><span class="badge badge-active">Active</span></td>
+                        <td><span class="status-badge--active">Active</span></td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" onclick="openModal('edit')" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Suspend">🚫</button>
-                                <button class="icon-btn" title="Archive">📦</button>
+                            <div class="dropdown-menu">
+                                <button onclick="openModal('edit')" title="Edit">✏️</button>
+                                <button title="Suspend">🚫</button>
+                                <button title="Archive">📦</button>
                             </div>
                         </td>
                     </tr>
@@ -165,12 +269,12 @@
                         <td>Career Center 101</td>
                         <td>60 min</td>
                         <td>$0</td>
-                        <td><span class="badge badge-active">Active</span></td>
+                        <td><span class="status-badge--active">Active</span></td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" onclick="openModal('edit')" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Suspend">🚫</button>
-                                <button class="icon-btn" title="Archive">📦</button>
+                            <div class="dropdown-menu">
+                                <button onclick="openModal('edit')" title="Edit">✏️</button>
+                                <button title="Suspend">🚫</button>
+                                <button title="Archive">📦</button>
                             </div>
                         </td>
                     </tr>
@@ -181,12 +285,12 @@
                         <td>Library Building 2nd Floor</td>
                         <td>120 min</td>
                         <td>$0</td>
-                        <td><span class="badge badge-active">Active</span></td>
+                        <td><span class="status-badge--active">Active</span></td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" onclick="openModal('edit')" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Suspend">🚫</button>
-                                <button class="icon-btn" title="Archive">📦</button>
+                            <div class="dropdown-menu">
+                                <button onclick="openModal('edit')" title="Edit">✏️</button>
+                                <button title="Suspend">🚫</button>
+                                <button title="Archive">📦</button>
                             </div>
                         </td>
                     </tr>
@@ -197,12 +301,12 @@
                         <td>Library Building 2nd Floor</td>
                         <td>120 min</td>
                         <td>$0</td>
-                        <td><span class="badge badge-active">Active</span></td>
+                        <td><span class="status-badge--active">Active</span></td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" onclick="openModal('edit')" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Suspend">🚫</button>
-                                <button class="icon-btn" title="Archive">📦</button>
+                            <div class="dropdown-menu">
+                                <button onclick="openModal('edit')" title="Edit">✏️</button>
+                                <button title="Suspend">🚫</button>
+                                <button title="Archive">📦</button>
                             </div>
                         </td>
                     </tr>
@@ -213,12 +317,12 @@
                         <td>Health Center 3rd Floor</td>
                         <td>50 min</td>
                         <td>$0</td>
-                        <td><span class="badge badge-suspended">Suspended</span></td>
+                        <td><span class="status-badge--pending">Suspended</span></td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" onclick="openModal('edit')" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Suspend">🚫</button>
-                                <button class="icon-btn" title="Archive">📦</button>
+                            <div class="dropdown-menu">
+                                <button onclick="openModal('edit')" title="Edit">✏️</button>
+                                <button title="Suspend">🚫</button>
+                                <button title="Archive">📦</button>
                             </div>
                         </td>
                     </tr>
@@ -229,12 +333,12 @@
                         <td>Language Building 201</td>
                         <td>90 min</td>
                         <td>$0</td>
-                        <td><span class="badge badge-archived">Archived</span></td>
+                        <td><span class="status-badge--inactive">Archived</span></td>
                         <td onclick="event.stopPropagation()">
-                            <div class="action-icons">
-                                <button class="icon-btn" onclick="openModal('edit')" title="Edit">✏️</button>
-                                <button class="icon-btn" title="Suspend">🚫</button>
-                                <button class="icon-btn" title="Archive">📦</button>
+                            <div class="dropdown-menu">
+                                <button onclick="openModal('edit')" title="Edit">✏️</button>
+                                <button title="Suspend">🚫</button>
+                                <button title="Archive">📦</button>
                             </div>
                         </td>
                     </tr>
@@ -244,108 +348,105 @@
     </div>
 
     <!-- Add/Edit Service Modal -->
+    <div id="serviceModal" class="modal-overlay"></div>
     <div id="serviceModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="modalTitle">Add New Service</h2>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div class="modal-header">
+            <h2 class="page-title" id="modalTitle">Add New Service</h2>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+
+        <form onsubmit="event.preventDefault(); closeModal();" style="padding: 24px;">
+            <div class="filter-group mb-3">
+                <label class="text-muted">Service Name</label>
+                <input type="text" placeholder="e.g., Math Tutoring">
             </div>
 
-            <form onsubmit="event.preventDefault(); closeModal();">
-                <div class="form-group">
-                    <label class="form-label">Service Name</label>
-                    <input type="text" class="form-control" placeholder="e.g., Math Tutoring">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                <div class="filter-group">
+                    <label class="text-muted">Category</label>
+                    <select>
+                        <option>Academic Support</option>
+                        <option>Career Services</option>
+                        <option>Student Resources</option>
+                        <option>Study Spaces</option>
+                        <option>Wellness</option>
+                        <option>Language Services</option>
+                    </select>
                 </div>
+                <div class="filter-group">
+                    <label class="text-muted">Duration (minutes)</label>
+                    <input type="number" placeholder="60">
+                </div>
+            </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Category</label>
-                        <select class="form-control">
-                            <option>Academic Support</option>
-                            <option>Career Services</option>
-                            <option>Student Resources</option>
-                            <option>Study Spaces</option>
-                            <option>Wellness</option>
-                            <option>Language Services</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Duration (minutes)</label>
-                        <input type="number" class="form-control" placeholder="60">
-                    </div>
-                </div>
+            <div class="filter-group mb-3">
+                <label class="text-muted">Description</label>
+                <textarea placeholder="Describe the service..."></textarea>
+            </div>
 
-                <div class="form-group">
-                    <label class="form-label">Description</label>
-                    <textarea class="form-control" placeholder="Describe the service..."></textarea>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                <div class="filter-group">
+                    <label class="text-muted">Provider</label>
+                    <select>
+                        <option>Michael Chen</option>
+                        <option>Jessica Lee</option>
+                        <option>Dr. Patricia Johnson</option>
+                        <option>Robert Thompson</option>
+                    </select>
                 </div>
+                <div class="filter-group">
+                    <label class="text-muted">Location</label>
+                    <input type="text" placeholder="e.g., Science Hall 205">
+                </div>
+            </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Provider</label>
-                        <select class="form-control">
-                            <option>Michael Chen</option>
-                            <option>Jessica Lee</option>
-                            <option>Dr. Patricia Johnson</option>
-                            <option>Robert Thompson</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Location</label>
-                        <input type="text" class="form-control" placeholder="e.g., Science Hall 205">
-                    </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                <div class="filter-group">
+                    <label class="text-muted">Max Capacity</label>
+                    <input type="number" placeholder="1">
                 </div>
+                <div class="filter-group">
+                    <label class="text-muted">Fee ($)</label>
+                    <input type="number" placeholder="0" step="0.01">
+                </div>
+            </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Max Capacity</label>
-                        <input type="number" class="form-control" placeholder="1">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Fee ($)</label>
-                        <input type="number" class="form-control" placeholder="0" step="0.01">
-                    </div>
-                </div>
+            <div class="filter-group mb-3">
+                <label class="text-muted">Active</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
 
-                <div class="form-group">
-                    <label class="form-label">Active</label>
-                    <label class="toggle-switch">
-                        <input type="checkbox" checked>
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="modal-btn modal-btn-cancel" onclick="closeModal()">Cancel</button>
-                    <button type="submit" class="modal-btn modal-btn-primary">Save Service</button>
-                </div>
-            </form>
-        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Service</button>
+            </div>
+        </form>
     </div>
 
     <!-- Import Modal -->
     <div id="importModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Bulk Import Services</h2>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div class="modal-header">
+            <h2 class="page-title">Bulk Import Services</h2>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+
+        <form onsubmit="event.preventDefault(); closeModal();" style="padding: 24px;">
+            <div class="filter-group mb-3">
+                <label class="text-muted">CSV File</label>
+                <input type="file" accept=".csv">
+                <p style="font-size: 11px; color: #999; margin-top: 0.5rem;">
+                    Expected columns: Name, Category, Provider, Location, Duration, Fee, Status
+                </p>
             </div>
 
-            <form onsubmit="event.preventDefault(); closeModal();">
-                <div class="form-group">
-                    <label class="form-label">CSV File</label>
-                    <input type="file" class="form-control" accept=".csv">
-                    <p style="font-size: 11px; color: #999; margin-top: 0.5rem;">
-                        Expected columns: Name, Category, Provider, Location, Duration, Fee, Status
-                    </p>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="modal-btn modal-btn-cancel" onclick="closeModal()">Cancel</button>
-                    <button type="submit" class="modal-btn modal-btn-primary">Upload & Import</button>
-                </div>
-            </form>
-        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Upload & Import</button>
+            </div>
+        </form>
     </div>
 
     <script>

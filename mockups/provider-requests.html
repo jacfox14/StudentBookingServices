@@ -6,25 +6,433 @@
     <title>Booking Requests - SBS</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Requests page-specific styles */
+        .page-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-title h1 {
+            margin: 0;
+        }
+
+        .request-badge {
+            display: inline-block;
+            background-color: #A60F2D;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .page-controls {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .sort-dropdown {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .auto-accept-section {
+            background-color: #f9fafb;
+            border: 1px solid #f5f5f5;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .auto-accept-text {
+            font-weight: 500;
+            color: #000;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 26px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #A60F2D;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        .request-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .request-card {
+            background: white;
+            border: 1px solid #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #f5f5f5;
+            background-color: #f9fafb;
+        }
+
+        .student-info {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .student-avatar {
+            font-size: 2.5rem;
+            width: 50px;
+            text-align: center;
+        }
+
+        .student-details h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .student-id {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .card-main {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .main-info h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.95rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .main-info p {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .card-notes {
+            padding: 1.5rem;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .card-notes h4 {
+            margin: 0 0 0.75rem 0;
+            font-size: 0.95rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .notes-box {
+            background-color: #f9fafb;
+            padding: 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #333;
+            border-left: 3px solid #A60F2D;
+        }
+
+        .student-profile-summary {
+            padding: 1.5rem;
+            border-bottom: 1px solid #f5f5f5;
+            background-color: #f9fafb;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .summary-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .summary-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .summary-value {
+            color: #000;
+            font-weight: 600;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+        }
+
+        .btn-accept,
+        .btn-decline {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-accept {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-accept:hover {
+            background-color: #218838;
+        }
+
+        .btn-decline {
+            background-color: transparent;
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+
+        .btn-decline:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .processed-section {
+            margin-bottom: 2rem;
+        }
+
+        .processed-section h3 {
+            margin-bottom: 1.5rem;
+        }
+
+        .processed-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem;
+            background: white;
+            border: 1px solid #f5f5f5;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+
+        .processed-left {
+            flex: 1;
+        }
+
+        .processed-student {
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 0.25rem;
+        }
+
+        .processed-service {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .processed-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .processed-status {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .processed-status.accepted {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .processed-status.declined {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .processed-time {
+            font-size: 0.85rem;
+            color: #999;
+            white-space: nowrap;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #f5f5f5;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .btn-modal {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-modal-cancel {
+            background-color: transparent;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+
+        .btn-modal-cancel:hover {
+            background-color: #f5f5f5;
+        }
+
+        .btn-modal-confirm {
+            background-color: #A60F2D;
+            color: white;
+        }
+
+        .btn-modal-confirm:hover {
+            background-color: #CA1237;
+        }
+
+        @media (max-width: 768px) {
+            .card-main {
+                grid-template-columns: 1fr;
+            }
+
+            .card-buttons {
+                flex-direction: column;
+            }
+
+            .processed-right {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .page-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="nav-left">
-            <div class="logo">SBS</div>
-            <div class="provider-badge">Provider</div>
-            <div class="nav-links">
+        <div class="navbar-left">
+            <div class="navbar-logo">SBS</div>
+            <div class="role-badge role-badge--provider">Provider</div>
+            <div class="navbar-links">
                 <a href="provider-dashboard.html">Dashboard</a>
                 <a href="provider-schedule.html">My Schedule</a>
                 <a href="provider-requests.html">Requests</a>
                 <a href="provider-profile.html">Profile</a>
             </div>
         </div>
-        <div class="nav-right">
-            <div class="bell-icon">🔔</div>
-            <div class="user-menu">
-                <div class="user-avatar">DJ</div>
-                <div class="user-name">Dr. Johnson</div>
+        <div class="navbar-right">
+            <div class="navbar-bell">🔔</div>
+            <div class="navbar-user">
+                <div class="navbar-user-avatar">DJ</div>
+                <span>Dr. Johnson</span>
             </div>
         </div>
     </nav>

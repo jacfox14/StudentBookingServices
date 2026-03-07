@@ -6,26 +6,108 @@
     <title>Admin Dashboard - Student Booking Services</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #A60F2D;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            border: 2px solid white;
+        }
+        .navbar-bell {
+            position: relative;
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .update-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        .status-dot.status-green {
+            background: #4CAF50;
+        }
+        .status-dot.status-yellow {
+            background: #FFC107;
+        }
+        .health-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .health-item:last-child {
+            border-bottom: none;
+        }
+        .health-label {
+            font-size: 14px;
+            color: #666;
+        }
+        .health-value {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+        .bar {
+            flex: 1;
+            background: linear-gradient(180deg, #A60F2D 0%, #8b0a23 100%);
+            border-radius: 4px 4px 0 0;
+            margin: 0 4px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .bar-label {
+            position: absolute;
+            bottom: -24px;
+            font-size: 12px;
+            color: #666;
+            white-space: nowrap;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
-        <div class="nav-left">
-            <div class="nav-logo">SBS</div>
-            <span class="admin-badge">ADMIN</span>
-            <ul class="nav-links">
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo">SBS</div>
+            <span class="role-badge role-badge--admin">ADMIN</span>
+            <ul class="navbar-links">
                 <li><a href="admin-dashboard.html" class="active">Dashboard</a></li>
                 <li><a href="admin-users.html">Users</a></li>
                 <li><a href="admin-services.html">Services</a></li>
                 <li><a href="admin-reports.html">Reports</a></li>
             </ul>
         </div>
-        <div class="nav-right">
-            <div class="notification-icon">
+        <div class="navbar-right">
+            <div class="navbar-bell">
                 🔔
                 <span class="notification-badge">3</span>
             </div>
-            <div class="user-dropdown">
+            <div class="navbar-user">
                 Admin User ▼
             </div>
         </div>
@@ -39,83 +121,78 @@
         </div>
 
         <!-- Top Controls -->
-        <div class="top-controls">
-            <div class="toggle-controls">
-                <div class="toggle-group">
-                    <button class="toggle-btn active">Live View</button>
-                    <button class="toggle-btn">Historical</button>
-                </div>
-                <span class="last-updated">
-                    <span class="update-dot"></span>Last updated: 2 seconds ago
-                </span>
+        <div class="filters-container">
+            <div class="filter-group">
+                <button class="btn btn-secondary active">Live View</button>
+                <button class="btn btn-secondary">Historical</button>
             </div>
+            <span class="text-muted">
+                <span class="update-dot"></span>Last updated: 2 seconds ago
+            </span>
         </div>
 
         <!-- Metrics Row -->
-        <div class="metrics-grid">
+        <div class="grid grid-3">
             <div class="metric-card">
-                <div class="metric-header">
-                    <div class="metric-icon">👥</div>
-                    <div class="metric-trend trend-up">↑ 5.2%</div>
+                <div class="flex-between">
+                    <div>👥</div>
+                    <div class="metric-card__trend metric-card__trend--up">↑ 5.2%</div>
                 </div>
-                <div class="metric-value">342</div>
-                <div class="metric-label">Active Users (Current)</div>
+                <div class="metric-card__value">342</div>
+                <div class="metric-card__label">Active Users (Current)</div>
             </div>
 
             <div class="metric-card">
-                <div class="metric-header">
-                    <div class="metric-icon">📅</div>
-                    <div class="metric-trend trend-up">↑ 12.1%</div>
+                <div class="flex-between">
+                    <div>📅</div>
+                    <div class="metric-card__trend metric-card__trend--up">↑ 12.1%</div>
                 </div>
-                <div class="metric-value">89</div>
-                <div class="metric-label">Bookings Today</div>
+                <div class="metric-card__value">89</div>
+                <div class="metric-card__label">Bookings Today</div>
             </div>
 
             <div class="metric-card">
-                <div class="metric-header">
-                    <div class="metric-icon">📊</div>
-                    <div class="metric-trend trend-up">↑ 8.3%</div>
+                <div class="flex-between">
+                    <div>📊</div>
+                    <div class="metric-card__trend metric-card__trend--up">↑ 8.3%</div>
                 </div>
-                <div class="metric-value">412</div>
-                <div class="metric-label">Bookings This Week</div>
+                <div class="metric-card__value">412</div>
+                <div class="metric-card__label">Bookings This Week</div>
             </div>
 
             <div class="metric-card">
-                <div class="metric-header">
-                    <div class="metric-icon">⏳</div>
-                    <div class="metric-trend trend-down">↓ 2.1%</div>
+                <div class="flex-between">
+                    <div>⏳</div>
+                    <div class="metric-card__trend metric-card__trend--down">↓ 2.1%</div>
                 </div>
-                <div class="metric-value">23</div>
-                <div class="metric-label">Active Pending Requests</div>
+                <div class="metric-card__value">23</div>
+                <div class="metric-card__label">Active Pending Requests</div>
             </div>
 
             <div class="metric-card">
-                <div class="metric-header">
-                    <div class="metric-icon">❌</div>
-                    <div class="metric-trend trend-down">↓ 1.5%</div>
+                <div class="flex-between">
+                    <div>❌</div>
+                    <div class="metric-card__trend metric-card__trend--down">↓ 1.5%</div>
                 </div>
-                <div class="metric-value">4.2%</div>
-                <div class="metric-label">Cancellation Rate (7-day)</div>
+                <div class="metric-card__value">4.2%</div>
+                <div class="metric-card__label">Cancellation Rate (7-day)</div>
             </div>
 
             <div class="metric-card">
-                <div class="metric-header">
-                    <div class="metric-icon">⚡</div>
-                    <div class="metric-trend trend-down">↓ 0.8%</div>
+                <div class="flex-between">
+                    <div>⚡</div>
+                    <div class="metric-card__trend metric-card__trend--down">↓ 0.8%</div>
                 </div>
-                <div class="metric-value">2.3 hrs</div>
-                <div class="metric-label">Avg Provider Response Time</div>
+                <div class="metric-card__value">2.3 hrs</div>
+                <div class="metric-card__label">Avg Provider Response Time</div>
             </div>
         </div>
 
         <!-- System Health and Alerts Grid -->
-        <div class="dashboard-grid">
+        <div class="grid grid-2">
             <!-- System Health Panel -->
-            <div class="panel">
-                <div class="panel-header">
-                    System Health
-                    <a href="#" class="panel-link">⚙️ Settings</a>
-                </div>
+            <div class="card">
+                <div class="text-muted mb-3">System Health</div>
                 <div class="health-item">
                     <span class="health-label">Server Uptime</span>
                     <span class="health-value">
@@ -147,57 +224,48 @@
             </div>
 
             <!-- Alerts Panel -->
-            <div class="panel">
-                <div class="panel-header">
-                    Active Alerts
-                    <a href="#" class="panel-link">View All</a>
-                </div>
+            <div class="card">
+                <div class="text-muted mb-3">Active Alerts</div>
 
-                <div class="alert-item alert-critical">
-                    <div class="alert-content">
-                        <div>
-                            <span class="alert-badge badge-critical">CRITICAL</span>
-                        </div>
-                        <div class="alert-text">High cancellation spike detected - Math Dept</div>
-                        <div class="alert-actions">
-                            <button class="alert-btn">Acknowledge</button>
-                            <button class="alert-btn">Dismiss</button>
-                        </div>
+                <div class="alert alert--critical mb-3">
+                    <div>
+                        <span class="role-badge role-badge--admin" style="background: #d32f2f;">CRITICAL</span>
+                    </div>
+                    <div>High cancellation spike detected - Math Dept</div>
+                    <div class="mt-2">
+                        <button class="btn btn-sm btn-secondary">Acknowledge</button>
+                        <button class="btn btn-sm btn-secondary">Dismiss</button>
                     </div>
                 </div>
 
-                <div class="alert-item alert-warning">
-                    <div class="alert-content">
-                        <div>
-                            <span class="alert-badge badge-warning">WARNING</span>
-                        </div>
-                        <div class="alert-text">Email queue backlog &gt; 100 messages</div>
-                        <div class="alert-actions">
-                            <button class="alert-btn">Acknowledge</button>
-                            <button class="alert-btn">Dismiss</button>
-                        </div>
+                <div class="alert alert--warning mb-3">
+                    <div>
+                        <span class="role-badge role-badge--admin" style="background: #FFC107;">WARNING</span>
+                    </div>
+                    <div>Email queue backlog &gt; 100 messages</div>
+                    <div class="mt-2">
+                        <button class="btn btn-sm btn-secondary">Acknowledge</button>
+                        <button class="btn btn-sm btn-secondary">Dismiss</button>
                     </div>
                 </div>
 
-                <div class="alert-item alert-info">
-                    <div class="alert-content">
-                        <div>
-                            <span class="alert-badge badge-info">INFO</span>
-                        </div>
-                        <div class="alert-text">Scheduled maintenance scheduled for tonight at 2:00 AM</div>
-                        <div class="alert-actions">
-                            <button class="alert-btn">Dismiss</button>
-                        </div>
+                <div class="alert alert--info">
+                    <div>
+                        <span class="role-badge role-badge--admin" style="background: #2196F3;">INFO</span>
+                    </div>
+                    <div>Scheduled maintenance scheduled for tonight at 2:00 AM</div>
+                    <div class="mt-2">
+                        <button class="btn btn-sm btn-secondary">Dismiss</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Charts Section -->
-        <div class="charts-grid">
+        <div class="grid grid-2">
             <!-- Bookings Trend Chart -->
             <div class="chart-container">
-                <div class="chart-title">Bookings Trend (Last 30 Days)</div>
+                <div class="text-muted mb-3">Bookings Trend (Last 30 Days)</div>
                 <svg class="line-chart" viewBox="0 0 500 250" preserveAspectRatio="xMidYMid meet">
                     <!-- Grid lines -->
                     <line x1="40" y1="200" x2="480" y2="200" stroke="#f0f0f0" stroke-width="1"/>
@@ -232,8 +300,8 @@
 
             <!-- Top Services Chart -->
             <div class="chart-container">
-                <div class="chart-title">Top Services by Bookings</div>
-                <div class="chart-bars">
+                <div class="text-muted mb-3">Top Services by Bookings</div>
+                <div class="chart-bar">
                     <div class="bar" style="width: 12%; height: 85%;">
                         <span class="bar-label">Math</span>
                     </div>

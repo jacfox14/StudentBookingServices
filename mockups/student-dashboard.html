@@ -6,25 +6,30 @@
     <title>Dashboard - Student Booking Services</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .welcome-banner h1 {
+            font-size: 2.2rem;
+        }
+    </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-left">
-            <div class="logo">SBS</div>
-            <ul class="nav-links">
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo">SBS</div>
+            <ul class="navbar-links">
                 <li><a href="student-dashboard.html" class="active">Dashboard</a></li>
                 <li><a href="search-services.html">Find Services</a></li>
                 <li><a href="my-bookings.html">My Bookings</a></li>
                 <li><a href="notifications.html">Notifications</a></li>
             </ul>
         </div>
-        <div class="nav-right">
-            <div class="profile-icon">👤</div>
+        <div class="navbar-right">
+            <div class="navbar-user-avatar" style="cursor: pointer;">👤</div>
             <div class="dropdown-menu">
                 <a href="#profile">Profile</a>
                 <a href="#settings">Settings</a>
                 <a href="#help">Help & Support</a>
-                <button>Log Out</button>
+                <a href="#logout">Log Out</a>
             </div>
         </div>
     </nav>
@@ -36,108 +41,108 @@
                 <p>You're all set to book your next service. Let's get started.</p>
             </div>
 
-            <div class="quick-actions">
+            <div class="grid grid-3">
                 <div class="action-card">
-                    <div class="action-card-icon">🔍</div>
-                    <h3>Find Services</h3>
-                    <p>Browse and discover available booking services</p>
+                    <div class="action-card__icon">🔍</div>
+                    <h3 class="action-card__title">Find Services</h3>
+                    <p class="action-card__description">Browse and discover available booking services</p>
                 </div>
                 <div class="action-card">
-                    <div class="action-card-icon">📋</div>
-                    <h3>My Bookings</h3>
-                    <p>View and manage your scheduled appointments</p>
+                    <div class="action-card__icon">📋</div>
+                    <h3 class="action-card__title">My Bookings</h3>
+                    <p class="action-card__description">View and manage your scheduled appointments</p>
                 </div>
                 <div class="action-card">
-                    <div class="action-card-icon">🔔</div>
-                    <h3>Notifications</h3>
-                    <p>Check your latest updates and reminders</p>
+                    <div class="action-card__icon">🔔</div>
+                    <h3 class="action-card__title">Notifications</h3>
+                    <p class="action-card__description">Check your latest updates and reminders</p>
                 </div>
             </div>
 
             <div class="appointments-section">
                 <h2>Your Upcoming Appointments</h2>
-                <div class="appointments-grid">
+                <div class="grid grid-3">
                     <div class="appointment-card">
-                        <div class="appointment-header">
-                            <div class="appointment-title">Academic Advising</div>
-                            <div class="status-badge status-confirmed">Confirmed</div>
+                        <div class="appointment-card__header">
+                            <div class="appointment-card__title">Academic Advising</div>
+                            <div class="status-badge status-badge--confirmed">Confirmed</div>
                         </div>
-                        <div class="appointment-details">
-                            <div class="appointment-detail">
-                                <span class="detail-icon">👨</span>
+                        <div>
+                            <div class="appointment-card__detail">
+                                <span>👨</span>
                                 <span>Dr. Sarah Johnson</span>
                             </div>
-                            <div class="appointment-detail">
-                                <span class="detail-icon">📅</span>
+                            <div class="appointment-card__detail">
+                                <span>📅</span>
                                 <span>March 8, 2026</span>
                             </div>
-                            <div class="appointment-detail">
-                                <span class="detail-icon">🕐</span>
+                            <div class="appointment-card__detail">
+                                <span>🕐</span>
                                 <span>2:00 PM - 2:30 PM</span>
                             </div>
-                            <div class="appointment-detail">
-                                <span class="detail-icon">📍</span>
+                            <div class="appointment-card__detail">
+                                <span>📍</span>
                                 <span>Student Center, Room 215</span>
                             </div>
                         </div>
                         <div class="appointment-action">
-                            <a href="#" class="appointment-link">View Details →</a>
+                            <a href="#" style="color: var(--crimson);">View Details →</a>
                         </div>
                     </div>
 
                     <div class="appointment-card">
-                        <div class="appointment-header">
-                            <div class="appointment-title">Career Counseling</div>
-                            <div class="status-badge status-pending">Pending</div>
+                        <div class="appointment-card__header">
+                            <div class="appointment-card__title">Career Counseling</div>
+                            <div class="status-badge status-badge--pending">Pending</div>
                         </div>
-                        <div class="appointment-details">
-                            <div class="appointment-detail">
-                                <span class="detail-icon">👩</span>
+                        <div>
+                            <div class="appointment-card__detail">
+                                <span>👩</span>
                                 <span>Ms. Emily Chen</span>
                             </div>
-                            <div class="appointment-detail">
-                                <span class="detail-icon">📅</span>
+                            <div class="appointment-card__detail">
+                                <span>📅</span>
                                 <span>March 10, 2026</span>
                             </div>
-                            <div class="appointment-detail">
-                                <span class="detail-icon">🕐</span>
+                            <div class="appointment-card__detail">
+                                <span>🕐</span>
                                 <span>10:00 AM - 10:45 AM</span>
                             </div>
-                            <div class="appointment-detail">
-                                <span class="detail-icon">📍</span>
+                            <div class="appointment-card__detail">
+                                <span>📍</span>
                                 <span>Career Services Office</span>
                             </div>
                         </div>
                         <div class="appointment-action">
-                            <a href="#" class="appointment-link">View Details →</a>
+                            <a href="#" style="color: var(--crimson);">View Details →</a>
                         </div>
                     </div>
 
                     <div class="appointment-card">
-                        <div class="appointment-header">
-                            <div class="appointment-title">Writing Center Tutoring</div>
-                            <div class="status-badge status-confirmed">Confirmed</div>
+                        <div class="appointment-card__header">
+                            <div class="appointment-card__title">Writing Center Tutoring</div>
+                            <div class="status-badge status-badge--confirmed">Confirmed</div>
                         </div>
-                        <div class="appointment-details">
-                            <div class="appointment-detail">
-                                <span class="detail-icon">👨</span>
+                        <div>
+                            <div class="appointment-card__detail">
+                                <span>👨</span>
                                 <span>Mark Williams</span>
                             </div>
-                            <div class="appointment-detail">
-                                <span class="detail-icon">📅</span>
+                            <div class="appointment-card__detail">
+                                <span>📅</span>
                                 <span>March 12, 2026</span>
                             </div>
-                            <div class="appointment-detail">
-                                <span class="detail-icon">🕐</span>
+                            <div class="appointment-card__detail">
+                                <span>🕐</span>
                                 <span>3:30 PM - 4:30 PM</span>
                             </div>
-                            <div class="appointment-detail">
-                                <span class="detail-icon">📍</span>
+                            <div class="appointment-card__detail">
+                                <span>📍</span>
                                 <span>Virtual - Zoom Link</span>
                             </div>
                         </div>
                         <div class="appointment-action">
-                            <a href="#" class="appointment-link">View Details →</a>
+                            <a href="#" style="color: var(--crimson);">View Details →</a>
                         </div>
                     </div>
                 </div>

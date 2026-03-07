@@ -6,25 +6,233 @@
     <title>Provider Profile - SBS</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Provider-specific styles */
+        .status-banner {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #28a745;
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .photo-upload {
+            width: 120px;
+            height: 120px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            cursor: pointer;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-info h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-info .title {
+            color: #A60F2D;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .profile-info p {
+            margin-bottom: 0.5rem;
+            color: #4D4D4D;
+        }
+
+        .form-section {
+            background-color: #fff;
+            border: 1px solid #f5f5f5;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #000;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #000;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .char-counter {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 0.5rem;
+            text-align: right;
+        }
+
+        .services-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card {
+            background-color: #f9fafb;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .service-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .remove-btn {
+            background-color: transparent;
+            border: 1px solid #dc3545;
+            color: #dc3545;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .remove-btn:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: auto;
+        }
+
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            background-color: #f9fafb;
+        }
+
+        .upload-area-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .upload-area-text {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #000;
+        }
+
+        .upload-area-hint {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="nav-left">
-            <div class="logo">SBS</div>
-            <div class="provider-badge">Provider</div>
-            <div class="nav-links">
+        <div class="navbar-left">
+            <div class="navbar-logo">SBS</div>
+            <div class="role-badge role-badge--provider">Provider</div>
+            <div class="navbar-links">
                 <a href="provider-dashboard.html">Dashboard</a>
                 <a href="provider-schedule.html">My Schedule</a>
                 <a href="provider-requests.html">Requests</a>
                 <a href="provider-profile.html">Profile</a>
             </div>
         </div>
-        <div class="nav-right">
-            <div class="bell-icon">🔔</div>
-            <div class="user-menu">
-                <div class="user-avatar">DJ</div>
-                <div class="user-name">Dr. Johnson</div>
+        <div class="navbar-right">
+            <div class="navbar-bell">🔔</div>
+            <div class="navbar-user">
+                <div class="navbar-user-avatar">DJ</div>
+                <span>Dr. Johnson</span>
             </div>
         </div>
     </nav>
@@ -163,7 +371,7 @@
                 </div>
             </div>
 
-            <button class="btn btn-add btn-small">+ Add Another Service</button>
+            <button class="btn btn-primary btn-sm">+ Add Another Service</button>
         </div>
 
         <!-- Meeting Format Preferences -->

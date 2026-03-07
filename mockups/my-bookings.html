@@ -6,6 +6,87 @@
     <title>My Bookings - Student Booking Services</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+        .export-btn {
+            padding: 8px 16px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .bookings-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .appointment-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .appointment-card__header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .booking-main-info {
+            flex: 1;
+        }
+        .appointment-card__title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        .appointment-card__detail {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        .booking-status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .appointment-card__body {
+            padding: 20px;
+            background: #f9f9f9;
+        }
+        .booking-detail {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .booking-detail:last-child {
+            margin-bottom: 0;
+        }
+        .booking-detail-label {
+            font-weight: 500;
+            color: #666;
+        }
+        .booking-detail-value {
+            color: #333;
+        }
+        .appointment-card__footer {
+            padding: 16px 20px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -71,17 +152,17 @@
         <!-- Upcoming Bookings -->
         <div id="upcoming-tab" class="bookings-list">
             <!-- Booking Card 1 -->
-            <div class="booking-card">
-                <div class="booking-card-header">
+            <div class="appointment-card">
+                <div class="appointment-card__header">
                     <div class="booking-main-info">
-                        <div class="booking-service-name">Math Tutoring</div>
-                        <div class="booking-provider">Dr. Sarah Johnson</div>
-                        <div class="booking-datetime">📅 Wednesday, March 11, 2026 at 10:30 AM</div>
-                        <div class="booking-id">Booking ID: BK-2026-0342</div>
+                        <div class="appointment-card__title">Math Tutoring</div>
+                        <div class="appointment-card__detail">Dr. Sarah Johnson</div>
+                        <div class="appointment-card__detail">📅 Wednesday, March 11, 2026 at 10:30 AM</div>
+                        <div class="appointment-card__detail">Booking ID: BK-2026-0342</div>
                     </div>
-                    <span class="booking-status-badge status-confirmed">Confirmed</span>
+                    <span class="booking-status-badge status-badge--confirmed">Confirmed</span>
                 </div>
-                <div class="booking-card-body">
+                <div class="appointment-card__body">
                     <div class="booking-detail">
                         <span class="booking-detail-label">Duration:</span>
                         <span class="booking-detail-value">1 hour</span>
@@ -91,25 +172,25 @@
                         <span class="booking-detail-value">In-Person - Math Building, Room 205</span>
                     </div>
                 </div>
-                <div class="booking-card-footer">
+                <div class="appointment-card__footer">
                     <button class="btn btn-secondary">Reschedule</button>
                     <button class="btn btn-secondary">Cancel</button>
-                    <a href="booking-detail.html" class="btn btn-ghost">View Details →</a>
+                    <a href="booking-detail.html" class="btn btn-secondary">View Details →</a>
                 </div>
             </div>
 
             <!-- Booking Card 2 -->
-            <div class="booking-card">
-                <div class="booking-card-header">
+            <div class="appointment-card">
+                <div class="appointment-card__header">
                     <div class="booking-main-info">
-                        <div class="booking-service-name">Academic Advising</div>
-                        <div class="booking-provider">Prof. Michael Chen</div>
-                        <div class="booking-datetime">📅 Friday, March 13, 2026 at 2:00 PM</div>
-                        <div class="booking-id">Booking ID: BK-2026-0343</div>
+                        <div class="appointment-card__title">Academic Advising</div>
+                        <div class="appointment-card__detail">Prof. Michael Chen</div>
+                        <div class="appointment-card__detail">📅 Friday, March 13, 2026 at 2:00 PM</div>
+                        <div class="appointment-card__detail">Booking ID: BK-2026-0343</div>
                     </div>
-                    <span class="booking-status-badge status-pending">Pending</span>
+                    <span class="booking-status-badge status-badge--pending">Pending</span>
                 </div>
-                <div class="booking-card-body">
+                <div class="appointment-card__body">
                     <div class="booking-detail">
                         <span class="booking-detail-label">Duration:</span>
                         <span class="booking-detail-value">30 minutes</span>
@@ -119,25 +200,25 @@
                         <span class="booking-detail-value">Virtual - Zoom Link</span>
                     </div>
                 </div>
-                <div class="booking-card-footer">
+                <div class="appointment-card__footer">
                     <button class="btn btn-secondary">Reschedule</button>
                     <button class="btn btn-secondary">Cancel</button>
-                    <a href="booking-detail.html" class="btn btn-ghost">View Details →</a>
+                    <a href="booking-detail.html" class="btn btn-secondary">View Details →</a>
                 </div>
             </div>
 
             <!-- Booking Card 3 -->
-            <div class="booking-card">
-                <div class="booking-card-header">
+            <div class="appointment-card">
+                <div class="appointment-card__header">
                     <div class="booking-main-info">
-                        <div class="booking-service-name">Writing Center</div>
-                        <div class="booking-provider">Jennifer Williams</div>
-                        <div class="booking-datetime">📅 Monday, March 17, 2026 at 3:30 PM</div>
-                        <div class="booking-id">Booking ID: BK-2026-0344</div>
+                        <div class="appointment-card__title">Writing Center</div>
+                        <div class="appointment-card__detail">Jennifer Williams</div>
+                        <div class="appointment-card__detail">📅 Monday, March 17, 2026 at 3:30 PM</div>
+                        <div class="appointment-card__detail">Booking ID: BK-2026-0344</div>
                     </div>
-                    <span class="booking-status-badge status-confirmed">Confirmed</span>
+                    <span class="booking-status-badge status-badge--confirmed">Confirmed</span>
                 </div>
-                <div class="booking-card-body">
+                <div class="appointment-card__body">
                     <div class="booking-detail">
                         <span class="booking-detail-label">Duration:</span>
                         <span class="booking-detail-value">1 hour</span>
@@ -147,25 +228,25 @@
                         <span class="booking-detail-value">In-Person - Writing Center, 3rd Floor</span>
                     </div>
                 </div>
-                <div class="booking-card-footer">
+                <div class="appointment-card__footer">
                     <button class="btn btn-secondary">Reschedule</button>
                     <button class="btn btn-secondary">Cancel</button>
-                    <a href="booking-detail.html" class="btn btn-ghost">View Details →</a>
+                    <a href="booking-detail.html" class="btn btn-secondary">View Details →</a>
                 </div>
             </div>
 
             <!-- Booking Card 4 -->
-            <div class="booking-card">
-                <div class="booking-card-header">
+            <div class="appointment-card">
+                <div class="appointment-card__header">
                     <div class="booking-main-info">
-                        <div class="booking-service-name">Career Counseling</div>
-                        <div class="booking-provider">Patricia Lee</div>
-                        <div class="booking-datetime">📅 Thursday, March 20, 2026 at 11:00 AM</div>
-                        <div class="booking-id">Booking ID: BK-2026-0345</div>
+                        <div class="appointment-card__title">Career Counseling</div>
+                        <div class="appointment-card__detail">Patricia Lee</div>
+                        <div class="appointment-card__detail">📅 Thursday, March 20, 2026 at 11:00 AM</div>
+                        <div class="appointment-card__detail">Booking ID: BK-2026-0345</div>
                     </div>
-                    <span class="booking-status-badge status-confirmed">Confirmed</span>
+                    <span class="booking-status-badge status-badge--confirmed">Confirmed</span>
                 </div>
-                <div class="booking-card-body">
+                <div class="appointment-card__body">
                     <div class="booking-detail">
                         <span class="booking-detail-label">Duration:</span>
                         <span class="booking-detail-value">1 hour</span>
@@ -175,10 +256,10 @@
                         <span class="booking-detail-value">Virtual - Zoom Link</span>
                     </div>
                 </div>
-                <div class="booking-card-footer">
+                <div class="appointment-card__footer">
                     <button class="btn btn-secondary">Reschedule</button>
                     <button class="btn btn-secondary">Cancel</button>
-                    <a href="booking-detail.html" class="btn btn-ghost">View Details →</a>
+                    <a href="booking-detail.html" class="btn btn-secondary">View Details →</a>
                 </div>
             </div>
         </div>
@@ -186,70 +267,70 @@
         <!-- Past Bookings (Hidden by default) -->
         <div id="past-tab" class="bookings-list" style="display: none;">
             <!-- Past Booking Card 1 -->
-            <div class="booking-card">
-                <div class="booking-card-header">
+            <div class="appointment-card">
+                <div class="appointment-card__header">
                     <div class="booking-main-info">
-                        <div class="booking-service-name">Physics Tutoring</div>
-                        <div class="booking-provider">Dr. Robert Adams</div>
-                        <div class="booking-datetime">📅 Tuesday, February 25, 2026 at 4:00 PM</div>
-                        <div class="booking-id">Booking ID: BK-2026-0340</div>
+                        <div class="appointment-card__title">Physics Tutoring</div>
+                        <div class="appointment-card__detail">Dr. Robert Adams</div>
+                        <div class="appointment-card__detail">📅 Tuesday, February 25, 2026 at 4:00 PM</div>
+                        <div class="appointment-card__detail">Booking ID: BK-2026-0340</div>
                     </div>
-                    <span class="booking-status-badge status-completed">Completed</span>
+                    <span class="booking-status-badge status-badge--completed">Completed</span>
                 </div>
-                <div class="booking-card-body">
+                <div class="appointment-card__body">
                     <div class="booking-detail">
                         <span class="booking-detail-label">Duration:</span>
                         <span class="booking-detail-value">1 hour</span>
                     </div>
                 </div>
-                <div class="booking-card-footer">
+                <div class="appointment-card__footer">
                     <button class="btn btn-primary">Leave Review</button>
-                    <a href="booking-detail.html" class="btn btn-ghost">View Details →</a>
+                    <a href="booking-detail.html" class="btn btn-secondary">View Details →</a>
                 </div>
             </div>
 
             <!-- Past Booking Card 2 -->
-            <div class="booking-card">
-                <div class="booking-card-header">
+            <div class="appointment-card">
+                <div class="appointment-card__header">
                     <div class="booking-main-info">
-                        <div class="booking-service-name">Study Room Reservation</div>
-                        <div class="booking-provider">Library Services</div>
-                        <div class="booking-datetime">📅 Thursday, February 18, 2026 at 1:00 PM</div>
-                        <div class="booking-id">Booking ID: BK-2026-0339</div>
+                        <div class="appointment-card__title">Study Room Reservation</div>
+                        <div class="appointment-card__detail">Library Services</div>
+                        <div class="appointment-card__detail">📅 Thursday, February 18, 2026 at 1:00 PM</div>
+                        <div class="appointment-card__detail">Booking ID: BK-2026-0339</div>
                     </div>
-                    <span class="booking-status-badge status-cancelled">Cancelled</span>
+                    <span class="booking-status-badge status-badge--cancelled">Cancelled</span>
                 </div>
-                <div class="booking-card-body">
+                <div class="appointment-card__body">
                     <div class="booking-detail">
                         <span class="booking-detail-label">Reason:</span>
                         <span class="booking-detail-value">Cancelled by student</span>
                     </div>
                 </div>
-                <div class="booking-card-footer">
-                    <a href="booking-detail.html" class="btn btn-ghost">View Details →</a>
+                <div class="appointment-card__footer">
+                    <a href="booking-detail.html" class="btn btn-secondary">View Details →</a>
                 </div>
             </div>
 
             <!-- Past Booking Card 3 -->
-            <div class="booking-card">
-                <div class="booking-card-header">
+            <div class="appointment-card">
+                <div class="appointment-card__header">
                     <div class="booking-main-info">
-                        <div class="booking-service-name">Math Tutoring</div>
-                        <div class="booking-provider">Dr. Sarah Johnson</div>
-                        <div class="booking-datetime">📅 Wednesday, February 10, 2026 at 2:00 PM</div>
-                        <div class="booking-id">Booking ID: BK-2026-0338</div>
+                        <div class="appointment-card__title">Math Tutoring</div>
+                        <div class="appointment-card__detail">Dr. Sarah Johnson</div>
+                        <div class="appointment-card__detail">📅 Wednesday, February 10, 2026 at 2:00 PM</div>
+                        <div class="appointment-card__detail">Booking ID: BK-2026-0338</div>
                     </div>
-                    <span class="booking-status-badge status-completed">Completed</span>
+                    <span class="booking-status-badge status-badge--completed">Completed</span>
                 </div>
-                <div class="booking-card-body">
+                <div class="appointment-card__body">
                     <div class="booking-detail">
                         <span class="booking-detail-label">Duration:</span>
                         <span class="booking-detail-value">1 hour</span>
                     </div>
                 </div>
-                <div class="booking-card-footer">
+                <div class="appointment-card__footer">
                     <button class="btn btn-primary">Leave Review</button>
-                    <a href="booking-detail.html" class="btn btn-ghost">View Details →</a>
+                    <a href="booking-detail.html" class="btn btn-secondary">View Details →</a>
                 </div>
             </div>
         </div>

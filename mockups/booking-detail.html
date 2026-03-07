@@ -6,6 +6,182 @@
     <title>Booking Details - Student Booking Services</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .breadcrumb {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 24px;
+        }
+        .breadcrumb a {
+            color: #c41e3a;
+            text-decoration: none;
+        }
+        .detail-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 32px;
+        }
+        .card-section {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #eee;
+        }
+        .card-section:last-child {
+            border-bottom: none;
+            margin-bottom: 32px;
+        }
+        .section-title {
+            font-weight: 600;
+            margin-bottom: 16px;
+            font-size: 15px;
+            text-transform: uppercase;
+            color: #666;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+        .detail-label {
+            font-weight: 500;
+            color: #666;
+            min-width: 150px;
+        }
+        .detail-value {
+            color: #333;
+            flex: 1;
+            text-align: right;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .notes-box {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+        .notes-box:last-child {
+            margin-bottom: 0;
+        }
+        .notes-label {
+            font-weight: 500;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #666;
+        }
+        .notes-content {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 32px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .modal-description {
+            color: #666;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: Inter, sans-serif;
+            font-size: 14px;
+        }
+        .form-textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: Inter, sans-serif;
+            font-size: 14px;
+            min-height: 80px;
+            resize: vertical;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .modal-btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        .modal-btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        .modal-btn-danger {
+            background: #c41e3a;
+            color: white;
+        }
+        .modal-btn-danger:hover {
+            background: #a01a2f;
+        }
+        .modal-btn-primary {
+            background: #c41e3a;
+            color: white;
+        }
+        .modal-btn-primary:hover {
+            background: #a01a2f;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -38,7 +214,7 @@
             <!-- Status Section -->
             <div class="card-section">
                 <div class="section-title">Status</div>
-                <div class="status-badge status-confirmed">Confirmed</div>
+                <div class="status-badge status-badge--confirmed">Confirmed</div>
             </div>
 
             <!-- Booking ID -->

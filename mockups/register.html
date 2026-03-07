@@ -7,20 +7,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <nav>
-        <div class="nav-left">
-            <div class="logo">SBS</div>
-            <div class="nav-links"></div>
+<body class="login-page">
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo">SBS</div>
+            <div class="navbar-links"></div>
         </div>
-        <div class="nav-right">
-            <div class="login-icon">👤</div>
+        <div class="navbar-right">
+            <div class="navbar-user-avatar">👤</div>
         </div>
     </nav>
 
     <main>
-        <div class="register-container">
-            <div class="register-header">
+        <div class="login-container">
+            <div class="login-header">
                 <h1>Create Your Account</h1>
                 <p>Student Booking Services</p>
             </div>
@@ -34,7 +34,7 @@
                         placeholder="your.name@university.edu"
                         required
                     >
-                    <span class="hint-text">Must be @university.edu</span>
+                    <span class="form-hint">Must be @university.edu</span>
                 </div>
 
                 <div class="form-group">
@@ -78,9 +78,9 @@
                         placeholder="Enter a strong password"
                         required
                     >
-                    <div class="password-requirements">
+                    <div class="card card--no-shadow">
                         <h4>Password Requirements:</h4>
-                        <ul>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 0;">
                             <li>Minimum 8 characters</li>
                             <li>At least 1 uppercase letter</li>
                             <li>At least 1 number</li>
@@ -98,16 +98,16 @@
                     >
                 </div>
 
-                <div class="checkbox-group">
+                <div class="form-group">
                     <input type="checkbox" id="terms" required>
-                    <label for="terms" class="checkbox-label">
+                    <label for="terms" style="display: inline; margin-bottom: 0; margin-left: 0.5rem;">
                         I agree to the <a href="#terms">Terms of Service</a> and <a href="#privacy">Privacy Policy</a>
                     </label>
                 </div>
 
-                <button type="submit" class="register-btn">Register</button>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
 
-                <div class="login-link">
+                <div class="form-group text-center">
                     Already have an account? <a href="login.html">Log In</a>
                 </div>
             </form>

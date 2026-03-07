@@ -6,6 +6,97 @@
     <title>Booking Confirmed - Student Booking Services</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .success-section {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 32px;
+        }
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        .success-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #333;
+        }
+        .success-message {
+            font-size: 16px;
+            color: #666;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .booking-details {
+            background: #f9f9f9;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 32px;
+        }
+        .booking-id-label {
+            font-size: 12px;
+            color: #999;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .booking-id {
+            font-size: 20px;
+            font-weight: 700;
+            color: #c41e3a;
+            margin-bottom: 24px;
+        }
+        .detail-header {
+            font-weight: 600;
+            margin-bottom: 16px;
+            font-size: 14px;
+            text-transform: uppercase;
+            color: #666;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .detail-label {
+            font-weight: 500;
+            color: #666;
+        }
+        .detail-value {
+            color: #333;
+        }
+        .info-box {
+            background: #f0f8ff;
+            border-left: 4px solid #0066cc;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 32px;
+        }
+        .info-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+        .info-box ul {
+            margin: 0;
+            padding-left: 16px;
+        }
+        .info-box li {
+            font-size: 14px;
+            color: #555;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -37,7 +128,7 @@
         </div>
 
         <!-- Booking Details Card -->
-        <div class="booking-details">
+        <div class="card booking-details">
             <div class="booking-id-label">Booking ID</div>
             <div class="booking-id">BK-2026-0342</div>
 
@@ -77,7 +168,7 @@
         <!-- Information Box -->
         <div class="info-box">
             <div class="info-title">What's Next?</div>
-            <ul style="margin-left: 16px; line-height: 1.8;">
+            <ul>
                 <li>A confirmation email will be sent to your inbox</li>
                 <li>You'll receive a reminder 24 hours before your appointment</li>
                 <li>Arrive 5-10 minutes early to the location</li>
