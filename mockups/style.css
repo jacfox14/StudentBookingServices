@@ -929,6 +929,10 @@ textarea {
 
 .welcome-banner p {
   color: rgba(255, 255, 255, 0.9);
+
+.student-dashboard-container {
+  padding-top: 2rem;
+}
   margin-bottom: 0;
 }
 
@@ -1943,6 +1947,10 @@ body.login-page footer {
    39. SEARCH SERVICES PAGE
    ================================================================ */
 
+.search-services-container {
+  padding-top: 2rem;
+}
+
 .category-tiles {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -2818,6 +2826,10 @@ body.login-page footer {
    47. PROVIDER PROFILE PAGE
    ================================================================ */
 
+.provider-profile-container {
+  padding-top: 1.5rem;
+}
+
 .status-banner {
   background-color: #d4edda;
   border-left: 4px solid var(--color-success);
@@ -2979,6 +2991,10 @@ body.login-page footer {
 /* ================================================================
    48. PROVIDER SCHEDULE PAGE
    ================================================================ */
+
+.provider-schedule-container {
+  padding-top: 2rem;
+}
 
 .header-controls {
   display: flex;
@@ -3267,6 +3283,10 @@ body.login-page footer {
 /* ================================================================
    49. PROVIDER REQUESTS PAGE
    ================================================================ */
+
+.provider-requests-container {
+  padding-top: 2rem;
+}
 
 .request-badge {
   display: inline-block;
