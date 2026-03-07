@@ -264,6 +264,10 @@ small {
   padding: 0 1.5rem;
 }
 
+.page-title-container {
+  padding-top: 2rem;
+}
+
 .page-header {
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
@@ -1947,10 +1951,6 @@ body.login-page footer {
    39. SEARCH SERVICES PAGE
    ================================================================ */
 
-.search-services-container {
-  padding-top: 2rem;
-}
-
 .category-tiles {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -2992,10 +2992,6 @@ body.login-page footer {
    48. PROVIDER SCHEDULE PAGE
    ================================================================ */
 
-.provider-schedule-container {
-  padding-top: 2rem;
-}
-
 .header-controls {
   display: flex;
   justify-content: space-between;
@@ -3283,10 +3279,6 @@ body.login-page footer {
 /* ================================================================
    49. PROVIDER REQUESTS PAGE
    ================================================================ */
-
-.provider-requests-container {
-  padding-top: 2rem;
-}
 
 .request-badge {
   display: inline-block;
