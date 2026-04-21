@@ -10,7 +10,14 @@
       "Bash(gh pr *)",
       "Bash(grep -E \"^\\(express|sequelize|mysql2|tsx|bcryptjs|jsonwebtoken\\)$\")",
       "Bash(../node_modules/.bin/tsc --noEmit)",
-      "Bash(timeout 10 ../node_modules/.bin/tsx src/index.ts)"
+      "Bash(timeout 10 ../node_modules/.bin/tsx src/index.ts)",
+      "Bash(npm test *)",
+      "Bash(mysql --version)",
+      "Bash(docker --version)",
+      "Bash(net start *)",
+      "Read(//c/xampp/**)",
+      "Read(//c/wamp64/bin/**)",
+      "Read(//c/laragon/bin/**)"
     ]
   }
 }

@@ -11,6 +11,9 @@
   "scripts": {
     "dev:client": "npm --workspace client run dev",
     "dev:server": "npm --workspace server run dev",
-    "build": "npm --workspace shared run build && npm --workspace client run build"
+    "build": "npm --workspace shared run build && npm --workspace client run build",
+    "test": "npm --workspace server test && npm --workspace client test",
+    "test:server": "npm --workspace server test",
+    "test:client": "npm --workspace client test"
   }
 }
