@@ -17,7 +17,8 @@
       "Bash(net start *)",
       "Read(//c/xampp/**)",
       "Read(//c/wamp64/bin/**)",
-      "Read(//c/laragon/bin/**)"
+      "Read(//c/laragon/bin/**)",
+      "Bash(xargs ls *)"
     ]
   }
 }
