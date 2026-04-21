@@ -7,7 +7,10 @@
       "Bash(npx tsc *)",
       "Bash(npm run *)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173/)",
-      "Bash(gh pr *)"
+      "Bash(gh pr *)",
+      "Bash(grep -E \"^\\(express|sequelize|mysql2|tsx|bcryptjs|jsonwebtoken\\)$\")",
+      "Bash(../node_modules/.bin/tsc --noEmit)",
+      "Bash(timeout 10 ../node_modules/.bin/tsx src/index.ts)"
     ]
   }
 }
