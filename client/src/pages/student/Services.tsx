@@ -51,7 +51,7 @@ export default function StudentServices() {
       ) : (
         <div className="grid grid-3">
           {services.map((s) => (
-            <article key={s.id} className="card">
+            <article key={s.id} className="card" style={{ display: "flex", flexDirection: "column" }}>
               <header style={{ marginBottom: "0.5rem" }}>
                 <h3 style={{ marginBottom: "0.25rem" }}>{s.title}</h3>
                 <small style={{ color: "#666" }}>{s.categoryName} · {s.providerName}</small>
@@ -60,9 +60,11 @@ export default function StudentServices() {
               <div style={{ fontSize: "0.85rem", color: "#555", marginBottom: "0.75rem" }}>
                 📍 {s.location} · ⏱ {s.durationMinutes} min
               </div>
-              <Link to={`/services/${s.id}`} className="btn btn-primary btn-sm">
-                View availability
-              </Link>
+              <div style={{ marginTop: "auto" }}>
+                <Link to={`/services/${s.id}`} className="btn btn-primary btn-sm">
+                  View availability
+                </Link>
+              </div>
             </article>
           ))}
         </div>
