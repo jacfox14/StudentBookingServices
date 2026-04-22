@@ -176,7 +176,7 @@ export const BookingService = {
         transaction: tx,
       });
       if (!booking) throw new AppError("NOT_FOUND", "Booking not found");
-      const service = (booking as unknown as { service?: { providerId: number } }).service;
+      const service = (booking as unknown as { service?: { providerId: number; title: string } }).service;
 
       const isOwner = booking.studentId === actor.id;
       const isProvider = service?.providerId === actor.id;
@@ -226,6 +226,7 @@ export const BookingService = {
             type: notificationType,
             payload: {
               bookingId: booking.id,
+              serviceTitle: service?.title,
               ...(options.rejectionReason
                 ? { rejectionReason: options.rejectionReason }
                 : {}),

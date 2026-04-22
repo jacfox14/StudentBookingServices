@@ -26,45 +26,48 @@ export default function Navbar() {
         <Link to="/" className="navbar-brand" style={{ textDecoration: "none", color: "inherit" }}>
           <strong>SBS</strong> — WSU Student Booking Services
         </Link>
-        {user && (
-          <ul className="navbar-links" style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", gap: "1rem" }}>
-            {user.role === "student" && (
-              <>
-                <li><NavLink to="/dashboard">Dashboard</NavLink></li>
-                <li><NavLink to="/services">Browse Services</NavLink></li>
-                <li><NavLink to="/bookings">My Bookings</NavLink></li>
-              </>
-            )}
-            {user.role === "staff" && (
-              <>
-                <li><NavLink to="/provider">Dashboard</NavLink></li>
-                <li><NavLink to="/provider/schedule">Schedule</NavLink></li>
-                <li><NavLink to="/provider/requests">Requests</NavLink></li>
-                <li><NavLink to="/provider/profile">Profile</NavLink></li>
-              </>
-            )}
-            {user.role === "admin" && (
-              <>
-                <li><NavLink to="/admin">Dashboard</NavLink></li>
-                <li><NavLink to="/admin/users">Users</NavLink></li>
-                <li><NavLink to="/admin/services">Services</NavLink></li>
-                <li><NavLink to="/admin/reports">Reports</NavLink></li>
-              </>
-            )}
-          </ul>
-        )}
       </div>
+
+      {user && (
+        <ul className="navbar-links navbar-center" style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", gap: "1rem" }}>
+          {user.role === "student" && (
+            <>
+              <li><NavLink to="/dashboard" end>Dashboard</NavLink></li>
+              <li><NavLink to="/services">Browse Services</NavLink></li>
+              <li><NavLink to="/bookings">My Bookings</NavLink></li>
+              <li><NavLink to="/profile">Profile</NavLink></li>
+            </>
+          )}
+          {user.role === "staff" && (
+            <>
+              <li><NavLink to="/provider" end>Dashboard</NavLink></li>
+              <li><NavLink to="/provider/schedule">Schedule</NavLink></li>
+              <li><NavLink to="/provider/requests">Requests</NavLink></li>
+              <li><NavLink to="/provider/profile">Profile</NavLink></li>
+            </>
+          )}
+          {user.role === "admin" && (
+            <>
+              <li><NavLink to="/admin" end>Dashboard</NavLink></li>
+              <li><NavLink to="/admin/users">Users</NavLink></li>
+              <li><NavLink to="/admin/services">Services</NavLink></li>
+              <li><NavLink to="/admin/reports">Reports</NavLink></li>
+            </>
+          )}
+        </ul>
+      )}
+
       <div className="navbar-right">
         {user ? (
           <>
             <Link to="/notifications" className="navbar-bell" aria-label={`Notifications (${unread} unread)`}>
-              🔔{unread > 0 && <span className="badge">{unread}</span>}
+              🔔{unread > 0 && <> ({unread})</>}
             </Link>
-            <span className={`role-badge role-badge--${user.role === "staff" ? "provider" : user.role}`}>
-              {user.role}
-            </span>
             <span className="navbar-user">
               {user.firstName} {user.lastName}
+            </span>
+            <span className={`role-badge role-badge--${user.role === "staff" ? "provider" : user.role}`}>
+              {user.role}
             </span>
             <button type="button" className="btn btn-sm btn-secondary" onClick={handleLogout}>
               Sign out

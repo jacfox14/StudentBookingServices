@@ -39,18 +39,24 @@ export default function ProviderProfile() {
         <h1 className="page-title">Your profile</h1>
       </div>
 
-      <form onSubmit={handleSubmit((v) => update.mutate(v))} className="card" style={{ maxWidth: 640 }}>
-        <div className="grid grid-2" style={{ gap: "1rem" }}>
-          <FormField label="First name" error={errors.firstName?.message} {...register("firstName")} />
-          <FormField label="Last name" error={errors.lastName?.message} {...register("lastName")} />
-        </div>
-        <FormField label="Email" type="email" error={errors.email?.message} {...register("email")} />
-        <button type="submit" className="btn btn-primary" disabled={isSubmitting || update.isPending}>
-          {update.isPending ? <span className="spinner-inline" /> : "Save changes"}
-        </button>
-      </form>
+      <div className="card" style={{ maxWidth: 560, marginBottom: "1.5rem" }}>
+        <form
+          onSubmit={handleSubmit((v) => update.mutate(v))}
+          noValidate
+          style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+        >
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <FormField label="First name" type="text" error={errors.firstName?.message} {...register("firstName")} />
+            <FormField label="Last name" type="text" error={errors.lastName?.message} {...register("lastName")} />
+          </div>
+          <FormField label="Email" type="email" error={errors.email?.message} {...register("email")} />
+          <button type="submit" className="btn btn-primary btn-block" disabled={isSubmitting || update.isPending} style={{ marginTop: "0.5rem" }}>
+            {update.isPending ? <span className="spinner-inline" /> : "Save changes"}
+          </button>
+        </form>
+      </div>
 
-      <section className="card" style={{ marginTop: "1.5rem" }}>
+      <section className="card" style={{ maxWidth: 560 }}>
         <h2>Services you provide</h2>
         {!services?.length ? (
           <p>You have no services yet. Contact an admin to add one.</p>
