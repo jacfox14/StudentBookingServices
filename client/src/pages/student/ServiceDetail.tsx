@@ -67,7 +67,7 @@ export default function ServiceDetail() {
   if (!service) return <p><span className="spinner-inline" /> Loading…</p>;
 
   return (
-    <div>
+    <div style={{ maxWidth: "700px", width: "100%", margin: "0 auto" }}>
       <Link to="/services" style={{ fontSize: "0.9rem" }}>← Back to services</Link>
 
       <header className="card" style={{ marginTop: "1rem" }}>
