@@ -59,6 +59,8 @@ export const bookingsApi = {
 };
 
 export const providerApi = {
+  bookings: () =>
+    http.get<Booking[]>("/provider/bookings").then((r) => r.data),
   requests: () =>
     http.get<Booking[]>("/provider/requests").then((r) => r.data),
   schedule: () =>

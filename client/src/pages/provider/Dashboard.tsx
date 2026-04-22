@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { bookingsApi, providerApi } from "@/api/endpoints";
+import { providerApi } from "@/api/endpoints";
 import { useAuth } from "@/context/AuthContext";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { fmtDateTime } from "@/lib/format";
@@ -12,8 +12,8 @@ export default function ProviderDashboard() {
     queryFn: providerApi.requests,
   });
   const { data: myBookings } = useQuery({
-    queryKey: ["bookings", "provider"],
-    queryFn: () => bookingsApi.listMine(),
+    queryKey: ["provider", "bookings"],
+    queryFn: providerApi.bookings,
   });
 
   const today = new Date();

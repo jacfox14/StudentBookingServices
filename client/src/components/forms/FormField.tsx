@@ -25,6 +25,7 @@ export const FormField = React.forwardRef<HTMLInputElement, Props>(
         ) : as === "select" ? (
           <select
             id={inputId}
+            ref={ref as unknown as React.Ref<HTMLSelectElement>}
             className={`form-control ${error ? "is-invalid" : ""}`}
             {...(rest as unknown as React.SelectHTMLAttributes<HTMLSelectElement>)}
           >

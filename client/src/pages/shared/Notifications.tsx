@@ -8,8 +8,10 @@ function renderMessage(n: Notification): string {
   const svc = (p.serviceTitle ?? p.service) as string | undefined;
   const forSvc = svc ? ` for ${svc}` : "";
   switch (n.type) {
-    case "booking_created":
-      return `New booking request from ${p.student ?? "a student"}${forSvc}.`;
+    case "booking_created": {
+      const when = p.startAt ? ` — ${fmtDateTime(p.startAt as string)}` : "";
+      return `New booking request from ${p.student ?? "a student"}${forSvc}${when}.`;
+    }
     case "booking_approved":
       return `Your booking${forSvc} was approved.`;
     case "booking_rejected":

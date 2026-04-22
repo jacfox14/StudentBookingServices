@@ -621,7 +621,8 @@ textarea {
   max-width: 500px;
   width: 90%;
   max-height: 90vh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   animation: slideIn 0.3s ease;
 }
 
@@ -663,6 +664,8 @@ textarea {
 
 .modal-body {
   padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
 }
 
 .modal-footer {

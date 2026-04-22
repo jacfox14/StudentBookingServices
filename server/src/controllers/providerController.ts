@@ -92,6 +92,23 @@ export const providerController = {
     }
   },
 
+  async bookings(req: Request, res: Response, next: NextFunction) {
+    try {
+      const ids = await myServiceIds(req.user!.id);
+      const rows = await Booking.findAll({
+        where: { serviceId: { [Op.in]: ids } },
+        include: [
+          { model: Service, as: "service", include: [{ model: User, as: "provider" }] },
+          { model: User, as: "student" },
+        ],
+        order: [["startAt", "ASC"]],
+      });
+      res.json(rows.map((r) => toBookingDTO(r as never)));
+    } catch (e) {
+      next(e);
+    }
+  },
+
   async myServices(req: Request, res: Response, next: NextFunction) {
     try {
       const rows = await Service.findAll({

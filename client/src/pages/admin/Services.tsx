@@ -148,65 +148,68 @@ export default function AdminServices() {
           </>
         }
       >
-        <FormField
-          label="Title"
-          value={form.title}
-          onChange={(e) => setForm({ ...form, title: e.target.value })}
-        />
-        <label className="form-label">Description</label>
-        <textarea
-          className="form-control mb-3"
-          rows={3}
-          value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
-        />
-        <div className="grid grid-2" style={{ gap: "1rem" }}>
-          <div>
-            <label className="form-label">Category</label>
-            <select
-              className="form-control"
-              value={form.categoryId}
-              onChange={(e) => setForm({ ...form, categoryId: Number(e.target.value) })}
-            >
-              <option value={0}>Select…</option>
-              {categories?.map((c) => (
-                <option key={c.id} value={c.id}>{c.name}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="form-label">Provider</label>
-            <select
-              className="form-control"
-              value={form.providerId}
-              onChange={(e) => setForm({ ...form, providerId: Number(e.target.value) })}
-            >
-              <option value={0}>Select…</option>
-              {staffOptions.map((u) => (
-                <option key={u.id} value={u.id}>{u.firstName} {u.lastName}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <FormField
-          label="Location"
-          value={form.location}
-          onChange={(e) => setForm({ ...form, location: e.target.value })}
-        />
-        <FormField
-          label="Duration (minutes)"
-          type="number"
-          value={form.durationMinutes}
-          onChange={(e) => setForm({ ...form, durationMinutes: Number(e.target.value) })}
-        />
-        <label style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-          <input
-            type="checkbox"
-            checked={form.isActive}
-            onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <FormField
+            label="Title"
+            type="text"
+            value={form.title}
+            onChange={(e) => setForm({ ...form, title: e.target.value })}
           />
-          Active
-        </label>
+          <FormField
+            as="textarea"
+            label="Description"
+            value={form.description}
+            onChange={(e) => setForm({ ...form, description: e.target.value })}
+          />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <div className="form-group" style={{ marginBottom: 0 }}>
+              <label className="form-label">Category</label>
+              <select
+                className="form-control"
+                value={form.categoryId}
+                onChange={(e) => setForm({ ...form, categoryId: Number(e.target.value) })}
+              >
+                <option value={0}>Select…</option>
+                {categories?.map((c) => (
+                  <option key={c.id} value={c.id}>{c.name}</option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group" style={{ marginBottom: 0 }}>
+              <label className="form-label">Provider</label>
+              <select
+                className="form-control"
+                value={form.providerId}
+                onChange={(e) => setForm({ ...form, providerId: Number(e.target.value) })}
+              >
+                <option value={0}>Select…</option>
+                {staffOptions.map((u) => (
+                  <option key={u.id} value={u.id}>{u.firstName} {u.lastName}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <FormField
+            label="Location"
+            type="text"
+            value={form.location}
+            onChange={(e) => setForm({ ...form, location: e.target.value })}
+          />
+          <FormField
+            label="Duration (minutes)"
+            type="number"
+            value={form.durationMinutes}
+            onChange={(e) => setForm({ ...form, durationMinutes: Number(e.target.value) })}
+          />
+          <label style={{ display: "flex", gap: "0.5rem", alignItems: "center", cursor: "pointer" }}>
+            <input
+              type="checkbox"
+              checked={form.isActive}
+              onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
+            />
+            Active
+          </label>
+        </div>
       </Modal>
     </div>
   );

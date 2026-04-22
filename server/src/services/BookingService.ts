@@ -81,18 +81,21 @@ export const BookingService = {
       await assertNoOverlap(service.id, startAt, endAt, tx);
       await assertNoStudentOverlap(studentId, startAt, endAt, tx);
 
-      const booking = await Booking.create(
-        {
-          serviceId: service.id,
-          studentId,
-          startAt,
-          endAt,
-          status: "pending",
-          notes: input.notes ?? null,
-          rejectionReason: null,
-        },
-        { transaction: tx }
-      );
+      const [booking, student] = await Promise.all([
+        Booking.create(
+          {
+            serviceId: service.id,
+            studentId,
+            startAt,
+            endAt,
+            status: "pending",
+            notes: input.notes ?? null,
+            rejectionReason: null,
+          },
+          { transaction: tx }
+        ),
+        User.findByPk(studentId, { transaction: tx }),
+      ]);
 
       await Notification.create(
         {
@@ -102,6 +105,7 @@ export const BookingService = {
             bookingId: booking.id,
             serviceTitle: service.title,
             startAt: startAt.toISOString(),
+            student: student ? `${student.firstName} ${student.lastName}` : undefined,
           },
           readAt: null,
         },

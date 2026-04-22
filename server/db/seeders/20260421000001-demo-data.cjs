@@ -72,12 +72,30 @@ module.exports = {
     }
     await queryInterface.bulkInsert('availability_blocks', availability);
 
+    const d = (n) => addDays(now, n);
     const bookings = [
-      { service_id: 1, student_id: 10, start_at: atTime(addDays(now, 2), 10), end_at: atTime(addDays(now, 2), 10, 30), status: 'approved', notes: 'Want to switch minors.', rejection_reason: null, created_at: now, updated_at: now },
-      { service_id: 4, student_id: 10, start_at: atTime(addDays(now, 4), 14), end_at: atTime(addDays(now, 4), 14, 30), status: 'pending', notes: 'Applying to summer internships.', rejection_reason: null, created_at: now, updated_at: now },
-      { service_id: 2, student_id: 11, start_at: atTime(addDays(now, 1), 11), end_at: atTime(addDays(now, 1), 11, 45), status: 'pending', notes: 'Thesis sources needed.', rejection_reason: null, created_at: now, updated_at: now },
-      { service_id: 1, student_id: 10, start_at: atTime(addDays(now, -3), 9), end_at: atTime(addDays(now, -3), 9, 30), status: 'completed', notes: null, rejection_reason: null, created_at: now, updated_at: now },
-      { service_id: 3, student_id: 10, start_at: atTime(addDays(now, -7), 13), end_at: atTime(addDays(now, -7), 13, 50), status: 'cancelled', notes: null, rejection_reason: null, created_at: now, updated_at: now },
+      // original bookings
+      { service_id: 1, student_id: 10, start_at: atTime(d(2), 10),  end_at: atTime(d(2), 10, 30), status: 'approved',   notes: 'Want to switch minors.',          rejection_reason: null, created_at: now,    updated_at: now },
+      { service_id: 4, student_id: 10, start_at: atTime(d(4), 14),  end_at: atTime(d(4), 14, 30), status: 'pending',    notes: 'Applying to summer internships.', rejection_reason: null, created_at: now,    updated_at: now },
+      { service_id: 2, student_id: 11, start_at: atTime(d(1), 11),  end_at: atTime(d(1), 11, 45), status: 'pending',    notes: 'Thesis sources needed.',          rejection_reason: null, created_at: now,    updated_at: now },
+      { service_id: 1, student_id: 10, start_at: atTime(d(-3), 9),  end_at: atTime(d(-3), 9, 30), status: 'completed',  notes: null,                              rejection_reason: null, created_at: now,    updated_at: now },
+      { service_id: 3, student_id: 10, start_at: atTime(d(-7), 13), end_at: atTime(d(-7), 13, 50),status: 'cancelled',  notes: null,                              rejection_reason: null, created_at: now,    updated_at: now },
+      // demo bookings spread across last 14 days for graph population
+      { service_id: 5, student_id: 11, start_at: atTime(d(3), 10),  end_at: atTime(d(3), 10, 45), status: 'approved',   notes: null, rejection_reason: null, created_at: d(-13), updated_at: d(-13) },
+      { service_id: 2, student_id: 10, start_at: atTime(d(5), 11),  end_at: atTime(d(5), 11, 45), status: 'approved',   notes: null, rejection_reason: null, created_at: d(-13), updated_at: d(-13) },
+      { service_id: 6, student_id: 11, start_at: atTime(d(6), 14),  end_at: atTime(d(6), 14, 30), status: 'completed',  notes: null, rejection_reason: null, created_at: d(-11), updated_at: d(-11) },
+      { service_id: 3, student_id: 11, start_at: atTime(d(7), 9),   end_at: atTime(d(7), 9, 50),  status: 'completed',  notes: null, rejection_reason: null, created_at: d(-11), updated_at: d(-11) },
+      { service_id: 4, student_id: 11, start_at: atTime(d(8), 15),  end_at: atTime(d(8), 15, 30), status: 'approved',   notes: null, rejection_reason: null, created_at: d(-9),  updated_at: d(-9)  },
+      { service_id: 1, student_id: 11, start_at: atTime(d(9), 10),  end_at: atTime(d(9), 10, 30), status: 'cancelled',  notes: null, rejection_reason: null, created_at: d(-9),  updated_at: d(-9)  },
+      { service_id: 7, student_id: 10, start_at: atTime(d(10), 13), end_at: atTime(d(10), 13, 15),status: 'approved',   notes: null, rejection_reason: null, created_at: d(-7),  updated_at: d(-7)  },
+      { service_id: 5, student_id: 10, start_at: atTime(d(11), 11), end_at: atTime(d(11), 11, 45),status: 'approved',   notes: null, rejection_reason: null, created_at: d(-6),  updated_at: d(-6)  },
+      { service_id: 2, student_id: 11, start_at: atTime(d(12), 14), end_at: atTime(d(12), 14, 45),status: 'pending',    notes: null, rejection_reason: null, created_at: d(-6),  updated_at: d(-6)  },
+      { service_id: 6, student_id: 10, start_at: atTime(d(13), 9),  end_at: atTime(d(13), 9, 30), status: 'approved',   notes: null, rejection_reason: null, created_at: d(-4),  updated_at: d(-4)  },
+      { service_id: 3, student_id: 11, start_at: atTime(d(14), 15), end_at: atTime(d(14), 15, 50),status: 'approved',   notes: null, rejection_reason: null, created_at: d(-4),  updated_at: d(-4)  },
+      { service_id: 4, student_id: 10, start_at: atTime(d(15), 11), end_at: atTime(d(15), 11, 30),status: 'pending',    notes: null, rejection_reason: null, created_at: d(-2),  updated_at: d(-2)  },
+      { service_id: 1, student_id: 11, start_at: atTime(d(16), 13), end_at: atTime(d(16), 13, 30),status: 'pending',    notes: null, rejection_reason: null, created_at: d(-2),  updated_at: d(-2)  },
+      { service_id: 7, student_id: 11, start_at: atTime(d(17), 10), end_at: atTime(d(17), 10, 15),status: 'approved',   notes: null, rejection_reason: null, created_at: d(-2),  updated_at: d(-2)  },
+      { service_id: 5, student_id: 10, start_at: atTime(d(18), 14), end_at: atTime(d(18), 14, 45),status: 'pending',    notes: null, rejection_reason: null, created_at: d(-1),  updated_at: d(-1)  },
     ];
     await queryInterface.bulkInsert('bookings', bookings);
 

@@ -9,6 +9,7 @@ const router = Router();
 
 router.use(requireAuth, requireRole("staff"));
 
+router.get("/bookings", providerController.bookings);
 router.get("/requests", providerController.requests);
 router.get("/schedule", providerController.schedule);
 router.post(
