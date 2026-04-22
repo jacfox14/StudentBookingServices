@@ -45,7 +45,7 @@ export default function Login() {
         <h1 className="page-title">Welcome back</h1>
         <p className="page-subtitle">Sign in to access your WSU bookings.</p>
         <ErrorSummary message={topError} />
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate style={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1.5rem" }}>
           <FormField
             label="Email"
             type="email"
@@ -64,6 +64,7 @@ export default function Login() {
             type="submit"
             className="btn btn-primary btn-block"
             disabled={isSubmitting}
+            style={{ marginTop: "0.5rem" }}
           >
             {isSubmitting ? <span className="spinner-inline" /> : "Sign in"}
           </button>

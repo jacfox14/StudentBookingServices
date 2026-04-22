@@ -24,7 +24,7 @@ export default function Navbar() {
     <nav className="navbar" aria-label="Primary">
       <div className="navbar-left">
         <Link to="/" className="navbar-brand" style={{ textDecoration: "none", color: "inherit" }}>
-          <strong>SBS</strong> — WSU Student Booking
+          <strong>SBS</strong> — WSU Student Booking Services
         </Link>
         {user && (
           <ul className="navbar-links" style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", gap: "1rem" }}>

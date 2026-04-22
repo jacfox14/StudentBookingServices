@@ -1,7 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
 import { bookingsApi } from "@/api/endpoints";
 import { StatusBadge } from "@/components/ui/StatusBadge";
+import { Modal } from "@/components/ui/Modal";
 import { fmtDateTime } from "@/lib/format";
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/context/ToastContext";
@@ -13,6 +15,7 @@ export default function BookingDetail() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { push: toast } = useToast();
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const { data: booking, isLoading } = useQuery({
     queryKey: ["booking", bookingId],
@@ -60,20 +63,41 @@ export default function BookingDetail() {
           )}
         </dl>
         {canCancel && (user?.role === "student" || user?.role === "admin") && (
-          <div style={{ marginTop: "1.5rem", display: "flex", gap: "0.5rem" }}>
+          <div style={{ marginTop: "1.5rem" }}>
             <button
               type="button"
               className="btn btn-danger"
               disabled={cancel.isPending}
-              onClick={() => {
-                if (confirm("Cancel this booking?")) cancel.mutate();
-              }}
+              onClick={() => setConfirmOpen(true)}
             >
               {cancel.isPending ? <span className="spinner-inline" /> : "Cancel booking"}
             </button>
           </div>
         )}
       </div>
+
+      <Modal
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        title="Cancel this booking?"
+        footer={
+          <>
+            <button type="button" className="btn btn-secondary" onClick={() => setConfirmOpen(false)}>
+              Keep booking
+            </button>
+            <button
+              type="button"
+              className="btn btn-danger"
+              disabled={cancel.isPending}
+              onClick={() => { setConfirmOpen(false); cancel.mutate(); }}
+            >
+              Yes, cancel
+            </button>
+          </>
+        }
+      >
+        <p>Are you sure you want to cancel your booking for <strong>{booking.serviceTitle}</strong>? This cannot be undone.</p>
+      </Modal>
     </div>
   );
 }

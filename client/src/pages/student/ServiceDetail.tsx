@@ -17,6 +17,7 @@ export default function ServiceDetail() {
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [notes, setNotes] = useState("");
   const [open, setOpen] = useState(false);
+  const [bookingError, setBookingError] = useState<string | null>(null);
 
   const { data: service } = useQuery({
     queryKey: ["service", svcId],
@@ -56,11 +57,12 @@ export default function ServiceDetail() {
       qc.invalidateQueries({ queryKey: ["bookings", "me"] });
       qc.invalidateQueries({ queryKey: ["service", svcId, "availability"] });
       toast("Booking request submitted!", "success");
+      setBookingError(null);
       setOpen(false);
       navigate(`/bookings/${booking.id}/confirm`);
     },
     onError: (e) => {
-      if (e instanceof ApiError) toast(e.message, "error");
+      if (e instanceof ApiError) setBookingError(e.message);
     },
   });
 
@@ -113,7 +115,7 @@ export default function ServiceDetail() {
 
       <Modal
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => { setOpen(false); setBookingError(null); }}
         title="Confirm your booking"
         footer={
           <>
@@ -139,6 +141,11 @@ export default function ServiceDetail() {
       >
         {selectedSlot && (
           <>
+            {bookingError && (
+              <div style={{ background: "#fdecea", color: "#c62828", padding: "0.75rem 1rem", borderRadius: "6px", marginBottom: "1rem", fontWeight: 500 }}>
+                {bookingError}
+              </div>
+            )}
             <p>
               <strong>{service.title}</strong><br />
               {fmtDate(selectedSlot)} at {fmtTime(selectedSlot)} · {service.durationMinutes} min<br />

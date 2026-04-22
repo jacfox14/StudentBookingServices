@@ -38,6 +38,30 @@ async function assertNoOverlap(
   }
 }
 
+async function assertNoStudentOverlap(
+  studentId: number,
+  startAt: Date,
+  endAt: Date,
+  tx: Transaction,
+  excludeBookingId?: number
+) {
+  const where: Record<string, unknown> = {
+    studentId,
+    status: { [Op.in]: ["pending", "approved"] },
+    startAt: { [Op.lt]: endAt },
+    endAt: { [Op.gt]: startAt },
+  };
+  if (excludeBookingId) where.id = { [Op.ne]: excludeBookingId };
+  const conflict = await Booking.findOne({
+    where,
+    transaction: tx,
+    lock: tx.LOCK.UPDATE,
+  });
+  if (conflict) {
+    throw new AppError("CONFLICT", "You already have a booking that overlaps with that time");
+  }
+}
+
 export const BookingService = {
   async create(studentId: number, input: CreateBookingInput) {
     const startAt = new Date(input.startAt);
@@ -55,6 +79,7 @@ export const BookingService = {
         throw new AppError("CONFLICT", "This service is not currently accepting bookings");
 
       await assertNoOverlap(service.id, startAt, endAt, tx);
+      await assertNoStudentOverlap(studentId, startAt, endAt, tx);
 
       const booking = await Booking.create(
         {
@@ -119,6 +144,7 @@ export const BookingService = {
         throw new AppError("CONFLICT", `Cannot reschedule a ${booking.status} booking`);
       }
       await assertNoOverlap(booking.serviceId, startAt, endAt, tx, booking.id);
+      await assertNoStudentOverlap(booking.studentId, startAt, endAt, tx, booking.id);
       booking.startAt = startAt;
       booking.endAt = endAt;
       booking.status = "pending";

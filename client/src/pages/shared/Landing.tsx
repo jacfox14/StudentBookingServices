@@ -10,20 +10,22 @@ export default function Landing() {
     <div>
       <section
         style={{
-          background: "linear-gradient(135deg, var(--crimson, #A60F2D), #6a0a1f)",
+          background: "var(--crimson)",
           color: "#fff",
-          padding: "4rem 1rem",
+          padding: "2.5rem 1rem",
           textAlign: "center",
+          borderRadius: "1rem",
+          margin: "1rem",
         }}
       >
-        <h1 style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>Student Booking Services</h1>
-        <p style={{ fontSize: "1.1rem", maxWidth: 720, margin: "0 auto 1.5rem" }}>
+        <h1 style={{ fontSize: "3.5rem", marginBottom: "0.5rem", fontWeight: 700, color: "#fff" }}>Student Booking Services</h1>
+        <p style={{ fontSize: "1.1rem", maxWidth: 720, margin: "0 auto 1.5rem", fontWeight: 700, color: "rgba(255,255,255,0.75)" }}>
           Your one-stop platform for booking advisors, counselors, librarians, and career coaches at
           Washington State University.
         </p>
-        <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center" }}>
-          <Link to="/login" className="btn btn-primary">Sign in</Link>
-          <Link to="/register" className="btn btn-secondary">Create account</Link>
+        <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", marginTop: "2rem" }}>
+          <Link to="/login" className="btn btn-primary btn-landing" style={{ background: "#4a0f1a" }}>Sign in</Link>
+          <Link to="/register" className="btn btn-secondary btn-landing" style={{ background: "#4a0f1a" }}>Create account</Link>
         </div>
       </section>
 

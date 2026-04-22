@@ -46,10 +46,10 @@ export default function Register() {
         <h1 className="page-title">Create your account</h1>
         <p className="page-subtitle">Join SBS as a student or campus staff member.</p>
         <ErrorSummary message={topError} />
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <div className="grid grid-2" style={{ gap: "1rem" }}>
-            <FormField label="First name" error={errors.firstName?.message} {...register("firstName")} />
-            <FormField label="Last name" error={errors.lastName?.message} {...register("lastName")} />
+        <form onSubmit={handleSubmit(onSubmit)} noValidate style={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1.5rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <FormField label="First name" type="text" error={errors.firstName?.message} {...register("firstName")} />
+            <FormField label="Last name" type="text" error={errors.lastName?.message} {...register("lastName")} />
           </div>
           <FormField label="Email" type="email" error={errors.email?.message} {...register("email")} />
           <FormField
@@ -74,7 +74,7 @@ export default function Register() {
             <option value="student">Student</option>
             <option value="staff">Staff / Faculty (Provider)</option>
           </FormField>
-          <button type="submit" className="btn btn-primary btn-block" disabled={isSubmitting}>
+          <button type="submit" className="btn btn-primary btn-block" disabled={isSubmitting} style={{ marginTop: "0.5rem" }}>
             {isSubmitting ? <span className="spinner-inline" /> : "Create account"}
           </button>
         </form>

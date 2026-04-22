@@ -4,9 +4,9 @@ export default function Footer() {
       style={{
         background: "#222",
         color: "#ddd",
-        padding: "1.5rem 2rem",
+        padding: "0.9rem 2rem",
         textAlign: "center",
-        marginTop: "3rem",
+        marginTop: "auto",
         fontSize: "0.9rem",
       }}
     >

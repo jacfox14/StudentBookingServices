@@ -12,7 +12,7 @@ export const FormField = React.forwardRef<HTMLInputElement, Props>(
   ({ label, error, hint, as = "input", children, id, ...rest }, ref) => {
     const inputId = id ?? rest.name;
     return (
-      <div className="form-group mb-3">
+      <div className="form-group" style={{ marginBottom: 0 }}>
         <label htmlFor={inputId} className="form-label">
           {label}
         </label>

@@ -145,7 +145,7 @@ small {
 .navbar {
   background-color: var(--crimson);
   color: var(--white);
-  padding: 1rem 2rem;
+  padding: 0.6rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -194,6 +194,18 @@ small {
   display: flex;
   align-items: center;
   gap: 1.5rem;
+}
+
+.navbar-right .btn-primary,
+.navbar-right .btn-secondary {
+  color: var(--white);
+  border: none;
+  background: transparent;
+}
+.navbar-right .btn-primary:hover,
+.navbar-right .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--white);
 }
 
 .navbar-bell {
@@ -1400,6 +1412,18 @@ body.login-page {
   min-height: 100vh;
   align-items: stretch;
   justify-content: flex-start;
+}
+
+.btn-landing {
+  color: #fff;
+  background: transparent;
+  border: 2px solid transparent;
+  transition: background var(--transition), border-color var(--transition);
+}
+.btn-landing:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #fff;
+  color: #fff;
 }
 
 body.login-page .navbar {
