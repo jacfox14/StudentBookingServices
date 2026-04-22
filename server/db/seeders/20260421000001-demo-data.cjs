@@ -82,9 +82,9 @@ module.exports = {
     await queryInterface.bulkInsert('bookings', bookings);
 
     const notifications = [
-      { user_id: 10, type: 'booking_approved', payload: { bookingId: 1, service: 'Academic Advising — CS Majors' }, read_at: null, created_at: now, updated_at: now },
-      { user_id: 10, type: 'reminder', payload: { bookingId: 1, when: 'tomorrow at 10:00 AM' }, read_at: null, created_at: now, updated_at: now },
-      { user_id: 10, type: 'booking_created', payload: { bookingId: 2, service: 'Resume Review' }, read_at: now, created_at: now, updated_at: now },
+      { user_id: 10, type: 'booking_approved', payload: JSON.stringify({ bookingId: 1, service: 'Academic Advising — CS Majors' }), read_at: null, created_at: now, updated_at: now },
+      { user_id: 10, type: 'reminder', payload: JSON.stringify({ bookingId: 1, when: 'tomorrow at 10:00 AM' }), read_at: null, created_at: now, updated_at: now },
+      { user_id: 10, type: 'booking_created', payload: JSON.stringify({ bookingId: 2, service: 'Resume Review' }), read_at: now, created_at: now, updated_at: now },
     ];
     await queryInterface.bulkInsert('notifications', notifications);
   },

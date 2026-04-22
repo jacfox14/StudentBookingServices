@@ -48,7 +48,7 @@ export default function StudentDashboard() {
         ) : (
           <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
             {upcoming.map((b) => (
-              <li key={b.id} className="appointment-card" style={{ display: "flex", justifyContent: "space-between", padding: "0.75rem 0", borderBottom: "1px solid #eee" }}>
+              <li key={b.id} className="appointment-card" style={{ display: "flex", justifyContent: "space-between", padding: "0.75rem 0.75rem", borderBottom: "1px solid #eee" }}>
                 <div>
                   <strong>{b.serviceTitle}</strong>
                   <div style={{ color: "#666", fontSize: "0.9rem" }}>
