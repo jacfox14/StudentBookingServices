@@ -1,10 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { z } from "zod";
 import { adminApi, servicesApi } from "@/api/endpoints";
 import { Modal } from "@/components/ui/Modal";
 import { useToast } from "@/context/ToastContext";
 import type { Service } from "@shared/schemas";
 import { FormField } from "@/components/forms/FormField";
+
+const serviceFormSchema = z.object({
+  categoryId: z.number().refine((v) => v > 0, { message: "Please select a category" }),
+  providerId: z.number().refine((v) => v > 0, { message: "Please select a provider" }),
+}).passthrough();
 
 interface ServiceForm {
   categoryId: number;
@@ -34,6 +40,7 @@ export default function AdminServices() {
   const [editing, setEditing] = useState<Service | null>(null);
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<ServiceForm>(emptyForm());
+  const [formErrors, setFormErrors] = useState<{ categoryId?: string; providerId?: string }>({});
 
   const { data: services, isLoading } = useQuery({
     queryKey: ["admin", "services"],
@@ -68,10 +75,12 @@ export default function AdminServices() {
   function openNew() {
     setEditing(null);
     setForm(emptyForm());
+    setFormErrors({});
     setOpen(true);
   }
   function openEdit(s: Service) {
     setEditing(s);
+    setFormErrors({});
     setForm({
       categoryId: s.categoryId,
       providerId: s.providerId,
@@ -141,7 +150,19 @@ export default function AdminServices() {
               type="button"
               className="btn btn-primary"
               disabled={save.isPending}
-              onClick={() => save.mutate()}
+              onClick={() => {
+                const result = serviceFormSchema.safeParse(form);
+                if (!result.success) {
+                  const errs = result.error.flatten().fieldErrors;
+                  setFormErrors({
+                    categoryId: errs.categoryId?.[0],
+                    providerId: errs.providerId?.[0],
+                  });
+                  return;
+                }
+                setFormErrors({});
+                save.mutate();
+              }}
             >
               {save.isPending ? <span className="spinner-inline" /> : "Save"}
             </button>
@@ -165,7 +186,7 @@ export default function AdminServices() {
             <div className="form-group" style={{ marginBottom: 0 }}>
               <label className="form-label">Category</label>
               <select
-                className="form-control"
+                className={`form-control ${formErrors.categoryId ? "is-invalid" : ""}`}
                 value={form.categoryId}
                 onChange={(e) => setForm({ ...form, categoryId: Number(e.target.value) })}
               >
@@ -174,11 +195,12 @@ export default function AdminServices() {
                   <option key={c.id} value={c.id}>{c.name}</option>
                 ))}
               </select>
+              {formErrors.categoryId && <div className="field-error" role="alert">{formErrors.categoryId}</div>}
             </div>
             <div className="form-group" style={{ marginBottom: 0 }}>
               <label className="form-label">Provider</label>
               <select
-                className="form-control"
+                className={`form-control ${formErrors.providerId ? "is-invalid" : ""}`}
                 value={form.providerId}
                 onChange={(e) => setForm({ ...form, providerId: Number(e.target.value) })}
               >
@@ -187,6 +209,7 @@ export default function AdminServices() {
                   <option key={u.id} value={u.id}>{u.firstName} {u.lastName}</option>
                 ))}
               </select>
+              {formErrors.providerId && <div className="field-error" role="alert">{formErrors.providerId}</div>}
             </div>
           </div>
           <FormField

@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { clearToken, getToken, setToken } from "@/api/axios";
 import { authApi } from "@/api/endpoints";
 import type { User, LoginInput, RegisterInput } from "@shared/schemas";
@@ -15,6 +16,7 @@ interface AuthContextValue {
 export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const queryClient = useQueryClient();
   const [user, setUser] = useState<User | null>(null);
   const [token, setTokenState] = useState<string | null>(getToken());
   const [isLoading, setIsLoading] = useState<boolean>(!!getToken());
@@ -71,7 +73,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     clearToken();
     setTokenState(null);
     setUser(null);
-  }, []);
+    queryClient.clear();
+  }, [queryClient]);
 
   const value = useMemo(
     () => ({ user, token, isLoading, login, register, logout }),

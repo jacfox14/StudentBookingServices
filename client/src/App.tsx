@@ -4,6 +4,7 @@ import { queryClient } from "@/api/queryClient";
 import { AuthProvider } from "@/context/AuthContext";
 import { ToastProvider } from "@/context/ToastContext";
 import AppRoutes from "@/routes/AppRoutes";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 export default function App() {
   return (
@@ -11,7 +12,9 @@ export default function App() {
       <BrowserRouter>
         <AuthProvider>
           <ToastProvider>
-            <AppRoutes />
+            <ErrorBoundary>
+              <AppRoutes />
+            </ErrorBoundary>
           </ToastProvider>
         </AuthProvider>
       </BrowserRouter>
