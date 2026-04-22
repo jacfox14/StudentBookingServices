@@ -280,7 +280,7 @@ small {
 }
 
 .role-badge--admin {
-  background-color: var(--crimson);
+  background-color: #333;
   color: var(--white);
 }
 
@@ -462,6 +462,7 @@ input[type="number"],
 input[type="date"],
 input[type="time"],
 input[type="tel"],
+input[type="search"],
 select,
 textarea {
   width: 100%;
@@ -480,6 +481,7 @@ input[type="number"]:focus,
 input[type="date"]:focus,
 input[type="time"]:focus,
 input[type="tel"]:focus,
+input[type="search"]:focus,
 select:focus,
 textarea:focus {
   outline: none;

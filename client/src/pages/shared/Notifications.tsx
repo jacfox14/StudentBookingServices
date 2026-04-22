@@ -5,18 +5,19 @@ import type { Notification } from "@shared/schemas";
 
 function renderMessage(n: Notification): string {
   const p = n.payload as Record<string, unknown>;
-  const svc = (p.serviceTitle ?? p.service ?? "your booking") as string;
+  const svc = (p.serviceTitle ?? p.service) as string | undefined;
+  const forSvc = svc ? ` for ${svc}` : "";
   switch (n.type) {
     case "booking_created":
-      return `New booking request from ${p.student ?? "a student"} for ${svc}.`;
+      return `New booking request from ${p.student ?? "a student"}${forSvc}.`;
     case "booking_approved":
-      return `Your booking for ${svc} was approved.`;
+      return `Your booking${forSvc} was approved.`;
     case "booking_rejected":
-      return `Your booking for ${svc} was rejected. Reason: ${(p.rejectionReason ?? p.reason) ?? "—"}`;
+      return `Your booking${forSvc} was rejected. Reason: ${(p.rejectionReason ?? p.reason) ?? "—"}`;
     case "booking_cancelled":
-      return `Your booking for ${svc} was cancelled.`;
+      return `Your booking${forSvc} was cancelled.`;
     case "reminder":
-      return `Reminder: ${svc} ${p.when ?? "soon"}.`;
+      return `Reminder: your booking${forSvc} is ${p.when ?? "coming up soon"}.`;
     default:
       return "New notification.";
   }
