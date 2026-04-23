@@ -24,8 +24,8 @@ export default function Landing() {
           Washington State University.
         </p>
         <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", marginTop: "2rem" }}>
-          <Link to="/login" className="btn btn-primary btn-landing" style={{ background: "#4a0f1a" }}>Sign in</Link>
-          <Link to="/register" className="btn btn-secondary btn-landing" style={{ background: "#4a0f1a" }}>Create account</Link>
+          <Link to="/login" className="btn btn-primary btn-landing" style={{ background: "#A60F2D" }}>Sign in</Link>
+          <Link to="/register" className="btn btn-secondary btn-landing" style={{ background: "#A60F2D" }}>Create account</Link>
         </div>
       </section>
 
