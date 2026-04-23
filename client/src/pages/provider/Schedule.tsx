@@ -6,9 +6,11 @@ import { fmtDate, fmtTime } from "@/lib/format";
 import { useToast } from "@/context/ToastContext";
 
 const HOUR_SLOTS = [
+  { label: "8:00 AM",  value: 8  },
   { label: "9:00 AM",  value: 9  },
   { label: "10:00 AM", value: 10 },
   { label: "11:00 AM", value: 11 },
+  { label: "12:00 PM", value: 12 },
   { label: "1:00 PM",  value: 13 },
   { label: "2:00 PM",  value: 14 },
   { label: "3:00 PM",  value: 15 },
@@ -46,7 +48,7 @@ export default function ProviderSchedule() {
   const [startDate, setStartDate]     = useState(todayStr);
   const [endDate, setEndDate]         = useState(() => isoDate(addDays(new Date(), 6)));
   const [days, setDays]               = useState<Set<number>>(new Set([1, 2, 3, 4, 5]));
-  const [hours, setHours]             = useState<Set<number>>(new Set([9, 10, 11, 13, 14, 15]));
+  const [hours, setHours]             = useState<Set<number>>(new Set([8, 9, 10, 11, 12, 13, 14, 15, 16]));
   const [submitting, setSubmitting]   = useState(false);
 
   const { data: blocks } = useQuery({ queryKey: ["provider", "schedule"], queryFn: providerApi.schedule });
