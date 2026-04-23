@@ -175,6 +175,9 @@ export default function ProviderSchedule() {
                   <div className="availability-grid">
                     {list.map((b) => (
                       <div key={b.id} className="availability-slot">
+                        <div style={{ fontSize: "0.7rem", color: "var(--crimson)", fontWeight: 600, marginBottom: "0.15rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          {svcName}
+                        </div>
                         {fmtTime(b.startAt)} – {fmtTime(b.endAt)}
                         <button
                           type="button"
