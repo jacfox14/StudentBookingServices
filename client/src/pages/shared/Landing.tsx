@@ -19,7 +19,7 @@ export default function Landing() {
         }}
       >
         <h1 style={{ fontSize: "3.5rem", marginBottom: "0.5rem", fontWeight: 700, color: "#fff" }}>Student Booking Services</h1>
-        <p style={{ fontSize: "1.1rem", maxWidth: 720, margin: "0 auto 1.5rem", fontWeight: 700, color: "rgba(255,255,255,0.75)" }}>
+        <p style={{ fontSize: "1.1rem", maxWidth: 720, margin: "0 auto 1.5rem", fontWeight: 700, color: "rgba(255,255,255,0.88)" }}>
           Your one-stop platform for booking advisors, counselors, librarians, and career coaches at
           Washington State University.
         </p>
