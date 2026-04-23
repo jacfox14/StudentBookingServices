@@ -137,11 +137,14 @@ export default function ProviderSchedule() {
     }
   }
 
-  const grouped = new Map<string, NonNullable<typeof blocks>>();
+  // Group: serviceId → date → blocks
+  const byService = new Map<number, Map<string, NonNullable<typeof blocks>>>();
   (blocks ?? []).forEach((b) => {
+    if (!byService.has(b.serviceId)) byService.set(b.serviceId, new Map());
+    const byDay = byService.get(b.serviceId)!;
     const day = b.startAt.slice(0, 10);
-    if (!grouped.has(day)) grouped.set(day, []);
-    grouped.get(day)!.push(b);
+    if (!byDay.has(day)) byDay.set(day, []);
+    byDay.get(day)!.push(b);
   });
 
   return (
@@ -159,32 +162,36 @@ export default function ProviderSchedule() {
       {!blocks?.length ? (
         <div className="card">No availability yet. Add some slots so students can book.</div>
       ) : (
-        Array.from(grouped.entries()).sort().map(([day, list]) => (
-          <section key={day} className="card" style={{ marginBottom: "1rem" }}>
-            <h3>{fmtDate(day + "T00:00:00")}</h3>
-            <div className="availability-grid">
-              {list.map((b) => {
-                const svcName = services?.find((s) => s.id === b.serviceId)?.title ?? "Unknown service";
-                return (
-                  <div key={b.id} className="availability-slot">
-                    <div style={{ fontSize: "0.7rem", color: "var(--crimson)", fontWeight: 600, marginBottom: "0.15rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                      {svcName}
-                    </div>
-                    {fmtTime(b.startAt)} – {fmtTime(b.endAt)}
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-danger"
-                      style={{ display: "block", marginTop: "0.25rem", width: "100%" }}
-                      onClick={() => remove.mutate(b.id)}
-                    >
-                      Remove
-                    </button>
+        Array.from(byService.entries()).map(([svcId, byDay]) => {
+          const svcName = services?.find((s) => s.id === svcId)?.title ?? "Unknown service";
+          return (
+            <div key={svcId} style={{ marginBottom: "2rem" }}>
+              <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.75rem", color: "var(--crimson)" }}>
+                {svcName}
+              </h2>
+              {Array.from(byDay.entries()).sort().map(([day, list]) => (
+                <section key={day} className="card" style={{ marginBottom: "1rem" }}>
+                  <h3>{fmtDate(day + "T00:00:00")}</h3>
+                  <div className="availability-grid">
+                    {list.map((b) => (
+                      <div key={b.id} className="availability-slot">
+                        {fmtTime(b.startAt)} – {fmtTime(b.endAt)}
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-danger"
+                          style={{ display: "block", marginTop: "0.25rem", width: "100%" }}
+                          onClick={() => remove.mutate(b.id)}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    ))}
                   </div>
-                );
-              })}
+                </section>
+              ))}
             </div>
-          </section>
-        ))
+          );
+        })
       )}
 
       <Modal
