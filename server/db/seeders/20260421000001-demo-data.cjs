@@ -55,7 +55,7 @@ module.exports = {
       for (let d = 1; d <= 14; d++) {
         const day = addDays(now, d);
         if (day.getDay() === 0 || day.getDay() === 6) continue;
-        for (const hour of [9, 10, 11, 13, 14, 15]) {
+        for (const hour of [8, 9, 10, 11, 12, 13, 14, 15, 16]) {
           availability.push({
             service_id: svc.id,
             start_at: atTime(day, hour),
