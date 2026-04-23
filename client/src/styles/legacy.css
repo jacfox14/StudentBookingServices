@@ -30,7 +30,7 @@
   /* Status Colors */
   --color-success: #28a745;
   --color-warning: #ffc107;
-  --color-danger: #dc3545;
+  --color-danger: #CA1237;
   --color-info: #17a2b8;
 
   /* Shadows */
@@ -280,17 +280,17 @@ small {
 }
 
 .role-badge--admin {
-  background-color: #333;
+  background-color: #002D61;
   color: var(--white);
 }
 
 .role-badge--provider {
-  background-color: #4CAF50;
-  color: var(--white);
+  background-color: #AADC24;
+  color: #002D61;
 }
 
 .role-badge--student {
-  background-color: #2196F3;
+  background-color: #5BC3F5;
   color: var(--white);
 }
 

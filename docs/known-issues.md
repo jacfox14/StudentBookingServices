@@ -4,16 +4,6 @@
 
 ---
 
-## KI-001 — No Reschedule UI for Students
-
-**Description:** Students cannot reschedule a confirmed booking. The only available actions are viewing or cancelling. If a student needs a different time, they must cancel and re-book.
-
-**Impact:** Minor UX friction. Cancelling and re-booking works correctly, but the original slot is immediately released and may be taken by another student.
-
-**Proposed fix:** Add a "Reschedule" action to the student booking card that reuses the existing slot-selection flow, then issues a `PATCH /api/bookings/:id` with a new `scheduledAt`.
-
----
-
 ## KI-002 — "Completed" Status Is Never Set Automatically
 
 **Description:** The `BookingStatus` enum includes `completed`, but no background job or API call transitions a booking to that state after the appointment time passes. All past bookings remain `confirmed` indefinitely.
@@ -61,3 +51,13 @@
 **Impact:** Any public deployment would expose valid account credentials to all visitors, posing a direct account-takeover risk.
 
 **Proposed fix:** Remove the credential hints before any non-demo deployment, or gate their display behind a `VITE_SHOW_DEMO_CREDENTIALS=true` environment variable so they are never visible in production builds.
+
+---
+
+## KI-007 — Email Verification Is Not Implemented
+
+**Description:** Account registration does not include any email verification step. When a user creates an account, it is immediately active regardless of whether the supplied email address is valid or belongs to the registrant. No confirmation email is sent, no verification token is generated, and the `email_verified_at` column in the `users` table is populated at registration time as a placeholder rather than as a result of an actual verification flow.
+
+**Impact:** Any person can register with an arbitrary email address (including one they do not own) and gain full access to the system. There is no mechanism to confirm that registered users are genuine WSU community members.
+
+**Proposed fix:** Implement a standard email verification flow — generate a signed token on registration, send a confirmation link via a transactional email provider (see KI-004), and require the user to visit that link before their account is activated. Gate all authenticated routes on `email_verified_at IS NOT NULL`.
