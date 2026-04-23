@@ -18,7 +18,8 @@
       "Read(//c/xampp/**)",
       "Read(//c/wamp64/bin/**)",
       "Read(//c/laragon/bin/**)",
-      "Bash(xargs ls *)"
+      "Bash(xargs ls *)",
+      "Bash(docker compose *)"
     ]
   }
 }
