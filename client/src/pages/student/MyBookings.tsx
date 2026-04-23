@@ -181,9 +181,9 @@ export default function MyBookings() {
                   marginTop: "0.75rem",
                   padding: "0.5rem 0.75rem",
                   background: "#fef2f2",
-                  border: "1px solid #fca5a5",
+                  border: "1px solid #CA1237",
                   borderRadius: "0.375rem",
-                  color: "#dc2626",
+                  color: "#CA1237",
                   fontSize: "0.875rem",
                 }}
               >
