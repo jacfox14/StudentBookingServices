@@ -61,11 +61,22 @@ export default function ProviderSchedule() {
 
   const selectedService = services?.find((s) => s.id === serviceId);
 
-  // Build the list of (startAt, endAt) pairs that will be created
-  const preview = useMemo(() => {
-    if (!serviceId || !startDate || !endDate || days.size === 0 || hours.size === 0) return [];
+  function overlaps(
+    a: { startAt: string; endAt: string },
+    b: { startAt: string; endAt: string },
+  ) {
+    return a.startAt < b.endAt && a.endAt > b.startAt;
+  }
+
+  // Build the list of (startAt, endAt) pairs that will be created,
+  // skipping any that overlap with existing blocks or with each other.
+  const { preview, skipped } = useMemo(() => {
+    if (!serviceId || !startDate || !endDate || days.size === 0 || hours.size === 0)
+      return { preview: [], skipped: 0 };
     const duration = selectedService?.durationMinutes ?? 30;
-    const slots: { startAt: string; endAt: string }[] = [];
+    const existing = (blocks ?? []).filter((b) => b.serviceId === serviceId);
+    const accepted: { startAt: string; endAt: string }[] = [];
+    let skipped = 0;
     const cursor = new Date(startDate + "T00:00:00");
     const end = new Date(endDate + "T23:59:59");
     while (cursor <= end) {
@@ -74,13 +85,17 @@ export default function ProviderSchedule() {
           const s = new Date(cursor);
           s.setHours(h, 0, 0, 0);
           const e = new Date(s.getTime() + duration * 60_000);
-          slots.push({ startAt: s.toISOString(), endAt: e.toISOString() });
+          const candidate = { startAt: s.toISOString(), endAt: e.toISOString() };
+          const conflictsExisting = existing.some((x) => overlaps(candidate, x));
+          const conflictsBatch    = accepted.some((x) => overlaps(candidate, x));
+          if (conflictsExisting || conflictsBatch) { skipped++; continue; }
+          accepted.push(candidate);
         }
       }
       cursor.setDate(cursor.getDate() + 1);
     }
-    return slots;
-  }, [serviceId, startDate, endDate, days, hours, selectedService]);
+    return { preview: accepted, skipped };
+  }, [serviceId, startDate, endDate, days, hours, selectedService, blocks]);
 
   function toggleDay(v: number) {
     setDays((prev) => {
@@ -112,7 +127,8 @@ export default function ProviderSchedule() {
     try {
       await Promise.all(preview.map((slot) => providerApi.addAvailability({ serviceId, ...slot })));
       qc.invalidateQueries({ queryKey: ["provider", "schedule"] });
-      toast(`Added ${preview.length} availability slot${preview.length !== 1 ? "s" : ""}`, "success");
+      const skippedMsg = skipped > 0 ? ` (${skipped} skipped — conflicts)` : "";
+      toast(`Added ${preview.length} slot${preview.length !== 1 ? "s" : ""}${skippedMsg}`, "success");
       setOpen(false);
     } catch {
       toast("Failed to save some slots", "error");
@@ -183,6 +199,7 @@ export default function ProviderSchedule() {
                 : preview.length > 0
                   ? `Add ${preview.length} slot${preview.length !== 1 ? "s" : ""}`
                   : "Add slots"}
+
             </button>
           </>
         }
@@ -280,9 +297,19 @@ export default function ProviderSchedule() {
           {/* Preview count */}
           {serviceId > 0 && (
             <p style={{ margin: 0, fontSize: "0.875rem", color: preview.length > 0 ? "var(--crimson)" : "#888" }}>
-              {preview.length > 0
-                ? `${preview.length} slot${preview.length !== 1 ? "s" : ""} will be created across ${new Set(preview.map((s) => s.startAt.slice(0, 10))).size} day${new Set(preview.map((s) => s.startAt.slice(0, 10))).size !== 1 ? "s" : ""}.`
-                : "No slots match the current selection."}
+              {preview.length > 0 ? (
+                <>
+                  {preview.length} slot{preview.length !== 1 ? "s" : ""} will be created across{" "}
+                  {new Set(preview.map((s) => s.startAt.slice(0, 10))).size} day{new Set(preview.map((s) => s.startAt.slice(0, 10))).size !== 1 ? "s" : ""}.
+                  {skipped > 0 && (
+                    <span style={{ color: "#888" }}> {skipped} skipped — conflicts with existing slots.</span>
+                  )}
+                </>
+              ) : (
+                skipped > 0
+                  ? `All ${skipped} slot${skipped !== 1 ? "s" : ""} conflict with existing availability.`
+                  : "No slots match the current selection."
+              )}
             </p>
           )}
         </div>
