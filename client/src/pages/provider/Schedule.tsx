@@ -163,19 +163,25 @@ export default function ProviderSchedule() {
           <section key={day} className="card" style={{ marginBottom: "1rem" }}>
             <h3>{fmtDate(day + "T00:00:00")}</h3>
             <div className="availability-grid">
-              {list.map((b) => (
-                <div key={b.id} className="availability-slot">
-                  {fmtTime(b.startAt)} – {fmtTime(b.endAt)}
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-danger"
-                    style={{ display: "block", marginTop: "0.25rem", width: "100%" }}
-                    onClick={() => remove.mutate(b.id)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              ))}
+              {list.map((b) => {
+                const svcName = services?.find((s) => s.id === b.serviceId)?.title ?? "Unknown service";
+                return (
+                  <div key={b.id} className="availability-slot">
+                    <div style={{ fontSize: "0.7rem", color: "var(--crimson)", fontWeight: 600, marginBottom: "0.15rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                      {svcName}
+                    </div>
+                    {fmtTime(b.startAt)} – {fmtTime(b.endAt)}
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-danger"
+                      style={{ display: "block", marginTop: "0.25rem", width: "100%" }}
+                      onClick={() => remove.mutate(b.id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           </section>
         ))
