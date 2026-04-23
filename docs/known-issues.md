@@ -4,16 +4,6 @@
 
 ---
 
-## KI-001 — No Reschedule UI for Students
-
-**Description:** Students cannot reschedule a confirmed booking. The only available actions are viewing or cancelling. If a student needs a different time, they must cancel and re-book.
-
-**Impact:** Minor UX friction. Cancelling and re-booking works correctly, but the original slot is immediately released and may be taken by another student.
-
-**Proposed fix:** Add a "Reschedule" action to the student booking card that reuses the existing slot-selection flow, then issues a `PATCH /api/bookings/:id` with a new `scheduledAt`.
-
----
-
 ## KI-002 — "Completed" Status Is Never Set Automatically
 
 **Description:** The `BookingStatus` enum includes `completed`, but no background job or API call transitions a booking to that state after the appointment time passes. All past bookings remain `confirmed` indefinitely.
