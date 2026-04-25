@@ -9,7 +9,7 @@ function addDays(base, d) {
 }
 function atTime(base, h, m = 0) {
   const x = new Date(base);
-  x.setHours(h, m, 0, 0);
+  x.setUTCHours(h + 7, m, 0, 0); // h is Pacific (PDT=UTC-7); store as UTC
   return x;
 }
 
