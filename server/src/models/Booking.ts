@@ -17,13 +17,14 @@ export interface BookingAttributes {
   status: BookingStatus;
   notes: string | null;
   rejectionReason: string | null;
+  rescheduleCount: number;
   createdAt: Date;
   updatedAt: Date;
 }
 
 type Creation = Optional<
   BookingAttributes,
-  "id" | "notes" | "rejectionReason" | "createdAt" | "updatedAt"
+  "id" | "notes" | "rejectionReason" | "rescheduleCount" | "createdAt" | "updatedAt"
 >;
 
 export class Booking extends Model<BookingAttributes, Creation> implements BookingAttributes {
@@ -35,6 +36,7 @@ export class Booking extends Model<BookingAttributes, Creation> implements Booki
   declare status: BookingStatus;
   declare notes: string | null;
   declare rejectionReason: string | null;
+  declare rescheduleCount: number;
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
 }
@@ -61,6 +63,11 @@ Booking.init(
     },
     notes: { type: DataTypes.TEXT, allowNull: true },
     rejectionReason: { type: DataTypes.STRING(255), allowNull: true },
+    rescheduleCount: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      defaultValue: 0,
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
   },

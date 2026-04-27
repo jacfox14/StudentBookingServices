@@ -70,6 +70,7 @@ export const toBookingDTO = (b: BookingWithRels) => ({
   notes: b.notes ?? null,
   rejectionReason: b.rejectionReason ?? null,
   location: b.service?.location ?? undefined,
+  rescheduleCount: b.rescheduleCount ?? 0,
   createdAt: b.createdAt.toISOString(),
 });
 

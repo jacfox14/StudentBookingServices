@@ -31,10 +31,10 @@ export const servicesApi = {
     http.get<Service[]>("/services", { params }).then((r) => r.data),
   get: (id: number) =>
     http.get<Service>(`/services/${id}`).then((r) => r.data),
-  availability: (id: number, from: string, to: string) =>
+  availability: (id: number, from: string, to: string, excludeBookingId?: number) =>
     http
       .get<AvailabilityBlock[]>(`/services/${id}/availability`, {
-        params: { from, to },
+        params: { from, to, ...(excludeBookingId ? { excludeBookingId } : {}) },
       })
       .then((r) => r.data),
   categories: () =>

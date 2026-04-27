@@ -2,7 +2,11 @@ import { Op, Transaction } from "sequelize";
 import { sequelize, Booking, Service, User, Notification, AuditLog } from "../models/index.js";
 import { AppError } from "../errors/AppError.js";
 import type { BookingStatus } from "../models/Booking.js";
-import type { CreateBookingInput, RescheduleBookingInput } from "@sbs/shared";
+import {
+  RESCHEDULE_LEAD_TIME_MINUTES,
+  type CreateBookingInput,
+  type RescheduleBookingInput,
+} from "@sbs/shared";
 
 async function loadFullBooking(id: number, tx?: Transaction) {
   return Booking.findByPk(id, {
@@ -138,6 +142,9 @@ export const BookingService = {
     if (Number.isNaN(startAt.getTime()) || Number.isNaN(endAt.getTime()) || startAt >= endAt) {
       throw new AppError("VALIDATION_ERROR", "Invalid time range");
     }
+    if (startAt < new Date()) {
+      throw new AppError("VALIDATION_ERROR", "Cannot reschedule into the past");
+    }
     return sequelize.transaction(async (tx) => {
       const booking = await Booking.findByPk(bookingId, { transaction: tx });
       if (!booking) throw new AppError("NOT_FOUND", "Booking not found");
@@ -147,12 +154,61 @@ export const BookingService = {
       if (!["pending", "approved"].includes(booking.status)) {
         throw new AppError("CONFLICT", `Cannot reschedule a ${booking.status} booking`);
       }
+      const minLeadMs = RESCHEDULE_LEAD_TIME_MINUTES * 60_000;
+      if (booking.startAt.getTime() - Date.now() < minLeadMs) {
+        throw new AppError(
+          "CONFLICT",
+          `Reschedules must be made at least ${RESCHEDULE_LEAD_TIME_MINUTES} minutes before the appointment. Cancel and book a new time instead.`
+        );
+      }
       await assertNoOverlap(booking.serviceId, startAt, endAt, tx, booking.id);
       await assertNoStudentOverlap(booking.studentId, startAt, endAt, tx, booking.id);
+
+      const oldStartAt = booking.startAt;
       booking.startAt = startAt;
       booking.endAt = endAt;
       booking.status = "pending";
+      booking.rescheduleCount = (booking.rescheduleCount ?? 0) + 1;
       await booking.save({ transaction: tx });
+
+      const service = await Service.findByPk(booking.serviceId, { transaction: tx });
+      const student = await User.findByPk(booking.studentId, { transaction: tx });
+      const studentName = student
+        ? `${student.firstName} ${student.lastName}`.trim()
+        : undefined;
+
+      if (service) {
+        await Notification.create(
+          {
+            userId: service.providerId,
+            type: "booking_rescheduled",
+            payload: {
+              bookingId: booking.id,
+              serviceTitle: service.title,
+              oldStartAt: oldStartAt.toISOString(),
+              newStartAt: startAt.toISOString(),
+              student: studentName,
+            },
+            readAt: null,
+          },
+          { transaction: tx }
+        );
+      }
+
+      await Notification.create(
+        {
+          userId: booking.studentId,
+          type: "booking_rescheduled",
+          payload: {
+            bookingId: booking.id,
+            serviceTitle: service?.title,
+            oldStartAt: oldStartAt.toISOString(),
+            newStartAt: startAt.toISOString(),
+          },
+          readAt: null,
+        },
+        { transaction: tx }
+      );
 
       await AuditLog.create(
         {
@@ -160,7 +216,11 @@ export const BookingService = {
           action: "booking.reschedule",
           targetType: "Booking",
           targetId: booking.id,
-          meta: { startAt: startAt.toISOString(), endAt: endAt.toISOString() },
+          meta: {
+            startAt: startAt.toISOString(),
+            endAt: endAt.toISOString(),
+            oldStartAt: oldStartAt.toISOString(),
+          },
         },
         { transaction: tx }
       );

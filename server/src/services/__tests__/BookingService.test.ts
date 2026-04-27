@@ -201,6 +201,26 @@ describe('BookingService', () => {
       expect(new Date(rescheduled.startAt).getTime()).toBe(newStart.getTime());
     });
 
+    it('owner can reschedule an approved booking and resets status to pending', async () => {
+      const start = new Date(Date.now() + 105 * 3_600_000);
+      const end = new Date(start.getTime() + 3_600_000);
+      const booking = await BookingService.create(ctx.student.id, {
+        serviceId: ctx.service.id,
+        startAt: start.toISOString(),
+        endAt: end.toISOString(),
+      });
+      await BookingService.transition(booking.id, 'approved', { id: ctx.staff.id, role: ctx.staff.role });
+
+      const newStart = new Date(start.getTime() + 3 * 3_600_000);
+      const newEnd = new Date(newStart.getTime() + 3_600_000);
+      const rescheduled = await BookingService.reschedule(
+        booking.id,
+        { id: ctx.student.id, role: 'student' },
+        { startAt: newStart.toISOString(), endAt: newEnd.toISOString() }
+      );
+      expect(rescheduled.status).toBe('pending');
+    });
+
     it('non-owner cannot reschedule — throws FORBIDDEN', async () => {
       const start = new Date(Date.now() + 120 * 3_600_000);
       const end = new Date(start.getTime() + 3_600_000);
@@ -246,6 +266,139 @@ describe('BookingService', () => {
       )).rejects.toMatchObject({ code: 'CONFLICT' });
 
       await other.destroy();
+    });
+
+    it('reschedule succeeds when new range overlaps only the booking itself', async () => {
+      // Regression test for excludeBookingId behavior in assertNoOverlap.
+      const start = new Date(Date.now() + 200 * 3_600_000);
+      const end = new Date(start.getTime() + 3_600_000);
+      const booking = await BookingService.create(ctx.student.id, {
+        serviceId: ctx.service.id,
+        startAt: start.toISOString(),
+        endAt: end.toISOString(),
+      });
+
+      // Reschedule to a window that overlaps the booking itself (e.g. shift by 30 min).
+      const newStart = new Date(start.getTime() + 30 * 60_000);
+      const newEnd = new Date(newStart.getTime() + 3_600_000);
+      const rescheduled = await BookingService.reschedule(
+        booking.id,
+        { id: ctx.student.id, role: 'student' },
+        { startAt: newStart.toISOString(), endAt: newEnd.toISOString() }
+      );
+      expect(new Date(rescheduled.startAt).getTime()).toBe(newStart.getTime());
+    });
+
+    it('throws CONFLICT when the booking is cancelled', async () => {
+      const start = new Date(Date.now() + 220 * 3_600_000);
+      const end = new Date(start.getTime() + 3_600_000);
+      const booking = await BookingService.create(ctx.student.id, {
+        serviceId: ctx.service.id,
+        startAt: start.toISOString(),
+        endAt: end.toISOString(),
+      });
+      await BookingService.transition(booking.id, 'cancelled', { id: ctx.student.id, role: 'student' });
+
+      const newStart = new Date(start.getTime() + 2 * 3_600_000);
+      const newEnd = new Date(newStart.getTime() + 3_600_000);
+      await expect(BookingService.reschedule(
+        booking.id,
+        { id: ctx.student.id, role: 'student' },
+        { startAt: newStart.toISOString(), endAt: newEnd.toISOString() }
+      )).rejects.toMatchObject({ code: 'CONFLICT', message: expect.stringMatching(/Cannot reschedule a cancelled/) });
+    });
+
+    it('throws CONFLICT when within the lead-time window', async () => {
+      // Booking that starts in 30 minutes — within the 120-minute lead-time guard.
+      const start = new Date(Date.now() + 30 * 60_000);
+      const end = new Date(start.getTime() + 3_600_000);
+      const booking = await Booking.create({
+        studentId: ctx.student.id,
+        serviceId: ctx.service.id,
+        startAt: start,
+        endAt: end,
+        status: 'approved',
+      });
+
+      const newStart = new Date(Date.now() + 50 * 3_600_000);
+      const newEnd = new Date(newStart.getTime() + 3_600_000);
+      await expect(BookingService.reschedule(
+        booking.id,
+        { id: ctx.student.id, role: 'student' },
+        { startAt: newStart.toISOString(), endAt: newEnd.toISOString() }
+      )).rejects.toMatchObject({
+        code: 'CONFLICT',
+        message: expect.stringMatching(/at least/),
+      });
+
+      await booking.destroy();
+    });
+
+    it('throws VALIDATION_ERROR when new startAt is in the past', async () => {
+      const start = new Date(Date.now() + 240 * 3_600_000);
+      const end = new Date(start.getTime() + 3_600_000);
+      const booking = await BookingService.create(ctx.student.id, {
+        serviceId: ctx.service.id,
+        startAt: start.toISOString(),
+        endAt: end.toISOString(),
+      });
+
+      const pastStart = new Date(Date.now() - 60 * 60_000);
+      const pastEnd = new Date(pastStart.getTime() + 3_600_000);
+      await expect(BookingService.reschedule(
+        booking.id,
+        { id: ctx.student.id, role: 'student' },
+        { startAt: pastStart.toISOString(), endAt: pastEnd.toISOString() }
+      )).rejects.toMatchObject({ code: 'VALIDATION_ERROR' });
+    });
+
+    it('increments rescheduleCount by 1 on success', async () => {
+      const start = new Date(Date.now() + 260 * 3_600_000);
+      const end = new Date(start.getTime() + 3_600_000);
+      const booking = await BookingService.create(ctx.student.id, {
+        serviceId: ctx.service.id,
+        startAt: start.toISOString(),
+        endAt: end.toISOString(),
+      });
+
+      const newStart = new Date(start.getTime() + 2 * 3_600_000);
+      const newEnd = new Date(newStart.getTime() + 3_600_000);
+      await BookingService.reschedule(
+        booking.id,
+        { id: ctx.student.id, role: 'student' },
+        { startAt: newStart.toISOString(), endAt: newEnd.toISOString() }
+      );
+      const fresh = await Booking.findByPk(booking.id);
+      expect(fresh!.rescheduleCount).toBe(1);
+    });
+
+    it('writes booking_rescheduled notifications to provider and student + audit row', async () => {
+      const start = new Date(Date.now() + 280 * 3_600_000);
+      const end = new Date(start.getTime() + 3_600_000);
+      const booking = await BookingService.create(ctx.student.id, {
+        serviceId: ctx.service.id,
+        startAt: start.toISOString(),
+        endAt: end.toISOString(),
+      });
+
+      const providerBefore = await Notification.count({ where: { userId: ctx.staff.id, type: 'booking_rescheduled' } });
+      const studentBefore = await Notification.count({ where: { userId: ctx.student.id, type: 'booking_rescheduled' } });
+
+      const newStart = new Date(start.getTime() + 4 * 3_600_000);
+      const newEnd = new Date(newStart.getTime() + 3_600_000);
+      await BookingService.reschedule(
+        booking.id,
+        { id: ctx.student.id, role: 'student' },
+        { startAt: newStart.toISOString(), endAt: newEnd.toISOString() }
+      );
+
+      const providerAfter = await Notification.count({ where: { userId: ctx.staff.id, type: 'booking_rescheduled' } });
+      const studentAfter = await Notification.count({ where: { userId: ctx.student.id, type: 'booking_rescheduled' } });
+      expect(providerAfter).toBe(providerBefore + 1);
+      expect(studentAfter).toBe(studentBefore + 1);
+
+      const audit = await AuditLog.findOne({ where: { targetId: booking.id, action: 'booking.reschedule' } });
+      expect(audit).not.toBeNull();
     });
   });
 });

@@ -6,6 +6,7 @@ export type NotificationType =
   | "booking_approved"
   | "booking_rejected"
   | "booking_cancelled"
+  | "booking_rescheduled"
   | "reminder";
 
 export interface NotificationAttributes {
@@ -51,6 +52,7 @@ Notification.init(
         "booking_approved",
         "booking_rejected",
         "booking_cancelled",
+        "booking_rescheduled",
         "reminder"
       ),
       allowNull: false,

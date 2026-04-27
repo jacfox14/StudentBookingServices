@@ -17,9 +17,12 @@ export const notificationTypeSchema = z.enum([
   "booking_approved",
   "booking_rejected",
   "booking_cancelled",
+  "booking_rescheduled",
   "reminder",
 ]);
 export type NotificationType = z.infer<typeof notificationTypeSchema>;
+
+export const RESCHEDULE_LEAD_TIME_MINUTES = 120;
 
 export const loginSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -127,6 +130,7 @@ export const bookingSchema = z.object({
   notes: z.string().nullable().optional(),
   rejectionReason: z.string().nullable().optional(),
   location: z.string().optional(),
+  rescheduleCount: z.number().int().nonnegative().optional(),
   createdAt: z.string(),
 });
 export type Booking = z.infer<typeof bookingSchema>;

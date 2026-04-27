@@ -82,6 +82,21 @@ export const serviceController = {
       const service = await Service.findByPk(id);
       if (!service) throw new AppError("NOT_FOUND", "Service not found");
 
+      let excludeBookingId: number | undefined;
+      if (req.query.excludeBookingId) {
+        const candidate = Number(req.query.excludeBookingId);
+        if (Number.isFinite(candidate) && candidate > 0) {
+          const owned = await Booking.findOne({
+            where: { id: candidate, serviceId: id, studentId: req.user!.id },
+            attributes: ["id"],
+          });
+          if (owned) {
+            excludeBookingId = candidate;
+          }
+          // Silently ignore mismatches — a 403 would itself leak existence.
+        }
+      }
+
       const blocks = await AvailabilityBlock.findAll({
         where: {
           serviceId: id,
@@ -91,14 +106,15 @@ export const serviceController = {
         order: [["startAt", "ASC"]],
       });
 
-      const bookings = await Booking.findAll({
-        where: {
-          serviceId: id,
-          status: { [Op.in]: ["pending", "approved"] },
-          startAt: { [Op.lt]: toDate },
-          endAt: { [Op.gt]: fromDate },
-        },
-      });
+      const bookingWhere: Record<string, unknown> = {
+        serviceId: id,
+        status: { [Op.in]: ["pending", "approved"] },
+        startAt: { [Op.lt]: toDate },
+        endAt: { [Op.gt]: fromDate },
+      };
+      if (excludeBookingId) bookingWhere.id = { [Op.ne]: excludeBookingId };
+
+      const bookings = await Booking.findAll({ where: bookingWhere });
 
       const free = blocks.filter((b) => {
         return !bookings.some(
