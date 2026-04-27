@@ -65,7 +65,10 @@ export default function ProviderDashboard() {
       </section>
 
       <section className="card">
-        <h2>Today's schedule</h2>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <h2>Today's schedule</h2>
+          <Link to="/provider/bookings" className="btn btn-sm btn-secondary">View all</Link>
+        </div>
         {!todaysList.length ? (
           <p>Nothing on today's calendar.</p>
         ) : (

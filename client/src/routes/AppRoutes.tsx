@@ -21,6 +21,8 @@ import BookingDetail from "@/pages/student/BookingDetail";
 import ProviderDashboard from "@/pages/provider/Dashboard";
 import ProviderSchedule from "@/pages/provider/Schedule";
 import ProviderRequests from "@/pages/provider/Requests";
+import ProviderMyBookings from "@/pages/provider/MyBookings";
+import ProviderBookingDetail from "@/pages/provider/BookingDetail";
 import ProviderProfile from "@/pages/provider/Profile";
 
 import AdminDashboard from "@/pages/admin/Dashboard";
@@ -53,6 +55,8 @@ export default function AppRoutes() {
           <Route element={<RoleRoute roles={["staff"]} />}>
             <Route path="/provider" element={<ProviderDashboard />} />
             <Route path="/provider/schedule" element={<ProviderSchedule />} />
+            <Route path="/provider/bookings" element={<ProviderMyBookings />} />
+            <Route path="/provider/bookings/:id" element={<ProviderBookingDetail />} />
             <Route path="/provider/requests" element={<ProviderRequests />} />
             <Route path="/provider/profile" element={<ProviderProfile />} />
           </Route>

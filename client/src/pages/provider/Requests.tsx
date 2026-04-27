@@ -2,14 +2,13 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { bookingsApi, providerApi } from "@/api/endpoints";
 import { fmtDateTime } from "@/lib/format";
-import { Modal } from "@/components/ui/Modal";
+import { RejectBookingModal } from "@/components/provider/RejectBookingModal";
 import { useToast } from "@/context/ToastContext";
 
 export default function ProviderRequests() {
   const qc = useQueryClient();
   const { push: toast } = useToast();
   const [rejectingId, setRejectingId] = useState<number | null>(null);
-  const [reason, setReason] = useState("");
 
   const { data: requests, isLoading } = useQuery({
     queryKey: ["provider", "requests"],
@@ -20,6 +19,7 @@ export default function ProviderRequests() {
     mutationFn: (id: number) => bookingsApi.approve(id),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["provider", "requests"] });
+      qc.invalidateQueries({ queryKey: ["provider", "bookings"] });
       qc.invalidateQueries({ queryKey: ["bookings"] });
       toast("Booking approved", "success");
     },
@@ -30,10 +30,10 @@ export default function ProviderRequests() {
       bookingsApi.reject(id, { reason }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["provider", "requests"] });
+      qc.invalidateQueries({ queryKey: ["provider", "bookings"] });
       qc.invalidateQueries({ queryKey: ["bookings"] });
       toast("Booking rejected", "info");
       setRejectingId(null);
-      setReason("");
     },
   });
 
@@ -83,35 +83,12 @@ export default function ProviderRequests() {
         </table>
       )}
 
-      <Modal
+      <RejectBookingModal
         open={rejectingId !== null}
         onClose={() => setRejectingId(null)}
-        title="Reject booking"
-        footer={
-          <>
-            <button type="button" className="btn btn-secondary" onClick={() => setRejectingId(null)}>
-              Cancel
-            </button>
-            <button
-              type="button"
-              className="btn btn-danger"
-              disabled={!reason.trim() || reject.isPending}
-              onClick={() => rejectingId && reject.mutate({ id: rejectingId, reason })}
-            >
-              {reject.isPending ? <span className="spinner-inline" /> : "Reject"}
-            </button>
-          </>
-        }
-      >
-        <p>Tell the student why you're rejecting this booking:</p>
-        <textarea
-          className="form-control"
-          rows={3}
-          maxLength={255}
-          value={reason}
-          onChange={(e) => setReason(e.target.value)}
-        />
-      </Modal>
+        onSubmit={(reason) => rejectingId && reject.mutate({ id: rejectingId, reason })}
+        isPending={reject.isPending}
+      />
     </div>
   );
 }

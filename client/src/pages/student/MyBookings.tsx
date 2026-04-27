@@ -5,19 +5,12 @@ import { bookingsApi } from "@/api/endpoints";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Modal } from "@/components/ui/Modal";
 import { fmtDateTime } from "@/lib/format";
+import { classifyBooking, type BookingTab } from "@/lib/bookings";
 import { useToast } from "@/context/ToastContext";
 import type { Booking } from "@shared/schemas";
 
-type Tab = "upcoming" | "past" | "cancelled";
-
-function classify(b: Booking, now: Date): Tab {
-  if (b.status === "cancelled" || b.status === "rejected") return "cancelled";
-  if (b.status === "completed" || new Date(b.endAt) < now) return "past";
-  return "upcoming";
-}
-
 export default function MyBookings() {
-  const [tab, setTab] = useState<Tab>("upcoming");
+  const [tab, setTab] = useState<BookingTab>("upcoming");
   const [rebookTarget, setRebookTarget] = useState<Booking | null>(null);
   const [rebookError, setRebookError] = useState<string | null>(null);
   const qc = useQueryClient();
@@ -54,8 +47,8 @@ export default function MyBookings() {
   });
 
   const now = new Date();
-  const groups: Record<Tab, Booking[]> = { upcoming: [], past: [], cancelled: [] };
-  (bookings ?? []).forEach((b) => groups[classify(b, now)].push(b));
+  const groups: Record<BookingTab, Booking[]> = { upcoming: [], past: [], cancelled: [] };
+  (bookings ?? []).forEach((b) => groups[classifyBooking(b, now)].push(b));
   const list = groups[tab].sort((a, b) =>
     a.startAt < b.startAt ? (tab === "upcoming" ? -1 : 1) : tab === "upcoming" ? 1 : -1
   );
@@ -67,7 +60,7 @@ export default function MyBookings() {
       </div>
 
       <div role="tablist" style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
-        {(["upcoming", "past", "cancelled"] as Tab[]).map((t) => (
+        {(["upcoming", "past", "cancelled"] as BookingTab[]).map((t) => (
           <button
             key={t}
             role="tab"

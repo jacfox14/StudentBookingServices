@@ -279,6 +279,18 @@ export const handlers = [
     return HttpResponse.json(list);
   }),
 
+  http.get(`${BASE}/provider/bookings`, ({ request }) => {
+    const user = currentUserFromAuth(request);
+    if (!user || user.role !== "staff")
+      return error(403, "FORBIDDEN", "Provider access only");
+    const myServiceIds = services.filter((s) => s.providerId === user.id).map((s) => s.id);
+    const list = bookings
+      .filter((b) => myServiceIds.includes(b.serviceId))
+      .slice()
+      .sort((a, b) => (a.startAt < b.startAt ? -1 : 1));
+    return HttpResponse.json(list);
+  }),
+
   http.get(`${BASE}/provider/schedule`, ({ request }) => {
     const user = currentUserFromAuth(request);
     if (!user || user.role !== "staff")

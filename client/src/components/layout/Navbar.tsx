@@ -42,6 +42,7 @@ export default function Navbar() {
             <>
               <li><NavLink to="/provider" end>Dashboard</NavLink></li>
               <li><NavLink to="/provider/schedule">Schedule</NavLink></li>
+              <li><NavLink to="/provider/bookings">My Bookings</NavLink></li>
               <li><NavLink to="/provider/requests">Requests</NavLink></li>
               <li><NavLink to="/provider/profile">Profile</NavLink></li>
             </>

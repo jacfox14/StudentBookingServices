@@ -9,6 +9,7 @@ import { fmtDate, fmtDateTime, fmtTime } from "@/lib/format";
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/context/ToastContext";
 import { ApiError } from "@/types/api";
+import NotFound from "@/pages/shared/NotFound";
 import { RESCHEDULE_LEAD_TIME_MINUTES, type AvailabilityBlock } from "@shared/schemas";
 
 export default function BookingDetail() {
@@ -23,9 +24,10 @@ export default function BookingDetail() {
   const [pickedSlot, setPickedSlot] = useState<string | null>(null);
   const [rescheduleError, setRescheduleError] = useState<string | null>(null);
 
-  const { data: booking, isLoading } = useQuery({
+  const { data: booking, isLoading, error } = useQuery({
     queryKey: ["booking", bookingId],
     queryFn: () => bookingsApi.get(bookingId),
+    retry: false,
   });
 
   const range = useMemo(() => {
@@ -122,6 +124,10 @@ export default function BookingDetail() {
       setRescheduleError(e.message);
     },
   });
+
+  if (error instanceof ApiError && (error.status === 403 || error.status === 404)) {
+    return <NotFound />;
+  }
 
   if (isLoading || !booking) return <p><span className="spinner-inline" /> Loading…</p>;
 
