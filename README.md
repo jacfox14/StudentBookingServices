@@ -1,8 +1,8 @@
 # StudentBookingServices
 
-A full-stack web application that allows university students to browse campus services, book appointments, and manage their schedules. Staff providers manage their availability and approve/reject requests; admins oversee users, services, and reporting.
+A full-stack web application that allows university students to browse campus services, book appointments, and manage their schedules. Staff providers manage their availability and approve or reject requests; admins oversee users, services, and reporting.
 
-Built for CPTS 489 – Web Application Development, Washington State University.
+Built for **CPTS 489 – Web Application Development**, Washington State University.
 
 ---
 
@@ -10,15 +10,17 @@ Built for CPTS 489 – Web Application Development, Washington State University.
 
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
+- [Quick Start](#quick-start)
+- [Option A: Run with Docker](#option-a-run-with-docker)
+- [Option B: Run Locally Without Docker](#option-b-run-locally-without-docker)
 - [Environment Variables](#environment-variables)
-- [Database Commands](#database-commands)
+- [Database Restore](#database-restore)
+- [Demo Accounts](#demo-accounts)
 - [Running Tests](#running-tests)
 - [API Overview](#api-overview)
 - [System Architecture](#system-architecture)
 - [User Roles](#user-roles)
-- [Demo Accounts](#demo-accounts)
+- [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -27,12 +29,12 @@ Built for CPTS 489 – Web Application Development, Washington State University.
 | Layer | Technology |
 |-------|-----------|
 | **Frontend** | React 18, TypeScript, Vite, React Router v6, TanStack Query, React Hook Form, Zod, Bootstrap 5, Axios |
-| **Backend** | Node.js, Express 4, TypeScript, Sequelize 6 ORM |
+| **Backend** | Node.js 20, Express 4, TypeScript, Sequelize 6 ORM |
 | **Database** | MySQL 8 |
 | **Auth** | JWT (Bearer token) + bcryptjs |
 | **Shared** | Zod schemas in an npm workspace consumed by both client and server |
 | **Testing** | Jest + Supertest (server), Vitest + Testing Library + MSW (client) |
-| **Build** | npm workspaces monorepo |
+| **Build / DevOps** | npm workspaces monorepo, Docker + docker compose |
 
 ---
 
@@ -40,35 +42,115 @@ Built for CPTS 489 – Web Application Development, Washington State University.
 
 ```
 StudentBookingServices/
-├── client/          # React SPA (Vite)
-├── server/          # Express REST API
+├── client/                     # React SPA (Vite) + Dockerfile (nginx)
+├── server/                     # Express REST API + Dockerfile
 │   ├── src/
-│   │   ├── controllers/   # Thin request handlers
-│   │   ├── services/      # Business logic (auth, booking conflict detection)
-│   │   ├── models/        # Sequelize models
-│   │   ├── routes/        # Express routers
-│   │   ├── middleware/    # Auth, role checks, validation, error handling
-│   │   ├── dto/           # Response serialization
-│   │   └── utils/         # JWT, password, date helpers
-│   └── db/
-│       ├── migrations/    # Sequelize CLI migrations
-│       └── seeders/       # Demo data seeder
-└── shared/          # Zod schemas and TypeScript types (used by client + server)
+│   │   ├── controllers/        # Thin request handlers
+│   │   ├── services/           # Business logic (auth, booking conflict detection)
+│   │   ├── models/             # Sequelize models
+│   │   ├── routes/             # Express routers
+│   │   ├── middleware/         # Auth, role checks, validation, error handling
+│   │   ├── dto/                # Response serialization
+│   │   └── utils/              # JWT, password, date helpers
+│   ├── db/
+│   │   ├── migrations/         # Sequelize CLI migrations (schema)
+│   │   └── seeders/            # Demo data seeder (users, services, bookings)
+│   └── docker-entrypoint.sh    # Waits for MySQL, runs migrations + seeds, starts API
+├── shared/                     # Zod schemas + TS types shared by client & server
+├── docker-compose.yml          # MySQL + backend + frontend (one-command bring-up)
+└── .env.example                # Root env template (used by docker compose)
 ```
 
 ---
 
-## Prerequisites
+## Quick Start
 
-- **Node.js** 20 or higher
-- **npm** 10 or higher (comes with Node 20)
-- **MySQL 8** running locally (or via Docker)
+If you just want to run the app, the fastest path is Docker:
+
+```bash
+git clone <repo-url> StudentBookingServices
+cd StudentBookingServices
+cp .env.example .env
+# edit .env: set JWT_SECRET to any string at least 16 characters long
+docker compose up --build
+```
+
+Then open <http://localhost:3000> and log in with one of the [demo accounts](#demo-accounts).
+
+For a full explanation of both run paths, see the two sections below.
 
 ---
 
-## Getting Started
+## Option A: Run with Docker
 
-### 1. Install dependencies
+Recommended. Starts MySQL 8, the API, and the nginx-served frontend in one command. No local Node or MySQL install required — only Docker.
+
+### Prerequisites
+
+- **Docker Desktop 4.x+** (or Docker Engine 24+ with the `compose` plugin on Linux)
+
+### Steps
+
+**1. Configure environment variables**
+
+The root-level `.env.example` is consumed by `docker-compose.yml`. Copy it and fill in a JWT secret:
+
+```bash
+cp .env.example .env
+```
+
+Open `.env` and set `JWT_SECRET` to any random string at least 16 characters long. The other defaults (`DB_NAME=sbs_dev`, `DB_USER=sbs`, etc.) are fine for local use.
+
+**2. Build and start all services**
+
+```bash
+docker compose up --build
+```
+
+This launches three containers:
+
+| Service | Port (host) | Description |
+|---------|-------------|-------------|
+| `db` | _internal only_ | MySQL 8 with a persistent `db_data` volume |
+| `backend` | `4000` | Express API (Node 20) |
+| `frontend` | `3000` | nginx serving the built React SPA |
+
+The backend container automatically waits for MySQL, runs all Sequelize migrations, and runs the demo-data seeder on first boot (see `server/docker-entrypoint.sh`). No separate restore step is needed.
+
+**3. Open the application**
+
+Browse to <http://localhost:3000>. The nginx frontend proxies `/api/*` calls to the backend container.
+
+**4. Stop the stack**
+
+```bash
+docker compose down            # stop and remove containers (data preserved)
+docker compose down -v         # also delete the MySQL volume (start fresh next time)
+```
+
+### Re-seeding inside Docker
+
+The seeder is idempotent (Sequelize `seederStorage: 'sequelize'`), so it will not duplicate rows on restart. To wipe and re-seed:
+
+```bash
+docker compose down -v         # drops the MySQL volume
+docker compose up --build      # migrations + seeds run again on first boot
+```
+
+---
+
+## Option B: Run Locally Without Docker
+
+Use this if you prefer running the API and Vite dev server directly on your machine — for example, to use hot module reload, attach a debugger, or work offline.
+
+### Prerequisites
+
+- **Node.js 20+** and **npm 10+**
+- **MySQL 8** running locally (any install method — Homebrew, apt, MySQL installer, or a standalone Docker container)
+
+### Steps
+
+**1. Install dependencies**
 
 From the project root, install all workspace packages at once:
 
@@ -76,85 +158,164 @@ From the project root, install all workspace packages at once:
 npm install
 ```
 
-### 2. Configure environment variables
+This installs dependencies for `shared/`, `server/`, and `client/` together via npm workspaces.
+
+**2. Configure environment variables**
+
+The local (non-Docker) workflow uses **per-package** env files, not the root `.env`:
 
 ```bash
 cp server/.env.example server/.env
 cp client/.env.example client/.env
 ```
 
-Edit `server/.env` with your MySQL credentials (see [Environment Variables](#environment-variables) below).
+Edit `server/.env` and set:
 
-### 3. Set up the database
+- `DB_USER`, `DB_PASS`, `DB_HOST`, `DB_PORT` — credentials for your local MySQL
+- `DB_NAME` — for example, `sbs_dev` (the database itself is created in step 3)
+- `JWT_SECRET` — any random string at least 16 characters long
+
+The default `client/.env` can be used as-is — Vite proxies `/api/*` to `http://localhost:4000` automatically.
+
+**3. Create the database and load demo data**
+
+Create an empty database in MySQL, then run the migrations and seeders:
+
+```bash
+# Create the empty schema (one-time, from any MySQL client)
+mysql -u root -p -e "CREATE DATABASE sbs_dev CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+# Apply schema and demo data
+cd server
+npm run db:migrate
+npm run db:seed
+```
+
+Or, after the database exists, run everything in one command:
 
 ```bash
 cd server
-npm run db:reset      # Creates tables and loads demo data
+npm run db:reset      # undo seeds + migrations, re-migrate, re-seed
 ```
 
-### 4. Start the development servers
+See [Database Restore](#database-restore) for more details and the `mysqldump` option.
+
+**4. Start the dev servers**
 
 Open two terminals:
 
 ```bash
-# Terminal 1 – API server (http://localhost:4000)
+# Terminal 1 — API server (http://localhost:4000)
 cd server
 npm run dev
 
-# Terminal 2 – Frontend (http://localhost:5173)
+# Terminal 2 — Frontend (http://localhost:5173)
 cd client
 npm run dev
 ```
 
 The Vite dev server proxies all `/api/*` requests to `localhost:4000`, so no CORS configuration is needed during development.
 
-### 5. Build for production
+**5. Build for production (optional)**
 
 ```bash
 # From the project root
 npm run build
 
-# Start the compiled server
-node server/dist/index.js
+# Then run the compiled API
+cd server
+npm start
 ```
 
-Serve the `client/dist/` directory from a static file host or configure Express to serve it.
+The compiled client lives at `client/dist/` and can be served by any static host (nginx, Cloudflare Pages, etc.) or by Express directly.
 
 ---
 
 ## Environment Variables
 
-### `server/.env`
+### Root `.env` (used by `docker compose`)
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DB_NAME` | `sbs_dev` | MySQL database name |
+| `DB_USER` | `sbs` | MySQL non-root user |
+| `DB_PASS` | `changeme` | Password for `DB_USER` |
+| `DB_ROOT_PASS` | `changemeroot` | Password for the MySQL `root` user |
+| `JWT_SECRET` | _(required)_ | Secret used to sign JWTs. **Must be at least 16 characters.** |
+| `JWT_TTL` | `12h` | Token lifespan |
+| `BCRYPT_ROUNDS` | `12` | bcrypt cost factor for password hashing |
+| `CLIENT_ORIGIN` | `http://localhost:3000` | CORS origin the backend will accept |
+
+### `server/.env` (used by `npm run dev` / `npm start`)
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `PORT` | `4000` | Express server port |
-| `DB_HOST` | `localhost` | MySQL host |
-| `DB_PORT` | `3306` | MySQL port |
-| `DB_NAME` | `student_booking` | Database name |
-| `DB_USER` | `root` | MySQL user |
-| `DB_PASS` | _(empty)_ | MySQL password |
-| `JWT_SECRET` | _(required)_ | Secret used to sign JWTs |
-| `JWT_EXPIRES_IN` | `7d` | Token lifespan |
 | `NODE_ENV` | `development` | `development` / `production` / `test` |
+| `DB_HOST` | `127.0.0.1` | MySQL host |
+| `DB_PORT` | `3306` | MySQL port |
+| `DB_NAME` | `sbs_dev` | Database name |
+| `DB_USER` | `root` | MySQL user |
+| `DB_PASS` | `dev` | MySQL password |
+| `DB_NAME_TEST` | `sbs_test` | Database used by the Jest test suite |
+| `JWT_SECRET` | _(required)_ | Secret used to sign JWTs (≥ 16 chars) |
+| `JWT_TTL` | `12h` | Token lifespan |
+| `BCRYPT_ROUNDS` | `12` | bcrypt cost factor |
+| `CLIENT_ORIGIN` | `http://localhost:5173` | CORS origin the backend will accept |
 
 ### `client/.env`
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `VITE_API_BASE_URL` | `/api` | API base path (proxied in dev) |
+| `VITE_API_BASE_URL` | `/api` | API base path (proxied to backend in dev) |
+| `VITE_USE_MSW` | `false` | Set to `true` to use MSW mocks for offline UI work |
 
 ---
 
-## Database Commands
+## Database Restore
 
-All commands are run from the `server/` directory.
+The schema and demo data live as Sequelize migrations and seeders under `server/db/`, so the canonical restore path is:
 
-| Command | Description |
-|---------|-------------|
-| `npm run db:migrate` | Apply pending migrations |
-| `npm run db:seed` | Insert demo data |
-| `npm run db:reset` | Drop all tables, re-migrate, re-seed |
+```bash
+cd server
+npm run db:migrate    # creates all tables
+npm run db:seed       # loads demo users, services, availability, and bookings
+```
+
+`npm run db:reset` does both in one shot (and undoes any prior seeds first).
+
+### Importing a SQL dump
+
+If you would rather restore from a `mysqldump` file, the project includes one at `server/db/dump.sql` (when present in the submitted ZIP):
+
+```bash
+# Create the database, then pipe the dump into it
+mysql -u root -p -e "CREATE DATABASE sbs_dev CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+mysql -u root -p sbs_dev < server/db/dump.sql
+```
+
+To regenerate the dump from a freshly seeded local database:
+
+```bash
+mysqldump -u root -p --databases sbs_dev > server/db/dump.sql
+```
+
+---
+
+## Demo Accounts
+
+After running migrations + seeds (either via Docker auto-boot, `npm run db:reset`, or importing the SQL dump), the following accounts are available. **Password for every account is `password123`.**
+
+| Role | Email |
+|------|-------|
+| **Admin** | `admin@wsu.edu` |
+| **Staff** (Academic Advisor) | `advisor@wsu.edu` |
+| **Staff** (Librarian) | `librarian@wsu.edu` |
+| **Staff** (Counselor) | `counselor@wsu.edu` |
+| **Staff** (Career Services) | `career@wsu.edu` |
+| **Student** | `alex@wsu.edu` |
+
+Additional student accounts seeded for testing follow the same pattern (see `server/db/seeders/20260421000001-demo-data.cjs`).
 
 ---
 
@@ -164,14 +325,14 @@ All commands are run from the `server/` directory.
 # Run all tests (server + client)
 npm run test
 
-# Server tests only (Jest + Supertest)
+# Server tests only (Jest + Supertest, hits a live MySQL test DB)
 npm run test:server
 
-# Client tests only (Vitest)
+# Client tests only (Vitest + Testing Library + MSW)
 npm run test:client
 ```
 
-Server tests require a running MySQL instance. The test suite uses a separate test database configured via `DB_NAME_TEST` in `server/.env`.
+Server tests require a running MySQL instance. The test suite uses a separate database configured via `DB_NAME_TEST` (default `sbs_test`) in `server/.env`.
 
 ---
 
@@ -201,7 +362,7 @@ Error responses follow a consistent shape:
 | Notifications | `/api/notifications` | In-app alert feed |
 | Admin | `/api/admin` | User management, service CRUD, KPI reports |
 
-See [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md) for the full table of all 32 endpoints.
+The full route table (HTTP method, path, description, auth/role required) is in **Section 2 of the project report**.
 
 ---
 
@@ -231,9 +392,9 @@ Request → Middleware (auth, role, validation) → Controller → Service → M
 
 ### Shared Package
 
-The `shared/` workspace publishes Zod schemas and their inferred TypeScript types. Both the server validation middleware and client form validation import from this package, ensuring the validation rules are never duplicated or out of sync.
+The `shared/` workspace publishes Zod schemas and their inferred TypeScript types. Both the server validation middleware and the client's form validation import from this package, ensuring the validation rules are never duplicated or out of sync.
 
-### Database (MySQL 8 – 7 tables)
+### Database (MySQL 8 — 7 tables)
 
 | Table | Purpose |
 |-------|---------|
@@ -251,20 +412,31 @@ The `shared/` workspace publishes Zod schemas and their inferred TypeScript type
 
 | Role | Capabilities |
 |------|-------------|
-| **Student** | Browse services, view availability, create/cancel bookings, receive notifications |
+| **Student** | Browse services, view availability, create / reschedule / cancel bookings, receive notifications |
 | **Staff (Provider)** | Manage their own availability, approve or reject student bookings |
 | **Admin** | Full access — manage all users, services, and view KPI reports |
 
 ---
 
-## Demo Accounts
+## Troubleshooting
 
-After running `npm run db:reset`, the following accounts are available:
+**`docker compose up` fails with `JWT_SECRET must be at least 16 characters`**
+Edit the root `.env` and set `JWT_SECRET` to a longer random string, then re-run `docker compose up`.
 
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | `admin@university.edu` | `password123` |
-| Staff | `staff1@university.edu` | `password123` |
-| Student | `student1@university.edu` | `password123` |
+**Port 3306 / 4000 / 3000 already in use**
+Stop whatever is using the port (a local MySQL service, another dev server, etc.) or change the host-side port in `docker-compose.yml`.
 
-Additional staff and student accounts follow the same `staff2–4` / `student2–6` pattern.
+**Local `npm run db:migrate` errors with `ER_ACCESS_DENIED`**
+The credentials in `server/.env` don't match your local MySQL. Confirm with `mysql -u <DB_USER> -p` and update `DB_USER` / `DB_PASS` accordingly.
+
+**`npm install` fails on a fresh clone**
+Make sure you are on Node 20+ (`node --version`). The repo uses npm workspaces, which requires npm 10+.
+
+**Frontend loads but every API call returns 401**
+The JWT in localStorage may have expired. Log out and log back in, or clear `localStorage` in the browser devtools.
+
+---
+
+## Team
+
+This project was developed for CPTS 489 – Web Application Development at Washington State University. See the project report (PDF) for team member names and individual contributions.
